@@ -138,7 +138,7 @@ void Scheduler::Reschedule(Fiber* fiber) {
       Destroy(fiber);
       break;
     default:
-      std::terminate();  // TODO
+      CLEW_PANIC("Unexpected fiber state");
       break;
   }
 }
