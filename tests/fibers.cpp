@@ -13,6 +13,27 @@ TEST(Fibers, YieldOnce) {
   RunScheduler(routine);
 }
 
+TEST(Fibers, Ids) {
+  RunScheduler([]() {
+    FiberId main_id = GetFiberId();
+
+    auto finn = [&]() {
+      ASSERT_EQ(GetFiberId(), main_id + 1);
+    };
+
+    auto jake = [&]() {
+      ASSERT_EQ(GetFiberId(), main_id + 2);
+    };
+
+    Spawn(finn);
+    Spawn(jake);
+
+    Yield();
+
+    ASSERT_EQ(main_id, GetFiberId());
+  });
+}
+
 TEST(Fibers, PingPong) {
   int count = 0;
 
