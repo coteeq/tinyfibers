@@ -17,8 +17,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 include(cmake/Platform.cmake)
 add_subdirectory(clew)
 
-option(TWIST_TESTS "Enable clew library tests" OFF)
-option(TWIST_BENCHMARKS "Enable clew library benchmarks" OFF)
+option(CLEW_TESTS "Enable clew library tests" OFF)
+option(CLEW_BENCHMARKS "Enable clew library benchmarks" OFF)
 
 if(${CLEW_TESTS})
     add_subdirectory(tests)
@@ -27,4 +27,3 @@ endif()
 if(${CLEW_BENCHMARKS})
     add_subdirectory(benchmarks)
 endif()
-
