@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace twist {
+namespace clew {
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -37,4 +37,4 @@ class Timer {
   TimePoint start_time_;
 };
 
-}  // namespace twist
+}  // namespace clew

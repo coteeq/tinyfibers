@@ -2,7 +2,7 @@
 
 #include <clew/core/scheduler.hpp>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 //////////////////////////////////////////////////////////////////////
@@ -31,4 +31,4 @@ FiberId GetFiberId() {
 }
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

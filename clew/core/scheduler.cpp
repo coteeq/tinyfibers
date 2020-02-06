@@ -2,7 +2,7 @@
 
 #include <clew/support/compiler.hpp>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 //////////////////////////////////////////////////////////////////////
@@ -157,4 +157,4 @@ void Scheduler::Destroy(Fiber* fiber) {
 }
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

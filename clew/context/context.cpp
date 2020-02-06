@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 // Switch between ExecutionContext-s
@@ -53,4 +53,4 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
 }
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

@@ -2,7 +2,7 @@
 
 #include <clew/support/memspan.hpp>
 
-namespace twist {
+namespace clew {
 
 class MmapAllocation {
  public:
@@ -55,4 +55,4 @@ class MmapAllocation {
   size_t size_;
 };
 
-}  // namespace twist
+}  // namespace clew

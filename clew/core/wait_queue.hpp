@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 class WaitQueue {
@@ -22,4 +22,4 @@ class WaitQueue {
 };
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

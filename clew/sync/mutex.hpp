@@ -4,7 +4,7 @@
 
 #include <clew/support/assert.hpp>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 class Mutex {
@@ -38,4 +38,4 @@ class Mutex {
 };
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

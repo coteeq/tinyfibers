@@ -6,7 +6,7 @@
 // std::unique_lock
 #include <mutex>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 class ConditionVariable {
@@ -45,4 +45,4 @@ class ConditionVariable {
 };
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

@@ -4,7 +4,7 @@
 
 #include <clew/support/compiler.hpp>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 //////////////////////////////////////////////////////////////////////
@@ -54,4 +54,4 @@ void Fiber::SetupTrampoline(Fiber* fiber) {
 }
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

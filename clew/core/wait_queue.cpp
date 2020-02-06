@@ -2,7 +2,7 @@
 
 #include <clew/core/scheduler.hpp>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 static inline void Suspend() {
@@ -67,4 +67,4 @@ bool WaitQueue::IsEmpty() const {
 }
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

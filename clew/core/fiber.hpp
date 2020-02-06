@@ -7,7 +7,7 @@
 
 #include <clew/support/intrusive_list.hpp>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 //////////////////////////////////////////////////////////////////////
@@ -52,4 +52,4 @@ class Fiber : public IntrusiveListNode<Fiber> {
 };
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

@@ -4,7 +4,7 @@
 
 #include <functional>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 //////////////////////////////////////////////////////////////////////
@@ -45,4 +45,4 @@ void SleepFor(Duration duration);
 FiberId GetFiberId();
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

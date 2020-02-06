@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cstdint>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 // TODO(Lipovsky): closure instead of void(void) function
@@ -26,4 +26,4 @@ struct ExecutionContext {
 };
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

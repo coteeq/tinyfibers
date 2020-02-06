@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace twist {
+namespace clew {
 
 struct MemSpan {
  public:
@@ -38,4 +38,4 @@ struct MemSpan {
   size_t size_;
 };
 
-}  // namespace twist
+}  // namespace clew

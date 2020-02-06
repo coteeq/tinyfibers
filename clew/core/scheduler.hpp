@@ -4,7 +4,7 @@
 #include <clew/core/fiber.hpp>
 #include <clew/support/time.hpp>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 using FiberQueue = IntrusiveList<Fiber>;
@@ -52,4 +52,4 @@ Fiber* GetCurrentFiber();
 Scheduler* GetCurrentScheduler();
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew

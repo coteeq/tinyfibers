@@ -4,7 +4,7 @@
 
 #include <sys/mman.h>
 
-namespace twist {
+namespace clew {
 
 #define CHECK_RESULT(ret, error) VERIFY(ret != -1, error)
 
@@ -65,4 +65,4 @@ void MmapAllocation::Reset() {
   size_ = 0;
 }
 
-}  // namespace twist
+}  // namespace clew

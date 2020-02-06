@@ -2,7 +2,7 @@
 
 #include <utility>
 
-namespace twist {
+namespace clew {
 namespace fiber {
 
 static const size_t kStackPages = 8;  // 8KB stacks
@@ -29,4 +29,4 @@ MemSpan FiberStack::AsMemSpan() const {
 }
 
 }  // namespace fiber
-}  // namespace twist
+}  // namespace clew
