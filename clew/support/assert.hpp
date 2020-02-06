@@ -1,12 +1,13 @@
 #pragma once
 
-#include <clew/support/compiler.hpp>
+#include <clew/support/panic.hpp>
 
+#include <iostream>
 #include <exception>
 
-#define VERIFY(cond, error)  \
-  do {                       \
-    if (UNLIKELY(!(cond))) { \
-      std::terminate();      \
-    }                        \
+#define CLEW_VERIFY(cond, error)                                   \
+  do {                                                             \
+    if (!(cond)) {                                                 \
+      CLEW_PANIC("Assertion '" << #cond << "' failed: " << error); \
+    }                                                              \
   } while (false);

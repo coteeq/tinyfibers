@@ -25,7 +25,7 @@ class Mutex {
   }
 
   void Unlock() {
-    VERIFY(locked_, "Unlocking mutex that is not locked!");
+    CLEW_VERIFY(locked_, "Unlocking mutex that is not locked!");
     locked_ = false;
     if (!wait_queue_.IsEmpty()) {
       wait_queue_.WakeOne();

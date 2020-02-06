@@ -28,13 +28,14 @@ static inline void SetCurrentFiber(Fiber* f) {
 static thread_local Scheduler* current_scheduler;
 
 Scheduler* GetCurrentScheduler() {
-  VERIFY(current_scheduler, "not in fiber context");
+  CLEW_VERIFY(current_scheduler, "not in fiber context");
   return current_scheduler;
 }
 
 struct SchedulerScope {
   SchedulerScope(Scheduler* scheduler) {
-    VERIFY(!current_scheduler, "cannot run scheduler from another scheduler");
+    CLEW_VERIFY(!current_scheduler,
+                "cannot run scheduler from another scheduler");
     current_scheduler = scheduler;
   }
 

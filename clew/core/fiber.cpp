@@ -38,13 +38,12 @@ static void FiberTrampoline() {
   try {
     routine();
   } catch (...) {
-    std::terminate();  // TODO
-    // PANIC("Uncaught exception in fiber " << self->Id());
+    CLEW_PANIC("Uncaught exception in fiber");
   }
 
   GetCurrentScheduler()->Terminate();  // never returns
 
-  UNREACHABLE();
+  CLEW_UNREACHABLE();
 }
 
 void Fiber::SetupTrampoline(Fiber* fiber) {

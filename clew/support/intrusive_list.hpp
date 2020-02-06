@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <iterator>
 
+namespace clew {
+
 // Introduction to intrusive containers:
 // https://www.boost.org/doc/libs/1_67_0/doc/html/intrusive/intrusive_vs_nontrusive.html
 
@@ -21,7 +23,7 @@ struct IntrusiveListNode {
   // Links this node before next in list
 
   void LinkBefore(Node* next) noexcept {
-    VERIFY(!IsLinked(), "cannot link already linked node");
+    CLEW_VERIFY(!IsLinked(), "cannot link already linked node");
 
     prev_ = next->prev_;
     prev_->next_ = this;
@@ -201,3 +203,5 @@ class IntrusiveList {
  private:
   Node head_;  // sentinel node
 };
+
+}  // namespace clew

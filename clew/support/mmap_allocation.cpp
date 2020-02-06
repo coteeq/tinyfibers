@@ -6,7 +6,7 @@
 
 namespace clew {
 
-#define CHECK_RESULT(ret, error) VERIFY(ret != -1, error)
+#define CHECK_RESULT(ret, error) CLEW_VERIFY(ret != -1, error)
 
 //////////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,7 @@ MmapAllocation MmapAllocation::AllocatePages(size_t count) {
                      /*flags=*/MAP_PRIVATE | MAP_ANONYMOUS,
                      /*fd=*/-1, /*offset=*/0);
 
-  VERIFY(start != MAP_FAILED, "Cannot allocate " << count << " pages");
+  CLEW_VERIFY(start != MAP_FAILED, "Cannot allocate " << count << " pages");
 
   return MmapAllocation{(char*)start, size};
 }
