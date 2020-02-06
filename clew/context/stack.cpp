@@ -13,10 +13,7 @@ FiberStack::FiberStack(MmapAllocation allocation)
 
 FiberStack FiberStack::Allocate() {
   MmapAllocation allocation = MmapAllocation::AllocatePages(kStackPages);
-  // local storage located in first page of memory span
-  // and separated by guard page from stack data
   allocation.ProtectPages(/*offset=*/0, /*count=*/1);
-
   return FiberStack{std::move(allocation)};
 }
 
