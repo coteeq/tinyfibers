@@ -4,7 +4,7 @@
   #define FUNCTION_NAME(name) name
 #endif
 
-    .global FUNCTION_NAME(SwitchContext)
+.global FUNCTION_NAME(SwitchContext)
 
 # SwitchContext(from, to)
 

@@ -11,9 +11,9 @@ file(GLOB_RECURSE LIB_HEADERS ${LIB_PATH}/*.hpp)
 
 enable_language(ASM)
 
-add_library(clew STATIC ${LIB_CXX_SOURCES} ${LIB_ASM_SOURCES} ${LIB_HEADERS})
-target_include_directories(clew PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(clew PUBLIC pthread)
+add_library(libclew STATIC ${LIB_CXX_SOURCES} ${LIB_ASM_SOURCES} ${LIB_HEADERS})
+target_include_directories(libclew PUBLIC ${LIB_INCLUDE_PATH})
+target_link_libraries(libclew PUBLIC pthread)
 
 # --------------------------------------------------------------------
 

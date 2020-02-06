@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
-project(clewlib)
+project(clew)
 
 include(cmake/ClangFormat.cmake)
 include(cmake/ClangTidy.cmake)
@@ -14,6 +14,7 @@ add_compile_options(-Wall -Wextra -Wpedantic -g -fno-omit-frame-pointer)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
+include(cmake/Platform.cmake)
 add_subdirectory(clew)
 
 option(TWIST_TESTS "Enable clew library tests" OFF)
