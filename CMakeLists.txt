@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
-project(clew)
+project(tinyfiber)
 
 include(cmake/ClangFormat.cmake)
 include(cmake/ClangTidy.cmake)
@@ -15,15 +15,15 @@ add_compile_options(-Wall -Wextra -Wpedantic -g -fno-omit-frame-pointer)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
 include(cmake/Platform.cmake)
-add_subdirectory(clew)
+add_subdirectory(tinyfiber)
 
-option(CLEW_TESTS "Enable clew library tests" OFF)
-option(CLEW_BENCHMARKS "Enable clew library benchmarks" OFF)
+option(TINY_FIBER_TESTS "Enable tinyfiber library tests" OFF)
+option(TINY_FIBER_BENCHMARKS "Enable tinyfiber library benchmarks" OFF)
 
-if(${CLEW_TESTS})
+if(${TINY_FIBER_TESTS})
     add_subdirectory(tests)
 endif()
 
-if(${CLEW_BENCHMARKS})
+if(${TINY_FIBER_BENCHMARKS})
     add_subdirectory(benchmarks)
 endif()

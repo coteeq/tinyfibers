@@ -1,11 +1,10 @@
 #pragma once
 
-#include <clew/support/time.hpp>
+#include <tinyfiber/support/time.hpp>
 
 #include <functional>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -44,5 +43,4 @@ void SleepFor(Duration duration);
 // Returns the id of the current fiber
 FiberId GetFiberId();
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

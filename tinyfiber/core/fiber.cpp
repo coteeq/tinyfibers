@@ -1,11 +1,10 @@
-#include <clew/core/fiber.hpp>
+#include <tinyfiber/core/fiber.hpp>
 
-#include <clew/core/scheduler.hpp>
+#include <tinyfiber/core/scheduler.hpp>
 
-#include <clew/support/compiler.hpp>
+#include <tinyfiber/support/compiler.hpp>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -38,12 +37,12 @@ static void FiberTrampoline() {
   try {
     routine();
   } catch (...) {
-    CLEW_PANIC("Uncaught exception in fiber");
+    TINY_PANIC("Uncaught exception in fiber");
   }
 
   GetCurrentScheduler()->Terminate();  // never returns
 
-  CLEW_UNREACHABLE();
+  TINY_UNREACHABLE();
 }
 
 void Fiber::SetupTrampoline(Fiber* fiber) {
@@ -52,5 +51,4 @@ void Fiber::SetupTrampoline(Fiber* fiber) {
       /*trampoline=*/FiberTrampoline);
 }
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

@@ -1,11 +1,10 @@
 #pragma once
 
-#include <clew/core/wait_queue.hpp>
+#include <tinyfiber/core/wait_queue.hpp>
 
-#include <clew/support/assert.hpp>
+#include <tinyfiber/support/assert.hpp>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 class Mutex {
  public:
@@ -25,7 +24,7 @@ class Mutex {
   }
 
   void Unlock() {
-    CLEW_VERIFY(locked_, "Unlocking mutex that is not locked!");
+    TINY_VERIFY(locked_, "Unlocking mutex that is not locked!");
     locked_ = false;
     if (!wait_queue_.IsEmpty()) {
       wait_queue_.WakeOne();
@@ -37,5 +36,4 @@ class Mutex {
   WaitQueue wait_queue_;
 };
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

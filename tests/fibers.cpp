@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
 
-#include <clew/core/api.hpp>
-#include <clew/sync/mutex.hpp>
-#include <clew/sync/condvar.hpp>
+#include <tinyfiber/core/api.hpp>
+#include <tinyfiber/sync/mutex.hpp>
+#include <tinyfiber/sync/condvar.hpp>
 
-using namespace clew::fiber;
+using namespace tinyfiber;
 
 TEST(Fibers, YieldOnce) {
   auto routine = []() {

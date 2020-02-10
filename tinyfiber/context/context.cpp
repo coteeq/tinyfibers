@@ -1,11 +1,10 @@
-#include <clew/context/context.hpp>
+#include <tinyfiber/context/context.hpp>
 
-#include <clew/context/stack.hpp>
+#include <tinyfiber/context/stack.hpp>
 
 #include <cstdint>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 // Switch between ExecutionContext-s
 extern "C" void SwitchContext(ExecutionContext* from, ExecutionContext* to);
@@ -52,5 +51,4 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   SwitchContext(this, &target);
 }
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

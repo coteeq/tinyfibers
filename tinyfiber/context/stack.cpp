@@ -1,9 +1,8 @@
-#include <clew/context/stack.hpp>
+#include <tinyfiber/context/stack.hpp>
 
 #include <utility>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 static const size_t kStackPages = 8;  // 8KB stacks
 
@@ -25,5 +24,4 @@ MemSpan FiberStack::AsMemSpan() const {
   return allocation_.AsMemSpan();
 }
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber
