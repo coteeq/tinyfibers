@@ -1,13 +1,12 @@
 #pragma once
 
-#include <clew/core/wait_queue.hpp>
-#include <clew/sync/mutex.hpp>
+#include <tinyfiber/core/wait_queue.hpp>
+#include <tinyfiber/sync/mutex.hpp>
 
 // std::unique_lock
 #include <mutex>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 class ConditionVariable {
  public:
@@ -44,5 +43,4 @@ class ConditionVariable {
   WaitQueue wait_queue_;
 };
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

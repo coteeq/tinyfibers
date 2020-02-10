@@ -1,14 +1,13 @@
 #pragma once
 
-#include <clew/context/context.hpp>
-#include <clew/context/stack.hpp>
+#include <tinyfiber/context/context.hpp>
+#include <tinyfiber/context/stack.hpp>
 
-#include <clew/core/api.hpp>
+#include <tinyfiber/core/api.hpp>
 
-#include <clew/support/intrusive_list.hpp>
+#include <tinyfiber/support/intrusive_list.hpp>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -51,5 +50,4 @@ class Fiber : public IntrusiveListNode<Fiber> {
   FiberId id_;
 };
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

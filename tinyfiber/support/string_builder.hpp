@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-namespace clew {
+namespace tinyfiber {
 
 class StringBuilder {
  public:
@@ -24,4 +24,4 @@ class StringBuilder {
   std::ostringstream out_;
 };
 
-}  // namespace clew
+}  // namespace tinyfiber

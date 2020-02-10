@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace clew {
+namespace tinyfiber {
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -37,4 +37,4 @@ class Timer {
   TimePoint start_time_;
 };
 
-}  // namespace clew
+}  // namespace tinyfiber

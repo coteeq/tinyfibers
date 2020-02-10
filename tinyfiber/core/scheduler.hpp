@@ -1,11 +1,10 @@
 #pragma once
 
-#include <clew/core/api.hpp>
-#include <clew/core/fiber.hpp>
-#include <clew/support/time.hpp>
+#include <tinyfiber/core/api.hpp>
+#include <tinyfiber/core/fiber.hpp>
+#include <tinyfiber/support/time.hpp>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 using FiberQueue = IntrusiveList<Fiber>;
 
@@ -51,5 +50,4 @@ class Scheduler {
 Fiber* GetCurrentFiber();
 Scheduler* GetCurrentScheduler();
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <clew/support/memspan.hpp>
+#include <tinyfiber/support/memspan.hpp>
 
-namespace clew {
+namespace tinyfiber {
 
 class MmapAllocation {
  public:
@@ -55,4 +55,4 @@ class MmapAllocation {
   size_t size_;
 };
 
-}  // namespace clew
+}  // namespace tinyfiber

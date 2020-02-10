@@ -1,8 +1,8 @@
-#include <clew/support/panic.hpp>
+#include <tinyfiber/support/panic.hpp>
 
 #include <iostream>
 
-namespace clew {
+namespace tinyfiber {
 namespace detail {
 
 void Panic(const std::string& error) {
@@ -11,4 +11,4 @@ void Panic(const std::string& error) {
 }
 
 }  // namespace detail
-}  // namespace clew
+}  // namespace tinyfiber

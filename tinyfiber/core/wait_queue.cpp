@@ -1,9 +1,8 @@
-#include <clew/core/wait_queue.hpp>
+#include <tinyfiber/core/wait_queue.hpp>
 
-#include <clew/core/scheduler.hpp>
+#include <tinyfiber/core/scheduler.hpp>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 static inline void Suspend() {
   GetCurrentScheduler()->Suspend();
@@ -66,5 +65,4 @@ bool WaitQueue::IsEmpty() const {
   return pimpl_->IsEmpty();
 }
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

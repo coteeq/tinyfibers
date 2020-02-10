@@ -1,12 +1,12 @@
 #pragma once
 
-#include <clew/support/assert.hpp>
+#include <tinyfiber/support/assert.hpp>
 
 #include <cstddef>
 #include <stdexcept>
 #include <iterator>
 
-namespace clew {
+namespace tinyfiber {
 
 // Introduction to intrusive containers:
 // https://www.boost.org/doc/libs/1_67_0/doc/html/intrusive/intrusive_vs_nontrusive.html
@@ -23,7 +23,7 @@ struct IntrusiveListNode {
   // Links this node before next in list
 
   void LinkBefore(Node* next) noexcept {
-    CLEW_VERIFY(!IsLinked(), "cannot link already linked node");
+    TINY_VERIFY(!IsLinked(), "cannot link already linked node");
 
     prev_ = next->prev_;
     prev_->next_ = this;
@@ -204,4 +204,4 @@ class IntrusiveList {
   Node head_;  // sentinel node
 };
 
-}  // namespace clew
+}  // namespace tinyfiber

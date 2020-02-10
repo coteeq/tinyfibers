@@ -1,9 +1,8 @@
-#include <clew/core/scheduler.hpp>
+#include <tinyfiber/core/scheduler.hpp>
 
-#include <clew/support/compiler.hpp>
+#include <tinyfiber/support/compiler.hpp>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -28,13 +27,13 @@ static inline void SetCurrentFiber(Fiber* f) {
 static thread_local Scheduler* current_scheduler;
 
 Scheduler* GetCurrentScheduler() {
-  CLEW_VERIFY(current_scheduler, "not in fiber context");
+  TINY_VERIFY(current_scheduler, "not in fiber context");
   return current_scheduler;
 }
 
 struct SchedulerScope {
   SchedulerScope(Scheduler* scheduler) {
-    CLEW_VERIFY(!current_scheduler,
+    TINY_VERIFY(!current_scheduler,
                 "cannot run scheduler from another scheduler");
     current_scheduler = scheduler;
   }
@@ -138,7 +137,7 @@ void Scheduler::Reschedule(Fiber* fiber) {
       Destroy(fiber);
       break;
     default:
-      CLEW_PANIC("Unexpected fiber state");
+      TINY_PANIC("Unexpected fiber state");
       break;
   }
 }
@@ -157,5 +156,4 @@ void Scheduler::Destroy(Fiber* fiber) {
   delete fiber;
 }
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

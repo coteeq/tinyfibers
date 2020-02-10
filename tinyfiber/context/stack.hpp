@@ -1,12 +1,11 @@
 #pragma once
 
-#include <clew/support/memspan.hpp>
-#include <clew/support/mmap_allocation.hpp>
+#include <tinyfiber/support/memspan.hpp>
+#include <tinyfiber/support/mmap_allocation.hpp>
 
 #include <cstdint>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -70,5 +69,4 @@ class StackBuilder {
   char* top_;
 };
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

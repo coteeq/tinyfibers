@@ -1,9 +1,8 @@
-#include <clew/core/api.hpp>
+#include <tinyfiber/core/api.hpp>
 
-#include <clew/core/scheduler.hpp>
+#include <tinyfiber/core/scheduler.hpp>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -30,5 +29,4 @@ FiberId GetFiberId() {
   return GetCurrentFiber()->Id();
 }
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

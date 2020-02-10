@@ -1,12 +1,11 @@
 #pragma once
 
-#include <clew/support/memspan.hpp>
+#include <tinyfiber/support/memspan.hpp>
 
 #include <cstdlib>
 #include <cstdint>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 // TODO(Lipovsky): closure instead of void(void) function
 typedef void (*Trampoline)();
@@ -25,5 +24,4 @@ struct ExecutionContext {
   void SwitchTo(ExecutionContext& target);
 };
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

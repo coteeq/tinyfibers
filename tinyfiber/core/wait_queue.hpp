@@ -2,8 +2,7 @@
 
 #include <memory>
 
-namespace clew {
-namespace fiber {
+namespace tinyfiber {
 
 class WaitQueue {
  public:
@@ -21,5 +20,4 @@ class WaitQueue {
   std::unique_ptr<Impl> pimpl_;
 };
 
-}  // namespace fiber
-}  // namespace clew
+}  // namespace tinyfiber

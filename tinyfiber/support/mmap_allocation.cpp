@@ -1,12 +1,12 @@
-#include <clew/support/mmap_allocation.hpp>
+#include <tinyfiber/support/mmap_allocation.hpp>
 
-#include <clew/support/assert.hpp>
+#include <tinyfiber/support/assert.hpp>
 
 #include <sys/mman.h>
 
-namespace clew {
+namespace tinyfiber {
 
-#define CHECK_RESULT(ret, error) CLEW_VERIFY(ret != -1, error)
+#define CHECK_RESULT(ret, error) TINY_VERIFY(ret != -1, error)
 
 //////////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,7 @@ MmapAllocation MmapAllocation::AllocatePages(size_t count) {
                      /*flags=*/MAP_PRIVATE | MAP_ANONYMOUS,
                      /*fd=*/-1, /*offset=*/0);
 
-  CLEW_VERIFY(start != MAP_FAILED, "Cannot allocate " << count << " pages");
+  TINY_VERIFY(start != MAP_FAILED, "Cannot allocate " << count << " pages");
 
   return MmapAllocation{(char*)start, size};
 }
@@ -65,4 +65,4 @@ void MmapAllocation::Reset() {
   size_ = 0;
 }
 
-}  // namespace clew
+}  // namespace tinyfiber
