@@ -9,7 +9,7 @@
 # SwitchContext(from, to)
 
 FUNCTION_NAME(SwitchContext):
-    # DoSwitchContext frame created on top of the current stack
+    # SwitchContext frame created on top of the current stack
 
     # 1. Save current execution context to 'from'
 
@@ -46,6 +46,6 @@ FUNCTION_NAME(SwitchContext):
     popq %r14
     popq %r15
 
-    # Pop current DoSwitchContext frame from target stack
+    # Pop current SwitchContext frame from target stack
 
     retq

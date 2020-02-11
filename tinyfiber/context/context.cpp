@@ -15,7 +15,7 @@ struct StackSavedContext {
   // in context.S at the 'Switch stacks' comment
 
   // Callee-saved registers
-  // Saved manually in DoSwitchContext
+  // Saved manually in SwitchContext
   void* rbp;
   void* rbx;
 
