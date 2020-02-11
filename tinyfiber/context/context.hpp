@@ -20,7 +20,7 @@ struct ExecutionContext {
   // Save the current execution context to 'this' and jump to the 'target'
   // context.
   // 'target' context created directly by Setup or by another
-  // target.SwitchTo(smth) call.
+  // target.SwitchTo(other) call.
   void SwitchTo(ExecutionContext& target);
 };
 
