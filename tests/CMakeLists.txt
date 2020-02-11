@@ -50,6 +50,6 @@ include_directories(
 
 file(GLOB TESTS_SRCS *.cpp)
 
-ADD_EXECUTABLE(clew_tests ${TESTS_SRCS})
-TARGET_LINK_LIBRARIES(clew_tests libclew libgtest)
-add_test(NAME clew_tests COMMAND clew_tests)
+ADD_EXECUTABLE(tinyfiber_tests ${TESTS_SRCS})
+TARGET_LINK_LIBRARIES(tinyfiber_tests libtinyfiber libgtest)
+add_test(NAME tinyfiber_tests COMMAND tinyfiber_tests)
