@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-#add_subdirectory(third_party)
-
 add_compile_options(-Wall -Wextra -Wpedantic -g -fno-omit-frame-pointer)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
