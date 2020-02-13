@@ -16,7 +16,7 @@ static FiberId GenerateId() {
 Fiber* Fiber::Create(FiberRoutine routine) {
   auto* fiber = new Fiber();
 
-  fiber->stack_ = FiberStack::Allocate();
+  fiber->stack_ = Stack::Allocate();
   fiber->id_ = GenerateId();
   fiber->routine_ = std::move(routine);
   fiber->state_ = FiberState::Starting;

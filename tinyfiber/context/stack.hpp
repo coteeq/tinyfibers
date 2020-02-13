@@ -9,14 +9,14 @@ namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
-class FiberStack {
+class Stack {
  public:
-  FiberStack() = default;
+  Stack() = default;
 
-  static FiberStack Allocate();
+  static Stack Allocate();
 
-  FiberStack(FiberStack&& that) = default;
-  FiberStack& operator=(FiberStack&& that) = default;
+  Stack(Stack&& that) = default;
+  Stack& operator=(Stack&& that) = default;
 
   char* Bottom() const;
 
@@ -27,7 +27,7 @@ class FiberStack {
   MemSpan AsMemSpan() const;
 
  private:
-  FiberStack(MmapAllocation allocation);
+  Stack(MmapAllocation allocation);
 
  private:
   MmapAllocation allocation_;

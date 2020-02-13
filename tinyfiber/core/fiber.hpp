@@ -19,10 +19,6 @@ class Fiber : public IntrusiveListNode<Fiber> {
     return id_;
   }
 
-  const FiberStack& Stack() const {
-    return stack_;
-  }
-
   ExecutionContext& Context() {
     return context_;
   }
@@ -43,7 +39,7 @@ class Fiber : public IntrusiveListNode<Fiber> {
   static void SetupTrampoline(Fiber* fiber);
 
  private:
-  FiberStack stack_;
+  Stack stack_;
   ExecutionContext context_;
   FiberState state_;
   FiberRoutine routine_;
