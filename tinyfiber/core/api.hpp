@@ -20,8 +20,8 @@ struct DeadlockDetected : public std::runtime_error {
   }
 };
 
-// Runs 'main' routine in fiber scheduler in the current thread
-void RunScheduler(FiberRoutine main);
+// Runs 'init' routine in fiber scheduler in the current thread
+void RunScheduler(FiberRoutine init);
 
 //////////////////////////////////////////////////////////////////////
 

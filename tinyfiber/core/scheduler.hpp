@@ -12,7 +12,7 @@ class Scheduler {
  public:
   Scheduler();
 
-  void Run(FiberRoutine main);
+  void Run(FiberRoutine init);
 
   // From fiber context
 

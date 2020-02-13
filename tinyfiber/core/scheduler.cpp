@@ -97,9 +97,9 @@ void Scheduler::Terminate() {
 
 // Scheduling
 
-void Scheduler::Run(FiberRoutine main) {
+void Scheduler::Run(FiberRoutine init) {
   SchedulerScope scope(this);
-  Spawn(main);
+  Spawn(init);
   RunLoop();
   CheckDeadlock();
 }
