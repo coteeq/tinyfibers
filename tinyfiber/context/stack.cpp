@@ -6,8 +6,7 @@ namespace tinyfiber {
 
 static const size_t kStackPages = 8;  // 8KB stacks
 
-Stack::Stack(MmapAllocation allocation)
-    : allocation_(std::move(allocation)) {
+Stack::Stack(MmapAllocation allocation) : allocation_(std::move(allocation)) {
 }
 
 Stack Stack::Allocate() {

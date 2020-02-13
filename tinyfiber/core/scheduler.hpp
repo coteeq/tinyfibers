@@ -29,9 +29,9 @@ class Scheduler {
 
   // Context switch: current fiber -> scheduler
   void SwitchToScheduler();
-
   // Context switch: scheduler -> fiber
   void SwitchTo(Fiber* fiber);
+
   void Reschedule(Fiber* fiber);
   void Schedule(Fiber* fiber);
 
