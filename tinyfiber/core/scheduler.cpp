@@ -31,18 +31,18 @@ Scheduler::Scheduler() {
 }
 
 Fiber* Scheduler::GetCurrentFiber() {
-  TINY_VERIFY(current_ != nullptr, "Not in fiber context");
-  return current_;
+  TINY_VERIFY(running_ != nullptr, "Not in fiber context");
+  return running_;
 }
 
 Fiber* Scheduler::GetAndResetCurrentFiber() {
-  Fiber* current = current_;
-  current_ = nullptr;
+  Fiber* current = running_;
+  running_ = nullptr;
   return current;
 }
 
 void Scheduler::SetCurrentFiber(Fiber* fiber) {
-  current_ = fiber;
+  running_ = fiber;
 }
 
 // Operations invoked by running fibers

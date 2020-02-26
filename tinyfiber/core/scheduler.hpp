@@ -46,7 +46,7 @@ class Scheduler {
  private:
   ExecutionContext loop_context_;
   FiberQueue run_queue_;
-  Fiber* current_{nullptr};
+  Fiber* running_{nullptr};
   size_t alive_count_{0};
 };
 
