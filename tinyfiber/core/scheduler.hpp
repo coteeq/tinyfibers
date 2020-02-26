@@ -23,6 +23,8 @@ class Scheduler {
   void Resume(Fiber* that);
   void Terminate();
 
+  Fiber* GetCurrentFiber();
+
  private:
   void RunLoop();
   void CheckDeadlock();
@@ -38,9 +40,13 @@ class Scheduler {
   Fiber* CreateFiber(FiberRoutine routine);
   void Destroy(Fiber* fiber);
 
+  void SetCurrentFiber(Fiber* fiber);
+  Fiber* GetAndResetCurrentFiber();
+
  private:
   ExecutionContext loop_context_;
   FiberQueue run_queue_;
+  Fiber* current_{nullptr};
   size_t alive_count_{0};
 };
 

@@ -6,24 +6,6 @@ namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
-static thread_local Fiber* current_fiber;
-
-Fiber* GetCurrentFiber() {
-  return current_fiber;
-}
-
-static inline Fiber* GetAndResetCurrentFiber() {
-  auto* f = current_fiber;
-  current_fiber = nullptr;
-  return f;
-}
-
-static inline void SetCurrentFiber(Fiber* f) {
-  current_fiber = f;
-}
-
-//////////////////////////////////////////////////////////////////////
-
 static thread_local Scheduler* current_scheduler;
 
 Scheduler* GetCurrentScheduler() {
@@ -46,6 +28,21 @@ struct SchedulerScope {
 //////////////////////////////////////////////////////////////////////
 
 Scheduler::Scheduler() {
+}
+
+Fiber* Scheduler::GetCurrentFiber() {
+  TINY_VERIFY(current_ != nullptr, "Not in fiber context");
+  return current_;
+}
+
+Fiber* Scheduler::GetAndResetCurrentFiber() {
+  Fiber* current = current_;
+  current_ = nullptr;
+  return current;
+}
+
+void Scheduler::SetCurrentFiber(Fiber* fiber) {
+  current_ = fiber;
 }
 
 // Operations invoked by running fibers
@@ -154,6 +151,12 @@ Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
 void Scheduler::Destroy(Fiber* fiber) {
   --alive_count_;
   delete fiber;
+}
+
+//////////////////////////////////////////////////////////////////////
+
+Fiber* GetCurrentFiber() {
+  return GetCurrentScheduler()->GetCurrentFiber();
 }
 
 }  // namespace tinyfiber
