@@ -10,7 +10,7 @@ Stack::Stack(MmapAllocation allocation) : allocation_(std::move(allocation)) {
 }
 
 Stack Stack::Allocate() {
-  MmapAllocation allocation = MmapAllocation::AllocatePages(kStackPages);
+  auto allocation = MmapAllocation::AllocatePages(kStackPages);
   allocation.ProtectPages(/*offset=*/0, /*count=*/1);
   return Stack{std::move(allocation)};
 }

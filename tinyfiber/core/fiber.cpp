@@ -13,15 +13,20 @@ static FiberId GenerateId() {
   return ++next_id;
 }
 
+Fiber::Fiber(FiberRoutine routine, Stack&& stack, FiberId id)
+    : routine_(std::move(routine)),
+      stack_(std::move(stack)),
+      state_(FiberState::Starting),
+      id_(id) {
+}
+
 Fiber* Fiber::Create(FiberRoutine routine) {
-  auto* fiber = new Fiber();
+  auto stack = Stack::Allocate();
+  FiberId id = GenerateId();
 
-  fiber->stack_ = Stack::Allocate();
-  fiber->id_ = GenerateId();
-  fiber->routine_ = std::move(routine);
-  fiber->state_ = FiberState::Starting;
+  Fiber* fiber = new Fiber(std::move(routine), std::move(stack), id);
 
-  SetupTrampoline(fiber);
+  fiber->SetupTrampoline();
 
   return fiber;
 }
@@ -45,9 +50,9 @@ static void FiberTrampoline() {
   TINY_UNREACHABLE();
 }
 
-void Fiber::SetupTrampoline(Fiber* fiber) {
-  fiber->context_.Setup(
-      /*stack=*/fiber->stack_.AsMemSpan(),
+void Fiber::SetupTrampoline() {
+  context_.Setup(
+      /*stack=*/stack_.AsMemSpan(),
       /*trampoline=*/FiberTrampoline);
 }
 

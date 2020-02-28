@@ -128,7 +128,8 @@ class IntrusiveList {
 
   // Iteration
 
-  // See "The Standard Librarian : Defining Iterators and Const Iterators"
+  // See "The Standard Librarian : Defining Iterators and Const
+  // Iterators"
 
   template <class NodeT, class ItemT>
   class IteratorImpl {

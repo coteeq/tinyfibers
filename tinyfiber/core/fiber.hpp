@@ -11,7 +11,13 @@ namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
 
-enum class FiberState { Starting, Runnable, Running, Suspended, Terminated };
+enum class FiberState {
+  Starting,
+  Runnable,
+  Running,
+  Suspended,  // in wait queue
+  Terminated
+};
 
 class Fiber : public IntrusiveListNode<Fiber> {
  public:
@@ -36,13 +42,17 @@ class Fiber : public IntrusiveListNode<Fiber> {
   }
 
   static Fiber* Create(FiberRoutine routine);
-  static void SetupTrampoline(Fiber* fiber);
 
  private:
+  Fiber(FiberRoutine routine, Stack&& stack, FiberId id);
+
+  void SetupTrampoline();
+
+ private:
+  FiberRoutine routine_;
   Stack stack_;
   ExecutionContext context_;
   FiberState state_;
-  FiberRoutine routine_;
   FiberId id_;
 };
 

@@ -17,10 +17,9 @@ struct ExecutionContext {
   // Prepare execution context for running trampoline function
   void Setup(MemSpan stack, Trampoline trampoline);
 
-  // Save the current execution context to 'this' and jump to the 'target'
-  // context.
-  // 'target' context created directly by Setup or by another
-  // target.SwitchTo(other) call.
+  // Save the current execution context to 'this' and jump to the
+  // 'target' context. 'target' context created directly by Setup or
+  // by another target.SwitchTo(other) call.
   void SwitchTo(ExecutionContext& target);
 };
 
