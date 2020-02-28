@@ -98,7 +98,6 @@ void Scheduler::Run(FiberRoutine init) {
   SchedulerScope scope(this);
   Spawn(init);
   RunLoop();
-  CheckDeadlock();
 }
 
 void Scheduler::RunLoop() {
@@ -106,12 +105,6 @@ void Scheduler::RunLoop() {
     Fiber* next = run_queue_.PopFront();
     SwitchTo(next);
     Reschedule(next);
-  }
-}
-
-void Scheduler::CheckDeadlock() {
-  if (run_queue_.IsEmpty() && alive_count_ > 0) {
-    throw DeadlockDetected();
   }
 }
 
@@ -144,12 +137,10 @@ void Scheduler::Schedule(Fiber* fiber) {
 }
 
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
-  ++alive_count_;
   return Fiber::Create(routine);
 }
 
 void Scheduler::Destroy(Fiber* fiber) {
-  --alive_count_;
   delete fiber;
 }
 

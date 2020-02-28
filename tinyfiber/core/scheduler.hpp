@@ -27,7 +27,6 @@ class Scheduler {
 
  private:
   void RunLoop();
-  void CheckDeadlock();
 
   // Context switch: current fiber -> scheduler
   void SwitchToScheduler();
@@ -47,7 +46,6 @@ class Scheduler {
   ExecutionContext loop_context_;
   FiberQueue run_queue_;
   Fiber* running_{nullptr};
-  size_t alive_count_{0};
 };
 
 //////////////////////////////////////////////////////////////////////
