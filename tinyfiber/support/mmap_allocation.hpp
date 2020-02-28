@@ -39,6 +39,7 @@ class MmapAllocation {
 
   // Protect range of pages
   // Protected pages cannot be read, written or executed
+  // offset - in pages, zero-based
   void ProtectPages(size_t offset, size_t count);
 
   void Release();
