@@ -16,6 +16,7 @@ class WaitQueue {
   bool IsEmpty() const;
 
  private:
+  // https://en.cppreference.com/w/cpp/language/pimpl
   class Impl;
   std::unique_ptr<Impl> pimpl_;
 };
