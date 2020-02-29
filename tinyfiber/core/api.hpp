@@ -14,12 +14,6 @@ using FiberId = size_t;
 
 //////////////////////////////////////////////////////////////////////
 
-struct DeadlockDetected : public std::runtime_error {
-  DeadlockDetected()
-      : std::runtime_error("Deadlock detected in fiber scheduler") {
-  }
-};
-
 // Runs 'init' routine in fiber scheduler in the current thread
 void RunScheduler(FiberRoutine init);
 
