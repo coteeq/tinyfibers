@@ -34,6 +34,8 @@ Fiber* Fiber::Create(FiberRoutine routine) {
 //////////////////////////////////////////////////////////////////////
 
 static void FiberTrampoline() {
+  // Fiber execution starts here
+
   Fiber* self = GetCurrentFiber();
 
   self->SetState(FiberState::Running);
