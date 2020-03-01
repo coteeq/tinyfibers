@@ -32,6 +32,7 @@ class Mutex {
   }
 
   // std::lock_guard / std::unique_lock compatibility
+  // BasicLockable concept
 
   void lock() {  // NOLINT
     Lock();
