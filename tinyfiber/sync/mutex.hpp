@@ -31,6 +31,16 @@ class Mutex {
     }
   }
 
+  // std::lock_guard / std::unique_lock compatibility
+
+  void lock() {  // NOLINT
+    Lock();
+  }
+
+  void unlock() {  // NOLINT
+    Unlock();
+  }
+
  private:
   bool locked_{false};
   WaitQueue wait_queue_;

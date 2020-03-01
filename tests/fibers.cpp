@@ -106,7 +106,7 @@ TEST(Fibers, WaitQueue) {
   RunScheduler(main);
 }
 
-TEST(Fibers, MutualExclusion) {
+TEST(Fibers, Mutex) {
   Mutex mutex;
   bool critical = false;
 
@@ -129,4 +129,33 @@ TEST(Fibers, MutualExclusion) {
     Spawn(routine);
     Spawn(routine);
   });
+}
+
+TEST(Fibers, ConditionVariable) {
+  Mutex mutex;
+  ConditionVariable ready;
+  std::string message;
+
+  auto receive = [&]() {
+    std::unique_lock lock(mutex);
+
+    ready.Wait(mutex);
+    ASSERT_EQ(message, "Hello");
+  };
+
+  auto send = [&]() {
+    std::lock_guard guard(mutex);
+    for (size_t i = 0; i < 100; ++i) {
+      Yield();
+    }
+    message = "Hello";
+    ready.NotifyOne();
+  };
+
+  auto init = [&]() {
+    Spawn(receive);
+    Spawn(send);
+  };
+
+  RunScheduler(init);
 }
