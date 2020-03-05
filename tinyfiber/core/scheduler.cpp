@@ -1,7 +1,5 @@
 #include <tinyfiber/core/scheduler.hpp>
 
-#include <tinyfiber/support/compiler.hpp>
-
 namespace tinyfiber {
 
 //////////////////////////////////////////////////////////////////////
