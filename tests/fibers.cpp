@@ -131,6 +131,28 @@ TEST(Fibers, Mutex) {
   });
 }
 
+TEST(Fibers, MutexTryLock) {
+  Mutex mutex;
+
+  auto locker = [&mutex]() {
+    mutex.Lock();
+    Yield();
+    mutex.Unlock();
+  };
+
+  auto try_locker = [&mutex]() {
+    ASSERT_FALSE(mutex.TryLock());
+    Yield();
+    ASSERT_TRUE(mutex.TryLock());
+    mutex.Unlock();
+  };
+
+  RunScheduler([&]() {
+    Spawn(locker);
+    Spawn(try_locker);
+  });
+}
+
 TEST(Fibers, ConditionVariable) {
   Mutex mutex;
   ConditionVariable ready;
