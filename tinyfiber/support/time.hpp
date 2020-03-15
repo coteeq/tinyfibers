@@ -10,12 +10,12 @@ using Duration = std::chrono::nanoseconds;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class Timer {
+class StopWatch {
   using Clock = std::chrono::steady_clock;
   using TimePoint = std::chrono::time_point<Clock>;
 
  public:
-  Timer() : start_time_(Now()) {
+  StopWatch() : start_time_(Now()) {
   }
 
   Duration Elapsed() const {
