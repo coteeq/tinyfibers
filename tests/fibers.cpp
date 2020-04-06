@@ -4,6 +4,8 @@
 #include <tinyfiber/sync/mutex.hpp>
 #include <tinyfiber/sync/condvar.hpp>
 
+#include <memory>
+
 using namespace tinyfiber;
 
 TEST(Fibers, YieldOnce) {
@@ -180,4 +182,16 @@ TEST(Fibers, ConditionVariable) {
   };
 
   RunScheduler(init);
+}
+
+TEST(Fibers, NoLeaks) {
+  auto strong_ref = std::make_shared<int>(42);
+  std::weak_ptr<int> weak_ref = strong_ref;
+
+  RunScheduler([ref = std::move(strong_ref)]() {
+    std::cout << "Answer to the Ultimate Question of Life, the Universe, and Everything: "
+              << *ref << std::endl;
+  });
+
+  ASSERT_FALSE(weak_ref.lock());
 }
