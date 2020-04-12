@@ -28,7 +28,7 @@ class ConditionVariable {
 
   using Lock = std::unique_lock<Mutex>;
 
-  void Wait(Lock& lock) {  // NOLINT
+  void Wait(Lock& lock) {
     Wait(*lock.mutex());
   }
 
