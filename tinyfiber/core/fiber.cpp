@@ -2,7 +2,7 @@
 
 #include <tinyfiber/core/scheduler.hpp>
 
-#include <tinyfiber/support/compiler.hpp>
+#include <tinysupport/compiler.hpp>
 
 namespace tiny::fiber {
 

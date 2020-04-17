@@ -1,10 +1,12 @@
 #pragma once
 
-#include <tinyfiber/support/time.hpp>
+#include <tinysupport/time.hpp>
 
 #include <functional>
 
 namespace tiny::fiber {
+
+using support::Duration;
 
 //////////////////////////////////////////////////////////////////////
 

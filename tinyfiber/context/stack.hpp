@@ -1,11 +1,14 @@
 #pragma once
 
-#include <tinyfiber/support/memspan.hpp>
-#include <tinyfiber/support/mmap_allocation.hpp>
+#include <tinysupport/memspan.hpp>
+#include <tinysupport/mmap_allocation.hpp>
 
 #include <cstdint>
 
 namespace tiny::fiber {
+
+using support::MmapAllocation;
+using support::MemSpan;
 
 //////////////////////////////////////////////////////////////////////
 

@@ -1,11 +1,13 @@
 #pragma once
 
-#include <tinyfiber/support/memspan.hpp>
+#include <tinysupport/memspan.hpp>
 
 #include <cstdlib>
 #include <cstdint>
 
 namespace tiny::fiber {
+
+using support::MemSpan;
 
 // TODO(Lipovsky): closure instead of void(void) function
 typedef void (*Trampoline)();

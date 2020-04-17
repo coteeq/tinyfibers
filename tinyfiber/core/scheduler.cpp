@@ -67,7 +67,7 @@ void Scheduler::SleepFor(Duration duration) {
   // Intentionally ineffective implementation
   // Support for sleep in scheduler left as homework
 
-  StopWatch stop_watch;
+  support::StopWatch stop_watch;
   do {
     Yield();
   } while (stop_watch.Elapsed() < duration);

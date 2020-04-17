@@ -2,7 +2,7 @@
 
 #include <tinyfiber/core/wait_queue.hpp>
 
-#include <tinyfiber/support/assert.hpp>
+#include <tinysupport/assert.hpp>
 
 namespace tiny::fiber {
 

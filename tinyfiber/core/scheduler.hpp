@@ -2,11 +2,12 @@
 
 #include <tinyfiber/core/api.hpp>
 #include <tinyfiber/core/fiber.hpp>
-#include <tinyfiber/support/time.hpp>
+
+#include <tinysupport/time.hpp>
 
 namespace tiny::fiber {
 
-using FiberQueue = IntrusiveList<Fiber>;
+using FiberQueue = support::IntrusiveList<Fiber>;
 
 class Scheduler {
  public:
