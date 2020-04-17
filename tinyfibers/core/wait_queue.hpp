@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 class WaitQueue {
  public:
@@ -21,4 +21,4 @@ class WaitQueue {
   std::unique_ptr<Impl> pimpl_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

@@ -1,10 +1,10 @@
-#include <tinyfiber/context/context.hpp>
+#include <tinyfibers/context/context.hpp>
 
-#include <tinyfiber/context/stack.hpp>
+#include <tinyfibers/context/stack.hpp>
 
 #include <cstdint>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 // Switch between ExecutionContext-s
 extern "C" void SwitchContext(ExecutionContext* from, ExecutionContext* to);
@@ -51,4 +51,4 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   SwitchContext(this, &target);
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

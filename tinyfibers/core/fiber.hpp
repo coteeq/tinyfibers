@@ -1,13 +1,13 @@
 #pragma once
 
-#include <tinyfiber/context/context.hpp>
-#include <tinyfiber/context/stack.hpp>
+#include <tinyfibers/context/context.hpp>
+#include <tinyfibers/context/stack.hpp>
 
-#include <tinyfiber/core/api.hpp>
+#include <tinyfibers/core/api.hpp>
 
-#include <tinyfiber/support/intrusive_list.hpp>
+#include <tinysupport/intrusive_list.hpp>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -19,7 +19,7 @@ enum class FiberState {
   Terminated
 };
 
-class Fiber : public IntrusiveListNode<Fiber> {
+ class Fiber : public support::IntrusiveListNode<Fiber> {
  public:
   size_t Id() const {
     return id_;
@@ -56,4 +56,4 @@ class Fiber : public IntrusiveListNode<Fiber> {
   FiberId id_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

@@ -1,12 +1,13 @@
 #pragma once
 
-#include <tinyfiber/core/api.hpp>
-#include <tinyfiber/core/fiber.hpp>
-#include <tinyfiber/support/time.hpp>
+#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/core/fiber.hpp>
 
-namespace tinyfiber {
+#include <tinysupport/time.hpp>
 
-using FiberQueue = IntrusiveList<Fiber>;
+namespace tiny::fibers {
+
+using FiberQueue = support::IntrusiveList<Fiber>;
 
 class Scheduler {
  public:
@@ -53,4 +54,4 @@ class Scheduler {
 Fiber* GetCurrentFiber();
 Scheduler* GetCurrentScheduler();
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

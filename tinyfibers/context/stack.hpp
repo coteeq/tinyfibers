@@ -1,11 +1,14 @@
 #pragma once
 
-#include <tinyfiber/support/memspan.hpp>
-#include <tinyfiber/support/mmap_allocation.hpp>
+#include <tinysupport/memspan.hpp>
+#include <tinysupport/mmap_allocation.hpp>
 
 #include <cstdint>
 
-namespace tinyfiber {
+namespace tiny::fibers {
+
+using support::MmapAllocation;
+using support::MemSpan;
 
 //////////////////////////////////////////////////////////////////////
 
@@ -69,4 +72,4 @@ class StackBuilder {
   char* top_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

@@ -1,10 +1,12 @@
 #pragma once
 
-#include <tinyfiber/support/time.hpp>
+#include <tinysupport/time.hpp>
 
 #include <functional>
 
-namespace tinyfiber {
+namespace tiny::fibers {
+
+using support::Duration;
 
 //////////////////////////////////////////////////////////////////////
 
@@ -37,4 +39,4 @@ void SleepFor(Duration duration);
 // Returns the id of the current fiber
 FiberId GetFiberId();
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

@@ -1,6 +1,6 @@
-#include <tinyfiber/core/scheduler.hpp>
+#include <tinyfibers/core/scheduler.hpp>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -67,7 +67,7 @@ void Scheduler::SleepFor(Duration duration) {
   // Intentionally ineffective implementation
   // Support for sleep in scheduler left as homework
 
-  StopWatch stop_watch;
+  support::StopWatch stop_watch;
   do {
     Yield();
   } while (stop_watch.Elapsed() < duration);
@@ -148,4 +148,4 @@ Fiber* GetCurrentFiber() {
   return GetCurrentScheduler()->GetCurrentFiber();
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

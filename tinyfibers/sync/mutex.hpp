@@ -1,10 +1,10 @@
 #pragma once
 
-#include <tinyfiber/core/wait_queue.hpp>
+#include <tinyfibers/core/wait_queue.hpp>
 
-#include <tinyfiber/support/assert.hpp>
+#include <tinysupport/assert.hpp>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 class Mutex {
  public:
@@ -47,4 +47,4 @@ class Mutex {
   WaitQueue wait_queue_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

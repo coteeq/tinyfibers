@@ -11,9 +11,9 @@ file(GLOB_RECURSE LIB_HEADERS ${LIB_PATH}/*.hpp)
 
 enable_language(ASM)
 
-add_library(libtinyfiber STATIC ${LIB_CXX_SOURCES} ${LIB_ASM_SOURCES} ${LIB_HEADERS})
-target_include_directories(libtinyfiber PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(libtinyfiber PUBLIC pthread)
+add_library(tinyfibers STATIC ${LIB_CXX_SOURCES} ${LIB_ASM_SOURCES} ${LIB_HEADERS})
+target_include_directories(tinyfibers PUBLIC ${LIB_INCLUDE_PATH})
+target_link_libraries(tinyfibers PUBLIC pthread tinysupport)
 
 # --------------------------------------------------------------------
 
@@ -21,14 +21,14 @@ target_link_libraries(libtinyfiber PUBLIC pthread)
 
 if(CLANG_FORMAT_TOOL)
     add_clang_format_target(
-            tinyfiber_clang_format
+            tinyfibers_clang_format
             ${CMAKE_CURRENT_SOURCE_DIR}
             ${LIB_HEADERS} ${LIB_CXX_SOURCES})
 endif()
 
 if(CLANG_TIDY_TOOL)
     add_clang_tidy_target(
-            tinyfiber_clang_tidy
+            tinyfibers_clang_tidy
             ${CMAKE_CURRENT_SOURCE_DIR}
             ${LIB_INCLUDE_PATH}
             ${LIB_HEADERS} ${LIB_CXX_SOURCES})

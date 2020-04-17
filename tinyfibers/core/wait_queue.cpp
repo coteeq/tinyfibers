@@ -1,8 +1,8 @@
-#include <tinyfiber/core/wait_queue.hpp>
+#include <tinyfibers/core/wait_queue.hpp>
 
-#include <tinyfiber/core/scheduler.hpp>
+#include <tinyfibers/core/scheduler.hpp>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 static inline void Suspend() {
   GetCurrentScheduler()->Suspend();
@@ -65,4 +65,4 @@ bool WaitQueue::IsEmpty() const {
   return pimpl_->IsEmpty();
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

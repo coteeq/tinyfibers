@@ -1,12 +1,12 @@
 #pragma once
 
-#include <tinyfiber/core/wait_queue.hpp>
-#include <tinyfiber/sync/mutex.hpp>
+#include <tinyfibers/core/wait_queue.hpp>
+#include <tinyfibers/sync/mutex.hpp>
 
 // std::unique_lock
 #include <mutex>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 class ConditionVariable {
  public:
@@ -43,4 +43,4 @@ class ConditionVariable {
   WaitQueue wait_queue_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers

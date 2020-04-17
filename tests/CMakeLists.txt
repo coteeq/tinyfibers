@@ -13,6 +13,6 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 file(GLOB TESTS_SRCS *.cpp)
 
-ADD_EXECUTABLE(tinyfiber_tests ${TESTS_SRCS})
-TARGET_LINK_LIBRARIES(tinyfiber_tests libtinyfiber ${GTEST_BOTH_LIBRARIES})
-add_test(NAME tinyfiber_tests COMMAND tinyfiber_tests)
+ADD_EXECUTABLE(tinyfibers_tests ${TESTS_SRCS})
+TARGET_LINK_LIBRARIES(tinyfibers_tests tinyfibers ${GTEST_BOTH_LIBRARIES})
+add_test(NAME tinyfibers_tests COMMAND tinyfibers_tests)

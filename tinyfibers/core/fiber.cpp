@@ -1,10 +1,10 @@
-#include <tinyfiber/core/fiber.hpp>
+#include <tinyfibers/core/fiber.hpp>
 
-#include <tinyfiber/core/scheduler.hpp>
+#include <tinyfibers/core/scheduler.hpp>
 
-#include <tinyfiber/support/compiler.hpp>
+#include <tinysupport/compiler.hpp>
 
-namespace tinyfiber {
+namespace tiny::fibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -58,4 +58,4 @@ void Fiber::SetupTrampoline() {
       /*trampoline=*/FiberTrampoline);
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fibers
