@@ -13,7 +13,7 @@ enable_language(ASM)
 
 add_library(libtinyfiber STATIC ${LIB_CXX_SOURCES} ${LIB_ASM_SOURCES} ${LIB_HEADERS})
 target_include_directories(libtinyfiber PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(libtinyfiber PUBLIC pthread)
+target_link_libraries(libtinyfiber PUBLIC pthread tinysupport)
 
 # --------------------------------------------------------------------
 
