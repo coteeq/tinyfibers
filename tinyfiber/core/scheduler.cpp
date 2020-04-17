@@ -1,6 +1,6 @@
 #include <tinyfiber/core/scheduler.hpp>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -148,4 +148,4 @@ Fiber* GetCurrentFiber() {
   return GetCurrentScheduler()->GetCurrentFiber();
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

@@ -7,7 +7,7 @@
 
 #include <tinyfiber/support/intrusive_list.hpp>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -56,4 +56,4 @@ class Fiber : public IntrusiveListNode<Fiber> {
   FiberId id_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

@@ -2,7 +2,7 @@
 
 #include <utility>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 static const size_t kStackPages = 8;  // 8KB stacks
 
@@ -23,4 +23,4 @@ MemSpan Stack::AsMemSpan() const {
   return allocation_.AsMemSpan();
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

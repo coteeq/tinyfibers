@@ -6,7 +6,7 @@
 
 #include <memory>
 
-using namespace tinyfiber;
+using namespace tiny::fiber;
 
 TEST(Fibers, YieldOnce) {
   auto routine = []() {

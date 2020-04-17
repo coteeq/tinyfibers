@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -69,4 +69,4 @@ class StackBuilder {
   char* top_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

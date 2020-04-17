@@ -4,7 +4,7 @@
 
 #include <sys/mman.h>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 #define CHECK_RESULT(ret, error) TINY_VERIFY(ret != -1, error)
 
@@ -65,4 +65,4 @@ void MmapAllocation::Reset() {
   size_ = 0;
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

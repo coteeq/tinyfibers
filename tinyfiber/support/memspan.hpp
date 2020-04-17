@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 struct MemSpan {
  public:
@@ -38,4 +38,4 @@ struct MemSpan {
   size_t size_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

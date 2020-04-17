@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <iterator>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 // Introduction to intrusive containers:
 // https://www.boost.org/doc/libs/1_67_0/doc/html/intrusive/intrusive_vs_nontrusive.html
@@ -205,4 +205,4 @@ class IntrusiveList {
   Node head_;  // sentinel node
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

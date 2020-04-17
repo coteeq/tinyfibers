@@ -2,7 +2,7 @@
 
 #include <tinyfiber/support/memspan.hpp>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 class MmapAllocation {
  public:
@@ -56,4 +56,4 @@ class MmapAllocation {
   size_t size_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

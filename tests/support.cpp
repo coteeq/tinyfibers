@@ -3,7 +3,7 @@
 #include <tinyfiber/support/intrusive_list.hpp>
 #include <tinyfiber/support/string_builder.hpp>
 
-using namespace tinyfiber;
+using namespace tiny::fiber;
 
 TEST(StringBuilder, HelloWorld) {
   std::string greeting = StringBuilder() << "Hello" << ", " << "World" << "!";

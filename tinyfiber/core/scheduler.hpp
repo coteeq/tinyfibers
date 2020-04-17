@@ -4,7 +4,7 @@
 #include <tinyfiber/core/fiber.hpp>
 #include <tinyfiber/support/time.hpp>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 using FiberQueue = IntrusiveList<Fiber>;
 
@@ -53,4 +53,4 @@ class Scheduler {
 Fiber* GetCurrentFiber();
 Scheduler* GetCurrentScheduler();
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -37,4 +37,4 @@ class StopWatch {
   TimePoint start_time_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

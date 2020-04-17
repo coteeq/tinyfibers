@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 class StringBuilder {
  public:
@@ -24,4 +24,4 @@ class StringBuilder {
   std::ostringstream out_;
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

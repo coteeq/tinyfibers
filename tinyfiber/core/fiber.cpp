@@ -4,7 +4,7 @@
 
 #include <tinyfiber/support/compiler.hpp>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -58,4 +58,4 @@ void Fiber::SetupTrampoline() {
       /*trampoline=*/FiberTrampoline);
 }
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

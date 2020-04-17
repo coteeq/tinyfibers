@@ -1,0 +1,3 @@
+[submodule "third_party/tiny-support"]
+	path = third_party/tiny-support
+	url = https://gitlab.com/Lipovsky/tiny-support

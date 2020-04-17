@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cstdint>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 
 // TODO(Lipovsky): closure instead of void(void) function
 typedef void (*Trampoline)();
@@ -23,4 +23,4 @@ struct ExecutionContext {
   void SwitchTo(ExecutionContext& target);
 };
 
-}  // namespace tinyfiber
+}  // namespace tiny::fiber

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace tinyfiber {
+namespace tiny::fiber {
 namespace detail {
 
 void Panic(const std::string& error) {
@@ -11,4 +11,4 @@ void Panic(const std::string& error) {
 }
 
 }  // namespace detail
-}  // namespace tinyfiber
+}  // namespace tiny::fiber
