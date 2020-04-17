@@ -1,6 +1,6 @@
-#include <tinyfiber/core/api.hpp>
+#include <tinyfibers/core/api.hpp>
 
-#include <tinyfiber/core/scheduler.hpp>
+#include <tinyfibers/core/scheduler.hpp>
 
 namespace tiny::fiber {
 

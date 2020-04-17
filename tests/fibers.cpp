@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 
-#include <tinyfiber/core/api.hpp>
-#include <tinyfiber/sync/mutex.hpp>
-#include <tinyfiber/sync/condvar.hpp>
+#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/sync/mutex.hpp>
+#include <tinyfibers/sync/condvar.hpp>
 
 #include <memory>
 

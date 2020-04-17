@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tinyfiber/core/wait_queue.hpp>
+#include <tinyfibers/core/wait_queue.hpp>
 
 #include <tinysupport/assert.hpp>
 

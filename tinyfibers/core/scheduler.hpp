@@ -1,7 +1,7 @@
 #pragma once
 
-#include <tinyfiber/core/api.hpp>
-#include <tinyfiber/core/fiber.hpp>
+#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/core/fiber.hpp>
 
 #include <tinysupport/time.hpp>
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <tinyfiber/core/wait_queue.hpp>
-#include <tinyfiber/sync/mutex.hpp>
+#include <tinyfibers/core/wait_queue.hpp>
+#include <tinyfibers/sync/mutex.hpp>
 
 // std::unique_lock
 #include <mutex>

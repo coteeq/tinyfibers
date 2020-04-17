@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
-project(tinyfiber)
+project(tinyfibers)
 
 include(cmake/ClangFormat.cmake)
 include(cmake/ClangTidy.cmake)
@@ -15,7 +15,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 add_subdirectory(third_party)
 
 include(cmake/Platform.cmake)
-add_subdirectory(tinyfiber)
+add_subdirectory(tinyfibers)
 
 option(TINY_FIBER_TESTS "Enable tinyfiber library tests" OFF)
 option(TINY_FIBER_BENCHMARKS "Enable tinyfiber library benchmarks" OFF)

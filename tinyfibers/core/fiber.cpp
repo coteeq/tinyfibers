@@ -1,6 +1,6 @@
-#include <tinyfiber/core/fiber.hpp>
+#include <tinyfibers/core/fiber.hpp>
 
-#include <tinyfiber/core/scheduler.hpp>
+#include <tinyfibers/core/scheduler.hpp>
 
 #include <tinysupport/compiler.hpp>
 

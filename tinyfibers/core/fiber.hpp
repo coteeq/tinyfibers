@@ -1,9 +1,9 @@
 #pragma once
 
-#include <tinyfiber/context/context.hpp>
-#include <tinyfiber/context/stack.hpp>
+#include <tinyfibers/context/context.hpp>
+#include <tinyfibers/context/stack.hpp>
 
-#include <tinyfiber/core/api.hpp>
+#include <tinyfibers/core/api.hpp>
 
 #include <tinysupport/intrusive_list.hpp>
 
