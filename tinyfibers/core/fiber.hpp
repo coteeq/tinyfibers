@@ -7,7 +7,7 @@
 
 #include <tinysupport/intrusive_list.hpp>
 
-namespace tiny::fiber {
+namespace tiny::fibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -56,4 +56,4 @@ enum class FiberState {
   FiberId id_;
 };
 
-}  // namespace tiny::fiber
+}  // namespace tiny::fibers

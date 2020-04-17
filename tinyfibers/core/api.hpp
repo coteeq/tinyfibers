@@ -4,7 +4,7 @@
 
 #include <functional>
 
-namespace tiny::fiber {
+namespace tiny::fibers {
 
 using support::Duration;
 
@@ -39,4 +39,4 @@ void SleepFor(Duration duration);
 // Returns the id of the current fiber
 FiberId GetFiberId();
 
-}  // namespace tiny::fiber
+}  // namespace tiny::fibers

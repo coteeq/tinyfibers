@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cstdint>
 
-namespace tiny::fiber {
+namespace tiny::fibers {
 
 using support::MemSpan;
 
@@ -25,4 +25,4 @@ struct ExecutionContext {
   void SwitchTo(ExecutionContext& target);
 };
 
-}  // namespace tiny::fiber
+}  // namespace tiny::fibers

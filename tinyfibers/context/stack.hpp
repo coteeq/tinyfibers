@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace tiny::fiber {
+namespace tiny::fibers {
 
 using support::MmapAllocation;
 using support::MemSpan;
@@ -72,4 +72,4 @@ class StackBuilder {
   char* top_;
 };
 
-}  // namespace tiny::fiber
+}  // namespace tiny::fibers

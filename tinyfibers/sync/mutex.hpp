@@ -4,7 +4,7 @@
 
 #include <tinysupport/assert.hpp>
 
-namespace tiny::fiber {
+namespace tiny::fibers {
 
 class Mutex {
  public:
@@ -47,4 +47,4 @@ class Mutex {
   WaitQueue wait_queue_;
 };
 
-}  // namespace tiny::fiber
+}  // namespace tiny::fibers

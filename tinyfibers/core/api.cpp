@@ -2,7 +2,7 @@
 
 #include <tinyfibers/core/scheduler.hpp>
 
-namespace tiny::fiber {
+namespace tiny::fibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -29,4 +29,4 @@ FiberId GetFiberId() {
   return GetCurrentFiber()->Id();
 }
 
-}  // namespace tiny::fiber
+}  // namespace tiny::fibers

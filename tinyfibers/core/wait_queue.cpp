@@ -2,7 +2,7 @@
 
 #include <tinyfibers/core/scheduler.hpp>
 
-namespace tiny::fiber {
+namespace tiny::fibers {
 
 static inline void Suspend() {
   GetCurrentScheduler()->Suspend();
@@ -65,4 +65,4 @@ bool WaitQueue::IsEmpty() const {
   return pimpl_->IsEmpty();
 }
 
-}  // namespace tiny::fiber
+}  // namespace tiny::fibers
