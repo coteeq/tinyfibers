@@ -7,8 +7,8 @@
 
 namespace tiny::fibers {
 
-using support::MmapAllocation;
 using support::MemSpan;
+using support::MmapAllocation;
 
 //////////////////////////////////////////////////////////////////////
 

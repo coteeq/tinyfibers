@@ -19,7 +19,7 @@ enum class FiberState {
   Terminated
 };
 
- class Fiber : public support::IntrusiveListNode<Fiber> {
+class Fiber : public support::IntrusiveListNode<Fiber> {
  public:
   size_t Id() const {
     return id_;
