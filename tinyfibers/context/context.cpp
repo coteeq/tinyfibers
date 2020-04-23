@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-namespace tiny::fibers {
+namespace tiny::context {
 
 // Switch between ExecutionContext-s
 extern "C" void SwitchContext(ExecutionContext* from, ExecutionContext* to);
@@ -51,4 +51,4 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   SwitchContext(this, &target);
 }
 
-}  // namespace tiny::fibers
+}  // namespace tiny::context

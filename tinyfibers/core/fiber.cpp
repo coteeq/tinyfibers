@@ -13,7 +13,7 @@ static FiberId GenerateId() {
   return ++next_id;
 }
 
-Fiber::Fiber(FiberRoutine routine, Stack&& stack, FiberId id)
+Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
     : routine_(std::move(routine)),
       stack_(std::move(stack)),
       state_(FiberState::Starting),
@@ -21,7 +21,7 @@ Fiber::Fiber(FiberRoutine routine, Stack&& stack, FiberId id)
 }
 
 Fiber* Fiber::Create(FiberRoutine routine) {
-  auto stack = Stack::Allocate();
+  auto stack = context::Stack::Allocate();
   FiberId id = GenerateId();
 
   Fiber* fiber = new Fiber(std::move(routine), std::move(stack), id);

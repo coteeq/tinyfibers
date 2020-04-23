@@ -44,7 +44,7 @@ class Scheduler {
   Fiber* GetAndResetCurrentFiber();
 
  private:
-  ExecutionContext loop_context_;
+  context::ExecutionContext loop_context_;
   FiberQueue run_queue_;
   Fiber* running_{nullptr};
 };

@@ -25,7 +25,7 @@ class Fiber : public support::IntrusiveListNode<Fiber> {
     return id_;
   }
 
-  ExecutionContext& Context() {
+  context::ExecutionContext& Context() {
     return context_;
   }
 
@@ -44,14 +44,14 @@ class Fiber : public support::IntrusiveListNode<Fiber> {
   static Fiber* Create(FiberRoutine routine);
 
  private:
-  Fiber(FiberRoutine routine, Stack&& stack, FiberId id);
+  Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
 
   void SetupTrampoline();
 
  private:
   FiberRoutine routine_;
-  Stack stack_;
-  ExecutionContext context_;
+  context::Stack stack_;
+  context::ExecutionContext context_;
   FiberState state_;
   FiberId id_;
 };
