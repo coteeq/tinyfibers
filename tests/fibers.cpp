@@ -4,15 +4,19 @@
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
+#include <tinysupport/time.hpp>
+
 #include <memory>
+#include <chrono>
 
 using namespace tiny::fibers;
 
+using namespace std::chrono_literals;
+
 TEST(Fibers, YieldOnce) {
-  auto routine = []() {
+  RunScheduler([]() {
     Yield();
-  };
-  RunScheduler(routine);
+  });
 }
 
 TEST(Fibers, Ids) {
@@ -59,6 +63,14 @@ TEST(Fibers, PingPong) {
   RunScheduler([&]() {
     Spawn(finn);
     Spawn(jake);
+  });
+}
+
+TEST(Fibers, SleepFor) {
+  RunScheduler([]() {
+    tiny::support::StopWatch stop_watch;
+    SleepFor(1s);
+    ASSERT_GE(stop_watch.Elapsed(), 1s);
   });
 }
 
@@ -182,6 +194,43 @@ TEST(Fibers, ConditionVariable) {
   };
 
   RunScheduler(init);
+}
+
+class OnePassBarrier {
+ public:
+  void Arrive() {
+    std::unique_lock lock(mutex_);
+    --threads_;
+    if (threads_ == 0) {
+      all_arrived_.NotifyAll();
+    } else {
+      all_arrived_.Wait(lock, [this]() { return threads_ == 0; });
+    }
+  }
+
+ private:
+  size_t threads_;
+  Mutex mutex_;
+  ConditionVariable all_arrived_;
+};
+
+TEST(Fibers, Barrier) {
+  OnePassBarrier barrier;
+  size_t arrived = 0;
+
+  static const size_t kFibers = 100;
+
+  auto participant = [&]() {
+    ++arrived;
+    barrier.Arrive();
+    ASSERT_EQ(arrived, kFibers);
+  };
+
+  RunScheduler([&]() {
+    for (size_t i = 0; i < kFibers; ++i) {
+      Spawn(participant);
+    }
+  });
 }
 
 TEST(Fibers, NoLeaks) {
