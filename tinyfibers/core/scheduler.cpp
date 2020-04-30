@@ -53,7 +53,7 @@ void Scheduler::SwitchToScheduler() {
 // System calls
 
 void Scheduler::Spawn(FiberRoutine routine) {
-  auto* created = CreateFiber(routine);
+  auto* created = CreateFiber(std::move(routine));
   Schedule(created);
 }
 
@@ -94,7 +94,7 @@ void Scheduler::Terminate() {
 
 void Scheduler::Run(FiberRoutine init) {
   SchedulerScope scope(this);
-  Spawn(init);
+  Spawn(std::move(init));
   RunLoop();
 }
 
@@ -135,7 +135,7 @@ void Scheduler::Schedule(Fiber* fiber) {
 }
 
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
-  return Fiber::Create(routine);
+  return Fiber::Create(std::move(routine));
 }
 
 void Scheduler::Destroy(Fiber* fiber) {

@@ -37,8 +37,8 @@ class Fiber : public support::IntrusiveListNode<Fiber> {
     state_ = target;
   }
 
-  FiberRoutine UserRoutine() {
-    return routine_;
+  void InvokeUserRoutine() {
+    routine_();
   }
 
   static Fiber* Create(FiberRoutine routine);

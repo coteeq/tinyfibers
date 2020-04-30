@@ -1,8 +1,7 @@
 #pragma once
 
 #include <tinysupport/time.hpp>
-
-#include <functional>
+#include <tinysupport/function.hpp>
 
 namespace tiny::fibers {
 
@@ -10,7 +9,7 @@ using support::Duration;
 
 //////////////////////////////////////////////////////////////////////
 
-using FiberRoutine = std::function<void()>;
+using FiberRoutine = tiny::support::UniqueFunction<void()>;
 
 using FiberId = size_t;
 
@@ -33,8 +32,8 @@ void Spawn(FiberRoutine routine);
 void Yield();
 
 // Blocks the execution of the current fiber for at least
-// the specified 'duration'
-void SleepFor(Duration duration);
+// the specified 'd'
+void SleepFor(Duration d);
 
 // Returns the id of the current fiber
 FiberId GetFiberId();

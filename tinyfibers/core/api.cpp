@@ -8,13 +8,13 @@ namespace tiny::fibers {
 
 void RunScheduler(FiberRoutine init) {
   Scheduler scheduler;
-  scheduler.Run(init);
+  scheduler.Run(std::move(init));
 }
 
 //////////////////////////////////////////////////////////////////////
 
 void Spawn(FiberRoutine routine) {
-  GetCurrentScheduler()->Spawn(routine);
+  GetCurrentScheduler()->Spawn(std::move(routine));
 }
 
 void Yield() {
