@@ -3,7 +3,7 @@
 #include <tinyfibers/context/context.hpp>
 #include <tinyfibers/context/stack.hpp>
 
-#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/runtime/api.hpp>
 
 #include <tinysupport/intrusive_list.hpp>
 

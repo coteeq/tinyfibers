@@ -1,4 +1,4 @@
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/runtime/scheduler.hpp>
 
 namespace tiny::fibers {
 

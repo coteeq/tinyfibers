@@ -1,6 +1,6 @@
-#include <tinyfibers/core/wait_queue.hpp>
+#include <tinyfibers/runtime/wait_queue.hpp>
 
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/runtime/scheduler.hpp>
 
 namespace tiny::fibers {
 

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
@@ -97,7 +97,7 @@ TEST(Fibers, FifoScheduling) {
 
 TEST(Fibers, WaitQueue) {
   WaitQueue wait_queue;
-  size_t step = 0;
+  int step = 0;
 
   auto foo = [&]() {
     ASSERT_EQ(step, 1);
