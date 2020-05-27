@@ -1,6 +1,7 @@
 #include <tinyfibers/runtime/fiber.hpp>
 
 #include <tinyfibers/runtime/scheduler.hpp>
+#include <tinyfibers/runtime/stack_allocator.hpp>
 
 #include <tinysupport/compiler.hpp>
 
@@ -21,7 +22,7 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
 }
 
 Fiber* Fiber::Create(FiberRoutine routine) {
-  auto stack = context::Stack::Allocate();
+  auto stack = AllocateStack();
   FiberId id = GenerateId();
 
   Fiber* fiber = new Fiber(std::move(routine), std::move(stack), id);
@@ -29,6 +30,10 @@ Fiber* Fiber::Create(FiberRoutine routine) {
   fiber->SetupTrampoline();
 
   return fiber;
+}
+
+Fiber::~Fiber() {
+  ReleaseStack(std::move(stack_));
 }
 
 //////////////////////////////////////////////////////////////////////

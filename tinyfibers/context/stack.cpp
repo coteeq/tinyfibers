@@ -4,13 +4,11 @@
 
 namespace tiny::context {
 
-static const size_t kStackPages = 8;  // 8KB stacks
-
 Stack::Stack(MmapAllocation allocation) : allocation_(std::move(allocation)) {
 }
 
-Stack Stack::Allocate() {
-  auto allocation = MmapAllocation::AllocatePages(kStackPages);
+Stack Stack::Allocate(size_t pages) {
+  auto allocation = MmapAllocation::AllocatePages(pages + 1);
   allocation.ProtectPages(/*offset=*/0, /*count=*/1);
   return Stack{std::move(allocation)};
 }

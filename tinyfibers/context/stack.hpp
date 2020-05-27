@@ -16,7 +16,7 @@ class Stack {
  public:
   Stack() = default;
 
-  static Stack Allocate();
+  static Stack Allocate(size_t pages);
 
   Stack(Stack&& that) = default;
   Stack& operator=(Stack&& that) = default;

@@ -43,6 +43,8 @@ class Fiber : public support::IntrusiveListNode<Fiber> {
 
   static Fiber* Create(FiberRoutine routine);
 
+  ~Fiber();
+
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
 
