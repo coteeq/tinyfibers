@@ -10,14 +10,14 @@ namespace tiny::fibers {
 static thread_local Scheduler* current_scheduler;
 
 Scheduler* GetCurrentScheduler() {
-  WHEELS_VERIFY(current_scheduler, "not in fiber context");
+  WHEELS_VERIFY(current_scheduler, "Not in fiber context");
   return current_scheduler;
 }
 
 struct SchedulerScope {
   SchedulerScope(Scheduler* scheduler) {
     WHEELS_VERIFY(!current_scheduler,
-                  "cannot run scheduler from another scheduler");
+                  "Cannot run scheduler from another scheduler");
     current_scheduler = scheduler;
   }
 
