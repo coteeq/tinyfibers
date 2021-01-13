@@ -41,17 +41,17 @@ Fiber::~Fiber() {
 static void FiberTrampoline() {
   // Fiber execution starts here
 
-  Fiber* self = GetCurrentFiber();
+  Fiber* fiber = GetCurrentFiber();
 
-  self->SetState(FiberState::Running);
+  fiber->SetState(FiberState::Running);
 
   try {
-    self->InvokeUserRoutine();
+    fiber->InvokeUserRoutine();
   } catch (...) {
     TINY_PANIC("Uncaught exception in fiber");
   }
 
-  GetCurrentScheduler()->Terminate();  // never returns
+  GetCurrentScheduler()->Terminate();  // Never returns
 
   TINY_UNREACHABLE();
 }
