@@ -35,10 +35,6 @@ class WaitQueue::Impl {
     }
   }
 
-  bool IsEmpty() const {
-    return wait_queue_.IsEmpty();
-  }
-
  private:
   FiberQueue wait_queue_;
 };
@@ -59,10 +55,6 @@ void WaitQueue::WakeOne() {
 
 void WaitQueue::WakeAll() {
   pimpl_->WakeAll();
-}
-
-bool WaitQueue::IsEmpty() const {
-  return pimpl_->IsEmpty();
 }
 
 }  // namespace tiny::fibers

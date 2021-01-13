@@ -13,7 +13,6 @@ class WaitQueue {
 
   void WakeOne();
   void WakeAll();
-  bool IsEmpty() const;
 
  private:
   // https://en.cppreference.com/w/cpp/language/pimpl
