@@ -29,5 +29,5 @@ tinyfibers::RunScheduler([]() {
 
 ## Зависимости
 
-- [Wheels](https://gitlab.com/Lipovsky/wheels) - общие компоненты
+- [Wheels](https://gitlab.com/Lipovsky/wheels) – общие компоненты
 - [Context](https://gitlab.com/Lipovsky/context) – контекст исполнения
