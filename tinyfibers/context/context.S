@@ -29,12 +29,12 @@ FUNCTION_NAME(SwitchContext):
     # Switch stacks
 
     # 1.2 Save current stack pointer to 'from' ExecutionContext
-    movq %rsp, (%rdi) # from->rsp_ := rsp
+    movq %rsp, (%rdi) # from_rsp := rsp
 
     # 2. Activate 'to' execution context
 
     # 2.1 Set stack pointer to target stack
-    movq (%rsi), %rsp # rsp := to->rsp_
+    movq (%rsi), %rsp # rsp := to_rsp
 
     # 2.2 Restore and pop registers saved on target stack
 

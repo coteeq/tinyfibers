@@ -7,7 +7,7 @@
 namespace tiny::context {
 
 // Switch between ExecutionContext-s
-extern "C" void SwitchContext(ExecutionContext* from, ExecutionContext* to);
+extern "C" void SwitchContext(void* from_rsp, void* to_rsp);
 
 // View for stack-saved context
 struct StackSavedContext {
@@ -48,7 +48,7 @@ void ExecutionContext::Setup(MemSpan stack, Trampoline trampoline) {
 }
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
-  SwitchContext(this, &target);
+  SwitchContext(&rsp_, &target.rsp_);
 }
 
 }  // namespace tiny::context
