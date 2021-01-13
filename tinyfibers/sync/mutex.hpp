@@ -26,9 +26,7 @@ class Mutex {
   void Unlock() {
     TINY_VERIFY(locked_, "Unlocking mutex that is not locked!");
     locked_ = false;
-    if (!wait_queue_.IsEmpty()) {
-      wait_queue_.WakeOne();
-    }
+    wait_queue_.WakeOne();
   }
 
   // std::lock_guard / std::unique_lock compatibility
