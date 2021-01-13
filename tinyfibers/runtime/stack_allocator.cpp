@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 using context::Stack;
 
@@ -45,4 +45,4 @@ void ReleaseStack(Stack stack) {
   allocator.Release(std::move(stack));
 }
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

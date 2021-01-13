@@ -3,7 +3,7 @@
 #include <wheels/support/assert.hpp>
 #include <wheels/support/panic.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -141,4 +141,4 @@ Fiber* GetCurrentFiber() {
   return GetCurrentScheduler()->GetCurrentFiber();
 }
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

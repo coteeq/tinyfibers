@@ -7,7 +7,7 @@
 
 #include <wheels/support/intrusive_list.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -58,4 +58,4 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
   FiberId id_;
 };
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

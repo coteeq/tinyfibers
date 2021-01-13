@@ -2,7 +2,7 @@
 
 #include <tinyfibers/runtime/scheduler.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 static inline void Suspend() {
   GetCurrentScheduler()->Suspend();
@@ -57,4 +57,4 @@ void WaitQueue::WakeAll() {
   pimpl_->WakeAll();
 }
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

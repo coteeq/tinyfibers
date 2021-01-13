@@ -2,9 +2,9 @@
 
 #include <context/stack.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 context::Stack AllocateStack();
 void ReleaseStack(context::Stack stack);
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

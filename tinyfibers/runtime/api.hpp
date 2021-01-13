@@ -3,7 +3,7 @@
 #include <wheels/support/time.hpp>
 #include <wheels/support/function.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 using wheels::Duration;
 
@@ -38,4 +38,4 @@ void SleepFor(Duration delay);
 // Returns the id of the current fiber
 FiberId GetFiberId();
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

@@ -4,7 +4,7 @@
 
 #include <wheels/support/assert.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 class Mutex {
  public:
@@ -45,4 +45,4 @@ class Mutex {
   WaitQueue wait_queue_;
 };
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

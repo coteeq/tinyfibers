@@ -9,7 +9,7 @@
 #include <memory>
 #include <chrono>
 
-using namespace tiny::fibers;
+using namespace tinyfibers;
 
 using namespace std::chrono_literals;
 

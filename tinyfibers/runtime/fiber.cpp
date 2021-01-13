@@ -7,7 +7,7 @@
 #include <wheels/support/panic.hpp>
 #include <wheels/support/exception.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -66,4 +66,4 @@ void Fiber::SetupTrampoline() {
       /*trampoline=*/FiberTrampoline);
 }
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

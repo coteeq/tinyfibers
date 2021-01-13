@@ -6,7 +6,7 @@
 // std::unique_lock
 #include <mutex>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 class ConditionVariable {
  public:
@@ -43,4 +43,4 @@ class ConditionVariable {
   WaitQueue wait_queue_;
 };
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers

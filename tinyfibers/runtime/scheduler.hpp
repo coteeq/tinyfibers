@@ -7,7 +7,7 @@
 
 #include <wheels/support/time.hpp>
 
-namespace tiny::fibers {
+namespace tinyfibers {
 
 using FiberQueue = wheels::IntrusiveList<Fiber>;
 
@@ -56,4 +56,4 @@ class Scheduler {
 Scheduler* GetCurrentScheduler();
 Fiber* GetCurrentFiber();
 
-}  // namespace tiny::fibers
+}  // namespace tinyfibers
