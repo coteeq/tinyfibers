@@ -6,9 +6,15 @@ namespace tiny::fibers {
 
 using context::Stack;
 
-class StackAllocator {
-  static const size_t kStackSizePages = 8;
+//////////////////////////////////////////////////////////////////////
 
+static const size_t kDefaultStackSizeInPages = 8;
+
+//////////////////////////////////////////////////////////////////////
+
+// Simple stack pooling
+
+class StackAllocator {
  public:
   Stack Allocate() {
     if (!pool_.empty()) {
@@ -16,7 +22,7 @@ class StackAllocator {
       pool_.pop_back();
       return stack;
     }
-    return Stack::Allocate(kStackSizePages);
+    return Stack::Allocate(kDefaultStackSizeInPages);
   }
 
   void Release(Stack stack) {
