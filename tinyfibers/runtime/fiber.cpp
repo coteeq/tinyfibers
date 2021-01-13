@@ -50,7 +50,8 @@ static void FiberTrampoline() {
   try {
     fiber->InvokeUserRoutine();
   } catch (...) {
-    WHEELS_PANIC("Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
+    WHEELS_PANIC(
+        "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
   }
 
   GetCurrentScheduler()->Terminate();  // Never returns

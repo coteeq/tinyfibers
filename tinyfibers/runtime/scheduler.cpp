@@ -17,7 +17,7 @@ Scheduler* GetCurrentScheduler() {
 struct SchedulerScope {
   SchedulerScope(Scheduler* scheduler) {
     WHEELS_VERIFY(!current_scheduler,
-                "cannot run scheduler from another scheduler");
+                  "cannot run scheduler from another scheduler");
     current_scheduler = scheduler;
   }
 
