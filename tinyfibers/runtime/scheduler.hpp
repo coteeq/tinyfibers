@@ -36,7 +36,7 @@ class Scheduler {
   // Context switch: current fiber -> scheduler
   void SwitchToScheduler(Fiber* me);
   // Switch to `fiber` and run it until this fiber calls Yield or terminates
-  void Run(Fiber* fiber);
+  void Step(Fiber* fiber);
   // ~ Handle system call (Yield / SleepFor / Terminate)
   void Reschedule(Fiber* fiber);
   // Add fiber to run queue

@@ -93,12 +93,12 @@ void Scheduler::Run(FiberRoutine init) {
 void Scheduler::RunLoop() {
   while (!run_queue_.IsEmpty()) {
     Fiber* next = run_queue_.PopFront();
-    Run(next);
+    Step(next);
     Reschedule(next);
   }
 }
 
-void Scheduler::Run(Fiber* fiber) {
+void Scheduler::Step(Fiber* fiber) {
   running_ = fiber;
   fiber->SetState(FiberState::Running);
   // Scheduler loop_context_ -> fiber->context_
