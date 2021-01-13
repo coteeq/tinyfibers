@@ -6,6 +6,19 @@ _tinyfibers_ – минималистичная библиотека файбе�
 
 Продемонстрировать базовую механику работы потоков.
 
+## Пример
+
+```cpp
+#include <tinyfibers/runtime/api.hpp>
+
+tinyfibers::RunScheduler([]() {
+  std::cout << "Hello from fiber!" << std::endl;
+  tinyfibers::Yield();  // Reschedule current fiber to the end of run queue
+})
+```
+
+См. [тесты](/tests/fibers.cpp).
+
 ## Ограничения 
 
 - Библиотека однопоточная
