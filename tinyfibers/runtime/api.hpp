@@ -32,8 +32,8 @@ void Spawn(FiberRoutine routine);
 void Yield();
 
 // Blocks the execution of the current fiber for at least
-// the specified 'd'
-void SleepFor(Duration d);
+// the specified 'delay'
+void SleepFor(Duration delay);
 
 // Returns the id of the current fiber
 FiberId GetFiberId();

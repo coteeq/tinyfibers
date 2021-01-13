@@ -55,14 +55,14 @@ void Scheduler::Yield() {
   SwitchToScheduler(caller);
 }
 
-void Scheduler::SleepFor(Duration duration) {
+void Scheduler::SleepFor(Duration delay) {
   // Intentionally ineffective implementation
   // Support for sleep in scheduler left as homework
 
   wheels::StopWatch stop_watch;
   do {
     Yield();
-  } while (stop_watch.Elapsed() < duration);
+  } while (stop_watch.Elapsed() < delay);
 }
 
 void Scheduler::Suspend() {

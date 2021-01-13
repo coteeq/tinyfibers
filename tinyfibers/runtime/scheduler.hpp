@@ -20,8 +20,8 @@ class Scheduler {
 
   void Spawn(FiberRoutine routine);
   void Yield();
-  // Sleep for _at_least_ duration
-  void SleepFor(Duration duration);
+  // Sleep for _at_least_ delay
+  void SleepFor(Duration delay);
   void Suspend();
   void Resume(Fiber* that);
   void Terminate();
