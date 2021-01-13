@@ -9,13 +9,13 @@ namespace tiny::context {
 // Switch between ExecutionContext-s
 extern "C" void SwitchMachineContext(void* from_rsp, void* to_rsp);
 
-// View for stack-saved context
-struct StackSavedContext {
+// View for stack-saved machine context
+struct StackSavedMachineContext {
   // Layout of the StackSavedContext matches the layout of the stack
   // in context.S at the 'Switch stacks' comment
 
   // Callee-saved registers
-  // Saved manually in SwitchContext
+  // Saved manually in SwitchMachineContext
   void* rbp;
   void* rbx;
 
@@ -37,10 +37,10 @@ void ExecutionContext::Setup(MemSpan stack, Trampoline trampoline) {
   // 'Next' here means first 'pushq %rbp' in trampoline prologue
   builder.AlignNextPush(16);
 
-  // Reserve space for stack-saved context
-  builder.Allocate(sizeof(StackSavedContext));
+  // Reserve space for stack-saved machine context
+  builder.Allocate(sizeof(StackSavedMachineContext));
 
-  auto* saved_context = (StackSavedContext*)builder.Top();
+  auto* saved_context = (StackSavedMachineContext*)builder.Top();
   saved_context->rip = (void*)trampoline;
 
   // Set current stack top
