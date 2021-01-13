@@ -11,10 +11,12 @@ _tinyfibers_ – минималистичная библиотека файбе�
 ```cpp
 #include <tinyfibers/runtime/api.hpp>
 
+#include <iostream>
+
 tinyfibers::RunScheduler([]() {
   std::cout << "Hello from fiber!" << std::endl;
-  tinyfibers::Yield();  // Reschedule current fiber to the end of run queue
-})
+  tinyfibers::Yield();  // Reschedule current fiber to the end of the scheduler run queue
+});
 ```
 
 См. [тесты](/tests/fibers.cpp).
