@@ -33,21 +33,10 @@ Fiber* Scheduler::GetCurrentFiber() {
   return running_;
 }
 
-Fiber* Scheduler::GetAndResetCurrentFiber() {
-  Fiber* current = running_;
-  running_ = nullptr;
-  return current;
-}
-
-void Scheduler::SetCurrentFiber(Fiber* fiber) {
-  running_ = fiber;
-}
-
 // Operations invoked by running fibers
 
-void Scheduler::SwitchToScheduler() {
-  Fiber* caller = GetAndResetCurrentFiber();
-  caller->Context().SwitchTo(loop_context_);
+void Scheduler::SwitchToScheduler(Fiber* me) {
+  me->Context().SwitchTo(loop_context_);
 }
 
 // System calls
@@ -60,7 +49,7 @@ void Scheduler::Spawn(FiberRoutine routine) {
 void Scheduler::Yield() {
   Fiber* caller = GetCurrentFiber();
   caller->SetState(FiberState::Runnable);
-  SwitchToScheduler();
+  SwitchToScheduler(caller);
 }
 
 void Scheduler::SleepFor(Duration duration) {
@@ -76,7 +65,7 @@ void Scheduler::SleepFor(Duration duration) {
 void Scheduler::Suspend() {
   Fiber* caller = GetCurrentFiber();
   caller->SetState(FiberState::Suspended);
-  SwitchToScheduler();
+  SwitchToScheduler(caller);
 }
 
 void Scheduler::Resume(Fiber* that) {
@@ -87,7 +76,7 @@ void Scheduler::Resume(Fiber* that) {
 void Scheduler::Terminate() {
   Fiber* caller = GetCurrentFiber();
   caller->SetState(FiberState::Terminated);
-  SwitchToScheduler();
+  SwitchToScheduler(caller);
 }
 
 // Scheduling
@@ -101,16 +90,17 @@ void Scheduler::Run(FiberRoutine init) {
 void Scheduler::RunLoop() {
   while (!run_queue_.IsEmpty()) {
     Fiber* next = run_queue_.PopFront();
-    SwitchTo(next);
+    Run(next);
     Reschedule(next);
   }
 }
 
-void Scheduler::SwitchTo(Fiber* fiber) {
-  SetCurrentFiber(fiber);
+void Scheduler::Run(Fiber* fiber) {
+  running_ = fiber;
   fiber->SetState(FiberState::Running);
   // Scheduler loop_context_ -> fiber->context_
   loop_context_.SwitchTo(fiber->Context());
+  running_ = nullptr;
 }
 
 void Scheduler::Reschedule(Fiber* fiber) {

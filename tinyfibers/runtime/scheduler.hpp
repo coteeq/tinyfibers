@@ -19,6 +19,7 @@ class Scheduler {
 
   void Spawn(FiberRoutine routine);
   void Yield();
+  // Sleep for _at_least_ duration
   void SleepFor(Duration duration);
   void Suspend();
   void Resume(Fiber* that);
@@ -30,18 +31,15 @@ class Scheduler {
   void RunLoop();
 
   // Context switch: current fiber -> scheduler
-  void SwitchToScheduler();
+  void SwitchToScheduler(Fiber* me);
   // Context switch: scheduler -> fiber
-  void SwitchTo(Fiber* fiber);
+  void Run(Fiber* fiber);
 
   void Reschedule(Fiber* fiber);
   void Schedule(Fiber* fiber);
 
   Fiber* CreateFiber(FiberRoutine routine);
   void Destroy(Fiber* fiber);
-
-  void SetCurrentFiber(Fiber* fiber);
-  Fiber* GetAndResetCurrentFiber();
 
  private:
   context::ExecutionContext loop_context_;
@@ -51,7 +49,7 @@ class Scheduler {
 
 //////////////////////////////////////////////////////////////////////
 
-Fiber* GetCurrentFiber();
 Scheduler* GetCurrentScheduler();
+Fiber* GetCurrentFiber();
 
 }  // namespace tiny::fibers

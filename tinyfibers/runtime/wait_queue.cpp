@@ -8,15 +8,15 @@ static inline void Suspend() {
   GetCurrentScheduler()->Suspend();
 }
 
-static inline void Resume(Fiber* f) {
-  GetCurrentScheduler()->Resume(f);
+static inline void Resume(Fiber* fiber) {
+  GetCurrentScheduler()->Resume(fiber);
 }
 
 class WaitQueue::Impl {
  public:
   void Park() {
-    Fiber* self = GetCurrentFiber();
-    wait_queue_.PushBack(self);
+    Fiber* caller = GetCurrentFiber();
+    wait_queue_.PushBack(caller);
     Suspend();
   }
 
@@ -24,14 +24,14 @@ class WaitQueue::Impl {
     if (wait_queue_.IsEmpty()) {
       return;
     }
-    Fiber* f = wait_queue_.PopFront();
-    Resume(f);
+    Fiber* fiber = wait_queue_.PopFront();
+    Resume(fiber);
   }
 
   void WakeAll() {
     while (!wait_queue_.IsEmpty()) {
-      Fiber* f = wait_queue_.PopFront();
-      Resume(f);
+      Fiber* fiber = wait_queue_.PopFront();
+      Resume(fiber);
     }
   }
 
