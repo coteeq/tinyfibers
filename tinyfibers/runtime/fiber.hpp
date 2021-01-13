@@ -5,7 +5,7 @@
 
 #include <tinyfibers/runtime/api.hpp>
 
-#include <tinysupport/intrusive_list.hpp>
+#include <wheels/support/intrusive_list.hpp>
 
 namespace tiny::fibers {
 
@@ -19,7 +19,7 @@ enum class FiberState {
   Terminated
 };
 
-class Fiber : public support::IntrusiveListNode<Fiber> {
+class Fiber : public wheels::IntrusiveListNode<Fiber> {
  public:
   size_t Id() const {
     return id_;

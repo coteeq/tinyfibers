@@ -3,7 +3,9 @@
 #include <tinyfibers/runtime/scheduler.hpp>
 #include <tinyfibers/runtime/stack_allocator.hpp>
 
-#include <tinysupport/compiler.hpp>
+#include <wheels/support/compiler.hpp>
+#include <wheels/support/panic.hpp>
+#include <wheels/support/exception.hpp>
 
 namespace tiny::fibers {
 
@@ -48,12 +50,12 @@ static void FiberTrampoline() {
   try {
     fiber->InvokeUserRoutine();
   } catch (...) {
-    TINY_PANIC("Uncaught exception in fiber");
+    WHEELS_PANIC("Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
   }
 
   GetCurrentScheduler()->Terminate();  // Never returns
 
-  TINY_UNREACHABLE();
+  WHEELS_UNREACHABLE();
 }
 
 void Fiber::SetupTrampoline() {

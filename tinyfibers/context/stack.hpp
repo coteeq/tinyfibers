@@ -1,14 +1,14 @@
 #pragma once
 
-#include <tinysupport/memspan.hpp>
-#include <tinysupport/mmap_allocation.hpp>
+#include <wheels/support/memspan.hpp>
+#include <wheels/support/mmap_allocation.hpp>
 
 #include <cstdint>
 
 namespace tiny::context {
 
-using support::MemSpan;
-using support::MmapAllocation;
+using wheels::MemSpan;
+using wheels::MmapAllocation;
 
 //////////////////////////////////////////////////////////////////////
 

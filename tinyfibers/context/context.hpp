@@ -1,13 +1,13 @@
 #pragma once
 
-#include <tinysupport/memspan.hpp>
+#include <wheels/support/memspan.hpp>
 
 #include <cstdlib>
 #include <cstdint>
 
 namespace tiny::context {
 
-using support::MemSpan;
+using wheels::MemSpan;
 
 typedef void (*Trampoline)();
 

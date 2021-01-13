@@ -1,15 +1,15 @@
 #pragma once
 
-#include <tinysupport/time.hpp>
-#include <tinysupport/function.hpp>
+#include <wheels/support/time.hpp>
+#include <wheels/support/function.hpp>
 
 namespace tiny::fibers {
 
-using support::Duration;
+using wheels::Duration;
 
 //////////////////////////////////////////////////////////////////////
 
-using FiberRoutine = tiny::support::UniqueFunction<void()>;
+using FiberRoutine = wheels::UniqueFunction<void()>;
 
 using FiberId = size_t;
 

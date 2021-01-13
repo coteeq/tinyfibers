@@ -4,7 +4,7 @@
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
-#include <tinysupport/time.hpp>
+#include <wheels/support/time.hpp>
 
 #include <memory>
 #include <chrono>
@@ -68,7 +68,7 @@ TEST(Fibers, PingPong) {
 
 TEST(Fibers, SleepFor) {
   RunScheduler([]() {
-    tiny::support::StopWatch stop_watch;
+    wheels::StopWatch stop_watch;
     SleepFor(1s);
     ASSERT_GE(stop_watch.Elapsed(), 1s);
   });

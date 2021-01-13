@@ -3,11 +3,11 @@
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/fiber.hpp>
 
-#include <tinysupport/time.hpp>
+#include <wheels/support/time.hpp>
 
 namespace tiny::fibers {
 
-using FiberQueue = support::IntrusiveList<Fiber>;
+using FiberQueue = wheels::IntrusiveList<Fiber>;
 
 class Scheduler {
  public:

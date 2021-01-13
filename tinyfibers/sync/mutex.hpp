@@ -2,7 +2,7 @@
 
 #include <tinyfibers/runtime/wait_queue.hpp>
 
-#include <tinysupport/assert.hpp>
+#include <wheels/support/assert.hpp>
 
 namespace tiny::fibers {
 
@@ -24,7 +24,7 @@ class Mutex {
   }
 
   void Unlock() {
-    TINY_VERIFY(locked_, "Unlocking mutex that is not locked!");
+    WHEELS_VERIFY(locked_, "Unlocking mutex that is not locked!");
     locked_ = false;
     wait_queue_.WakeOne();
   }

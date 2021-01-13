@@ -1,5 +1,8 @@
 #include <tinyfibers/runtime/scheduler.hpp>
 
+#include <wheels/support/assert.hpp>
+#include <wheels/support/panic.hpp>
+
 namespace tiny::fibers {
 
 //////////////////////////////////////////////////////////////////////
@@ -7,13 +10,13 @@ namespace tiny::fibers {
 static thread_local Scheduler* current_scheduler;
 
 Scheduler* GetCurrentScheduler() {
-  TINY_VERIFY(current_scheduler, "not in fiber context");
+  WHEELS_VERIFY(current_scheduler, "not in fiber context");
   return current_scheduler;
 }
 
 struct SchedulerScope {
   SchedulerScope(Scheduler* scheduler) {
-    TINY_VERIFY(!current_scheduler,
+    WHEELS_VERIFY(!current_scheduler,
                 "cannot run scheduler from another scheduler");
     current_scheduler = scheduler;
   }
@@ -29,7 +32,7 @@ Scheduler::Scheduler() {
 }
 
 Fiber* Scheduler::GetCurrentFiber() {
-  TINY_VERIFY(running_ != nullptr, "Not in fiber context");
+  WHEELS_VERIFY(running_ != nullptr, "Not in fiber context");
   return running_;
 }
 
@@ -56,7 +59,7 @@ void Scheduler::SleepFor(Duration duration) {
   // Intentionally ineffective implementation
   // Support for sleep in scheduler left as homework
 
-  support::StopWatch stop_watch;
+  wheels::StopWatch stop_watch;
   do {
     Yield();
   } while (stop_watch.Elapsed() < duration);
@@ -115,7 +118,7 @@ void Scheduler::Reschedule(Fiber* fiber) {
       Destroy(fiber);
       break;
     default:
-      TINY_PANIC("Unexpected fiber state");
+      WHEELS_PANIC("Unexpected fiber state");
       break;
   }
 }
