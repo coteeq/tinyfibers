@@ -54,6 +54,7 @@ static void FiberTrampoline() {
         "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
   }
 
+  // NB: No leaks!
   GetCurrentScheduler()->Terminate();  // Never returns
 
   WHEELS_UNREACHABLE();
