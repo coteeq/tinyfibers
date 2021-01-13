@@ -3,6 +3,8 @@
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/fiber.hpp>
 
+#include <context/context.hpp>
+
 #include <wheels/support/time.hpp>
 
 namespace tiny::fibers {

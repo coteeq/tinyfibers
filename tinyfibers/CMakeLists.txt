@@ -13,7 +13,7 @@ enable_language(ASM)
 
 add_library(tinyfibers STATIC ${LIB_CXX_SOURCES} ${LIB_ASM_SOURCES} ${LIB_HEADERS})
 target_include_directories(tinyfibers PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(tinyfibers PUBLIC pthread wheels)
+target_link_libraries(tinyfibers PUBLIC pthread wheels context)
 
 # --------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tinyfibers/context/stack.hpp>
+#include <context/stack.hpp>
 
 namespace tiny::fibers {
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <tinyfibers/context/context.hpp>
-#include <tinyfibers/context/stack.hpp>
+#include <context/context.hpp>
+#include <context/stack.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
 
