@@ -79,7 +79,9 @@ void Scheduler::Resume(Fiber* that) {
 void Scheduler::Terminate() {
   Fiber* caller = GetCurrentFiber();
   caller->SetState(FiberState::Terminated);
-  SwitchToScheduler(caller);
+
+  // Leave this context forever
+  caller->Context().ExitTo(loop_context_);
 }
 
 // Scheduling
