@@ -36,10 +36,12 @@ Fiber* Scheduler::GetCurrentFiber() {
   return running_;
 }
 
-// Operations invoked by running fibers
-
 void Scheduler::SwitchToScheduler(Fiber* me) {
   me->Context().SwitchTo(loop_context_);
+}
+
+void Scheduler::SwitchToFiber(Fiber* fiber) {
+  loop_context_.SwitchTo(fiber->Context());
 }
 
 // System calls
@@ -103,8 +105,7 @@ void Scheduler::RunLoop() {
 void Scheduler::Step(Fiber* fiber) {
   running_ = fiber;
   fiber->SetState(FiberState::Running);
-  // Scheduler loop_context_ -> fiber->context_
-  loop_context_.SwitchTo(fiber->Context());
+  SwitchToFiber(fiber);
   running_ = nullptr;
 }
 
