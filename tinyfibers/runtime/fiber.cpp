@@ -15,7 +15,6 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
       stack_(std::move(stack)),
       state_(FiberState::Starting),
       id_(id) {
-
   SetupTrampoline();
 }
 
