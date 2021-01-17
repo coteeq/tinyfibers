@@ -26,9 +26,6 @@ static void FiberTrampoline() {
 
   Fiber* fiber = GetCurrentFiber();
 
-  // Finalize first context switch
-  fiber->Context().AfterStart();
-
   fiber->SetState(FiberState::Running);
 
   try {
