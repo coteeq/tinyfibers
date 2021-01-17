@@ -1,5 +1,7 @@
 #include <tinyfibers/runtime/scheduler.hpp>
 
+#include <tinyfibers/runtime/stack_allocator.hpp>
+
 #include <wheels/support/assert.hpp>
 #include <wheels/support/panic.hpp>
 
@@ -131,10 +133,14 @@ void Scheduler::Schedule(Fiber* fiber) {
 }
 
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
-  return Fiber::Create(std::move(routine));
+  auto stack = AllocateStack();
+  FiberId id = ids_.NextId();
+
+  return new Fiber(std::move(routine), std::move(stack), id);
 }
 
 void Scheduler::Destroy(Fiber* fiber) {
+  ReleaseStack(std::move(fiber->Stack()));
   delete fiber;
 }
 

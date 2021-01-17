@@ -20,6 +20,7 @@ enum class FiberState {
 };
 
 class Fiber : public wheels::IntrusiveListNode<Fiber> {
+  friend class Scheduler;
  public:
   size_t Id() const {
     return id_;
@@ -27,6 +28,10 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
 
   context::ExecutionContext& Context() {
     return context_;
+  }
+
+  context::Stack& Stack() {
+    return stack_;
   }
 
   FiberState State() const {
@@ -40,10 +45,6 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
   void InvokeUserRoutine() {
     routine_();
   }
-
-  static Fiber* Create(FiberRoutine routine);
-
-  ~Fiber();
 
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);

@@ -6,6 +6,7 @@
 #include <context/context.hpp>
 
 #include <wheels/support/time.hpp>
+#include <wheels/support/id.hpp>
 
 namespace tinyfibers {
 
@@ -51,6 +52,8 @@ class Scheduler {
   context::ExecutionContext loop_context_;
   FiberQueue run_queue_;
   Fiber* running_{nullptr};
+
+  wheels::IdGenerator ids_;
 };
 
 //////////////////////////////////////////////////////////////////////
