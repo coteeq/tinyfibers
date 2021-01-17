@@ -35,7 +35,7 @@ class StackAllocator {
 
 //////////////////////////////////////////////////////////////////////
 
-static StackAllocator allocator;
+static thread_local StackAllocator allocator;
 
 Stack AllocateStack() {
   return allocator.Allocate();
