@@ -17,6 +17,8 @@ void Spawn(FiberRoutine routine) {
   GetCurrentScheduler()->Spawn(std::move(routine));
 }
 
+namespace self {
+
 void Yield() {
   GetCurrentScheduler()->Yield();
 }
@@ -25,8 +27,10 @@ void SleepFor(Duration delay) {
   GetCurrentScheduler()->SleepFor(delay);
 }
 
-FiberId GetFiberId() {
+FiberId GetId() {
   return GetCurrentFiber()->Id();
 }
+
+}  // namespace self
 
 }  // namespace tinyfibers

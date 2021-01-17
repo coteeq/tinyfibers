@@ -27,6 +27,8 @@ void RunScheduler(FiberRoutine init);
 // Does not transfer control to the scheduler.
 void Spawn(FiberRoutine routine);
 
+namespace self {
+
 // Transfers control to the current scheduler
 // and puts the current fiber to the end of the run queue
 void Yield();
@@ -36,6 +38,8 @@ void Yield();
 void SleepFor(Duration delay);
 
 // Returns the id of the current fiber
-FiberId GetFiberId();
+FiberId GetId();
+
+}  // namespace self
 
 }  // namespace tinyfibers
