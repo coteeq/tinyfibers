@@ -23,6 +23,8 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
 static void FiberTrampoline() {
   // Fiber execution starts here
 
+  // No RAII here!
+
   Fiber* fiber = GetCurrentFiber();
 
   // Finalize first context switch
@@ -37,7 +39,6 @@ static void FiberTrampoline() {
         "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
   }
 
-  // NB: No leaks!
   GetCurrentScheduler()->Terminate();  // Never returns
 
   WHEELS_UNREACHABLE();
