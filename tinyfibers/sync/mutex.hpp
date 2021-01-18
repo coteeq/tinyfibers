@@ -4,6 +4,8 @@
 
 #include <wheels/support/assert.hpp>
 
+#include <utility>
+
 namespace tinyfibers {
 
 class Mutex {
@@ -16,11 +18,7 @@ class Mutex {
   }
 
   bool TryLock() {
-    if (!locked_) {
-      locked_ = true;
-      return true;
-    }
-    return false;
+    return !std::exchange(locked_, true);
   }
 
   void Unlock() {
@@ -30,10 +28,14 @@ class Mutex {
   }
 
   // std::lock_guard / std::unique_lock compatibility
-  // BasicLockable concept
+  // Lockable concept
 
   void lock() {  // NOLINT
     Lock();
+  }
+
+  bool try_lock() {  // NOLINT
+    return TryLock();
   }
 
   void unlock() {  // NOLINT
