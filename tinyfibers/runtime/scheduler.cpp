@@ -75,9 +75,11 @@ void Scheduler::Suspend() {
   SwitchToScheduler(caller);
 }
 
-void Scheduler::Resume(Fiber* that) {
-  that->SetState(FiberState::Runnable);
-  Schedule(that);
+void Scheduler::Resume(Fiber* fiber) {
+  WHEELS_ASSERT(fiber->State() == FiberState::Suspended,
+                "Expected fiber in Suspended state");
+  fiber->SetState(FiberState::Runnable);
+  Schedule(fiber);
 }
 
 void Scheduler::Terminate() {

@@ -26,7 +26,7 @@ class Scheduler {
   // Sleep for _at_least_ delay
   void SleepFor(Duration delay);
   void Suspend();
-  void Resume(Fiber* that);
+  void Resume(Fiber* fiber);
   void Terminate();
 
   Fiber* GetCurrentFiber();
