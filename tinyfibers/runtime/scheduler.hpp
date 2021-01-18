@@ -19,7 +19,7 @@ class Scheduler {
   // One-shot
   void Run(FiberRoutine init);
 
-  // From fiber context
+  // System calls
 
   void Spawn(FiberRoutine routine);
   void Yield();
