@@ -15,28 +15,28 @@ using namespace std::chrono_literals;
 
 TEST(Fibers, YieldOnce) {
   RunScheduler([]() {
-    Yield();
+    self::Yield();
   });
 }
 
 TEST(Fibers, Ids) {
   RunScheduler([]() {
-    FiberId main_id = GetFiberId();
+    FiberId main_id = self::GetId();
 
     auto finn = [&]() {
-      ASSERT_EQ(GetFiberId(), main_id + 1);
+      ASSERT_EQ(self::GetId(), main_id + 1);
     };
 
     auto jake = [&]() {
-      ASSERT_EQ(GetFiberId(), main_id + 2);
+      ASSERT_EQ(self::GetId(), main_id + 2);
     };
 
     Spawn(finn);
     Spawn(jake);
 
-    Yield();
+    self::Yield();
 
-    ASSERT_EQ(main_id, GetFiberId());
+    ASSERT_EQ(main_id, self::GetId());
   });
 }
 
@@ -46,7 +46,7 @@ TEST(Fibers, PingPong) {
   auto finn = [&count]() {
     for (size_t i = 0; i < 10; ++i) {
       ++count;
-      Yield();
+      self::Yield();
       ASSERT_EQ(count, 0);
     }
     ++count;
@@ -55,7 +55,7 @@ TEST(Fibers, PingPong) {
   auto jake = [&count]() {
     for (size_t i = 0; i < 10; ++i) {
       --count;
-      Yield();
+      self::Yield();
       ASSERT_EQ(count, 1);
     }
   };
@@ -69,7 +69,7 @@ TEST(Fibers, PingPong) {
 TEST(Fibers, SleepFor) {
   RunScheduler([]() {
     wheels::StopWatch stop_watch;
-    SleepFor(1s);
+    self::SleepFor(1s);
     ASSERT_GE(stop_watch.Elapsed(), 1s);
   });
 }
@@ -84,7 +84,7 @@ TEST(Fibers, FifoScheduling) {
     for (size_t i = 0; i < kRounds; ++i) {
       ASSERT_EQ(next, k);
       next = (next + 1) % kFibers;
-      Yield();
+      self::Yield();
     }
   };
 
@@ -104,7 +104,7 @@ TEST(Fibers, WaitQueue) {
     wait_queue.WakeOne();
     ASSERT_EQ(step, 1);
     ++step;
-    Yield();
+    self::Yield();
     ASSERT_EQ(step, 3);
   };
 
@@ -114,7 +114,7 @@ TEST(Fibers, WaitQueue) {
     wait_queue.Park();
     ASSERT_EQ(step, 2);
     ++step;
-    Yield();
+    self::Yield();
   };
 
   RunScheduler(main);
@@ -130,12 +130,12 @@ TEST(Fibers, Mutex) {
       ASSERT_FALSE(critical);
       critical = true;
       for (size_t j = 0; j < 3; ++j) {
-        Yield();
+        self::Yield();
       }
       ASSERT_TRUE(critical);
       critical = false;
       mutex.Unlock();
-      Yield();
+      self::Yield();
     }
   };
 
@@ -150,13 +150,13 @@ TEST(Fibers, MutexTryLock) {
 
   auto locker = [&mutex]() {
     mutex.Lock();
-    Yield();
+    self::Yield();
     mutex.Unlock();
   };
 
   auto try_locker = [&mutex]() {
     ASSERT_FALSE(mutex.TryLock());
-    Yield();
+    self::Yield();
     ASSERT_TRUE(mutex.TryLock());
     mutex.Unlock();
   };
@@ -182,7 +182,7 @@ TEST(Fibers, ConditionVariable) {
   auto send = [&]() {
     std::lock_guard guard(mutex);
     for (size_t i = 0; i < 100; ++i) {
-      Yield();
+      self::Yield();
     }
     message = "Hello";
     ready.NotifyOne();

@@ -1,6 +1,6 @@
 #include <tinyfibers/runtime/scheduler.hpp>
 
-#include <tinyfibers/runtime/stack_allocator.hpp>
+#include <tinyfibers/runtime/stacks.hpp>
 
 #include <wheels/support/assert.hpp>
 #include <wheels/support/panic.hpp>
@@ -49,8 +49,8 @@ void Scheduler::SwitchToFiber(Fiber* fiber) {
 // System calls
 
 void Scheduler::Spawn(FiberRoutine routine) {
-  auto* created = CreateFiber(std::move(routine));
-  Schedule(created);
+  Fiber* newbie = CreateFiber(std::move(routine));
+  Schedule(newbie);
 }
 
 void Scheduler::Yield() {
@@ -75,9 +75,11 @@ void Scheduler::Suspend() {
   SwitchToScheduler(caller);
 }
 
-void Scheduler::Resume(Fiber* that) {
-  that->SetState(FiberState::Runnable);
-  Schedule(that);
+void Scheduler::Resume(Fiber* fiber) {
+  WHEELS_ASSERT(fiber->State() == FiberState::Suspended,
+                "Expected fiber in Suspended state");
+  fiber->SetState(FiberState::Runnable);
+  Schedule(fiber);
 }
 
 void Scheduler::Terminate() {
@@ -99,7 +101,7 @@ void Scheduler::RunLoop() {
   while (!run_queue_.IsEmpty()) {
     Fiber* next = run_queue_.PopFront();
     Step(next);
-    Reschedule(next);
+    Reschedule(next);  // ~ Handle syscall
   }
 }
 

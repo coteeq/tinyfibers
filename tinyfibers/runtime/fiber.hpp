@@ -21,6 +21,7 @@ enum class FiberState {
 
 class Fiber : public wheels::IntrusiveListNode<Fiber> {
   friend class Scheduler;
+
  public:
   size_t Id() const {
     return id_;

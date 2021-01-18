@@ -19,14 +19,14 @@ class Scheduler {
   // One-shot
   void Run(FiberRoutine init);
 
-  // From fiber context
+  // System calls
 
   void Spawn(FiberRoutine routine);
   void Yield();
   // Sleep for _at_least_ delay
   void SleepFor(Duration delay);
   void Suspend();
-  void Resume(Fiber* that);
+  void Resume(Fiber* fiber);
   void Terminate();
 
   Fiber* GetCurrentFiber();
