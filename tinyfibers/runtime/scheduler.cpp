@@ -102,7 +102,7 @@ void Scheduler::RunLoop() {
   while (!run_queue_.IsEmpty()) {
     Fiber* next = run_queue_.PopFront();
     Step(next);
-    Reschedule(next);
+    Reschedule(next);  // ~ Handle syscall
   }
 }
 
