@@ -2,6 +2,8 @@
 
 #include <tinyfibers/runtime/scheduler.hpp>
 
+#include <wheels/support/assert.hpp>
+
 namespace tinyfibers {
 
 static inline void Suspend() {
@@ -33,6 +35,10 @@ class WaitQueue::Impl {
       Fiber* fiber = wait_queue_.PopFront();
       Resume(fiber);
     }
+  }
+
+  ~Impl() {
+    WHEELS_ASSERT(wait_queue_.IsEmpty(), "WaitQueue is not empty");
   }
 
  private:
