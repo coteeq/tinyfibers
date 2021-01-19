@@ -15,7 +15,7 @@ _tinyfibers_ – минималистичная библиотека файбе�
 
 tinyfibers::RunScheduler([]() {
   std::cout << "Hello from fiber!" << std::endl;
-  tinyfibers::Yield();  // Reschedule current fiber to the end of the scheduler run queue
+  tinyfibers::self::Yield();  // Reschedule current fiber to the end of the scheduler run queue
 });
 ```
 
