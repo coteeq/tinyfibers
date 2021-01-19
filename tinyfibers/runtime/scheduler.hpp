@@ -8,6 +8,8 @@
 #include <wheels/support/time.hpp>
 #include <wheels/support/id.hpp>
 
+#include <functional>
+
 namespace tinyfibers {
 
 using FiberQueue = wheels::IntrusiveList<Fiber>;
@@ -31,6 +33,8 @@ class Scheduler {
 
   Fiber* GetCurrentFiber();
 
+  void SetDeadlockHandler(std::function<void()> handler);
+
  private:
   void RunLoop();
 
@@ -50,12 +54,18 @@ class Scheduler {
   Fiber* CreateFiber(FiberRoutine routine);
   void Destroy(Fiber* fiber);
 
+  void CheckDeadlock();
+
  private:
   context::ExecutionContext loop_context_;
   FiberQueue run_queue_;
   Fiber* running_{nullptr};
 
   wheels::IdGenerator ids_;
+
+  size_t alive_count_{0};
+
+  std::function<void()> deadlock_handler_;
 };
 
 //////////////////////////////////////////////////////////////////////

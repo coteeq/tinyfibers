@@ -31,6 +31,9 @@ struct SchedulerScope {
 //////////////////////////////////////////////////////////////////////
 
 Scheduler::Scheduler() {
+  SetDeadlockHandler([]() {
+    WHEELS_PANIC("Deadlock detected in fiber scheduler");
+  });
 }
 
 Fiber* Scheduler::GetCurrentFiber() {
@@ -96,6 +99,7 @@ void Scheduler::Run(FiberRoutine init) {
   SchedulerScope scope(this);
   Spawn(std::move(init));
   RunLoop();
+  CheckDeadlock();
 }
 
 void Scheduler::RunLoop() {
@@ -138,18 +142,37 @@ Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   auto stack = AllocateStack();
   FiberId id = ids_.NextId();
 
+  ++alive_count_;
+
   return new Fiber(std::move(routine), std::move(stack), id);
 }
 
 void Scheduler::Destroy(Fiber* fiber) {
   ReleaseStack(std::move(fiber->Stack()));
   delete fiber;
+  --alive_count_;
+}
+
+void Scheduler::SetDeadlockHandler(std::function<void()> handler) {
+  deadlock_handler_ = handler;
+}
+
+void Scheduler::CheckDeadlock() {
+ if (alive_count_ > 0 && run_queue_.IsEmpty()) {
+   // Deadlock
+   deadlock_handler_();
+   WHEELS_PANIC("Deadlock handler returns control");
+ }
 }
 
 //////////////////////////////////////////////////////////////////////
 
 Fiber* GetCurrentFiber() {
   return GetCurrentScheduler()->GetCurrentFiber();
+}
+
+void SetDeadlockHandler(std::function<void()> handler) {
+  GetCurrentScheduler()->SetDeadlockHandler(handler);
 }
 
 }  // namespace tinyfibers

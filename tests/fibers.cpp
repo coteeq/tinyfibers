@@ -1,6 +1,7 @@
 #include <wheels/test/test_framework.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
+#include <tinyfibers/runtime/deadlock.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
@@ -249,6 +250,32 @@ SIMPLE_TEST(NoLeaks) {
   });
 
   ASSERT_FALSE(weak_ref.lock());
+}
+
+SIMPLE_TEST(Deadlock) {
+  Mutex a;
+  Mutex b;
+
+  RunScheduler([&]() {
+    tinyfibers::SetDeadlockHandler([]() {
+      std::cout << "Deadlock detected!";
+      std::exit(0);
+    });
+
+    Spawn([&]() {
+      a.Lock();
+      self::Yield();
+      b.Lock();
+    });
+
+    Spawn([&]() {
+      b.Lock();
+      a.Lock();
+    });
+  });
+
+  // Test routine never returns control
+  WHEELS_UNREACHABLE();
 }
 
 }
