@@ -23,7 +23,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
   friend class Scheduler;
 
  public:
-  size_t Id() const {
+  FiberId Id() const {
     return id_;
   }
 
