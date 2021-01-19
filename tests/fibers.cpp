@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+#include <wheels/test/test_framework.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/sync/mutex.hpp>
@@ -13,13 +13,15 @@ using namespace tinyfibers;
 
 using namespace std::chrono_literals;
 
-TEST(Fibers, YieldOnce) {
+TEST_SUITE(Fibers) {
+
+SIMPLE_TEST(YieldOnce) {
   RunScheduler([]() {
     self::Yield();
   });
 }
 
-TEST(Fibers, Ids) {
+SIMPLE_TEST(Ids) {
   RunScheduler([]() {
     FiberId main_id = self::GetId();
 
@@ -40,7 +42,7 @@ TEST(Fibers, Ids) {
   });
 }
 
-TEST(Fibers, PingPong) {
+SIMPLE_TEST(PingPong) {
   int count = 0;
 
   auto finn = [&count]() {
@@ -66,7 +68,7 @@ TEST(Fibers, PingPong) {
   });
 }
 
-TEST(Fibers, SleepFor) {
+SIMPLE_TEST(SleepFor) {
   RunScheduler([]() {
     wheels::StopWatch stop_watch;
     self::SleepFor(1s);
@@ -74,7 +76,7 @@ TEST(Fibers, SleepFor) {
   });
 }
 
-TEST(Fibers, FifoScheduling) {
+SIMPLE_TEST(FifoScheduling) {
   static const size_t kFibers = 5;
   static const size_t kRounds = 5;
 
@@ -90,12 +92,12 @@ TEST(Fibers, FifoScheduling) {
 
   RunScheduler([&]() {
     for (size_t k = 0; k < kFibers; ++k) {
-      Spawn([&, k](){ routine(k); });
+      Spawn([&, k]() { routine(k); });
     }
   });
 }
 
-TEST(Fibers, WaitQueue) {
+SIMPLE_TEST(WaitQueue) {
   WaitQueue wait_queue;
   int step = 0;
 
@@ -120,7 +122,7 @@ TEST(Fibers, WaitQueue) {
   RunScheduler(main);
 }
 
-TEST(Fibers, Mutex) {
+SIMPLE_TEST(Mutex) {
   Mutex mutex;
   bool critical = false;
 
@@ -145,7 +147,7 @@ TEST(Fibers, Mutex) {
   });
 }
 
-TEST(Fibers, MutexTryLock) {
+SIMPLE_TEST(MutexTryLock) {
   Mutex mutex;
 
   auto locker = [&mutex]() {
@@ -167,7 +169,7 @@ TEST(Fibers, MutexTryLock) {
   });
 }
 
-TEST(Fibers, ConditionVariable) {
+SIMPLE_TEST(ConditionVariable) {
   Mutex mutex;
   ConditionVariable ready;
   std::string message;
@@ -198,6 +200,10 @@ TEST(Fibers, ConditionVariable) {
 
 class OnePassBarrier {
  public:
+  OnePassBarrier(size_t threads)
+      : threads_(threads) {
+  }
+
   void Arrive() {
     std::unique_lock lock(mutex_);
     --threads_;
@@ -214,11 +220,11 @@ class OnePassBarrier {
   ConditionVariable all_arrived_;
 };
 
-TEST(Fibers, Barrier) {
-  OnePassBarrier barrier;
-  size_t arrived = 0;
-
+SIMPLE_TEST(Barrier) {
   static const size_t kFibers = 100;
+
+  OnePassBarrier barrier{kFibers};
+  size_t arrived = 0;
 
   auto participant = [&]() {
     ++arrived;
@@ -233,7 +239,7 @@ TEST(Fibers, Barrier) {
   });
 }
 
-TEST(Fibers, NoLeaks) {
+SIMPLE_TEST(NoLeaks) {
   auto strong_ref = std::make_shared<int>(42);
   std::weak_ptr<int> weak_ref = strong_ref;
 
@@ -243,4 +249,6 @@ TEST(Fibers, NoLeaks) {
   });
 
   ASSERT_FALSE(weak_ref.lock());
+}
+
 }
