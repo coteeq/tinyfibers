@@ -20,6 +20,7 @@ class Scheduler {
 
   // One-shot
   void Run(FiberRoutine init);
+  void Run(FiberRoutine init, size_t fuel);
 
   // System calls
 
@@ -36,7 +37,8 @@ class Scheduler {
   void SetDeadlockHandler(std::function<void()> handler);
 
  private:
-  void RunLoop();
+  // `fuel` limits number of iterations
+  void RunLoop(size_t& fuel);
 
   // Context switches
   // Fiber context -> scheduler (thread) context

@@ -1,11 +1,13 @@
 #include <wheels/test/test_framework.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
+#include <tinyfibers/runtime/scheduler.hpp>
 #include <tinyfibers/runtime/deadlock.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
 #include <wheels/support/time.hpp>
+#include <wheels/support/quick_exit.hpp>
 
 #include <memory>
 #include <chrono>
@@ -259,7 +261,7 @@ SIMPLE_TEST(Deadlock) {
   RunScheduler([&]() {
     tinyfibers::SetDeadlockHandler([]() {
       std::cout << "Deadlock detected!";
-      std::exit(0);
+      wheels::QuickExit(0);
     });
 
     Spawn([&]() {
@@ -276,6 +278,22 @@ SIMPLE_TEST(Deadlock) {
 
   // Test routine never returns control
   WHEELS_UNREACHABLE();
+}
+
+SIMPLE_TEST(Fuel) {
+  static const size_t kFuel = 17;
+
+  size_t iterations = 0;
+
+  Scheduler scheduler;
+  scheduler.Run([&]() {
+    while (true) {
+      ++iterations;
+      self::Yield();
+    }
+  }, kFuel);
+
+  ASSERT_EQ(iterations, kFuel);
 }
 
 }

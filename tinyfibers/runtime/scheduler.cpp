@@ -5,6 +5,8 @@
 #include <wheels/support/assert.hpp>
 #include <wheels/support/panic.hpp>
 
+#include <limits>
+
 namespace tinyfibers {
 
 //////////////////////////////////////////////////////////////////////
@@ -96,14 +98,20 @@ void Scheduler::Terminate() {
 // Scheduling
 
 void Scheduler::Run(FiberRoutine init) {
-  SchedulerScope scope(this);
-  Spawn(std::move(init));
-  RunLoop();
-  CheckDeadlock();
+  Run(std::move(init), std::numeric_limits<size_t>::max());
 }
 
-void Scheduler::RunLoop() {
-  while (!run_queue_.IsEmpty()) {
+void Scheduler::Run(FiberRoutine init, size_t fuel) {
+  SchedulerScope scope(this);
+  Spawn(std::move(init));
+  RunLoop(fuel);
+  if (fuel > 0) {
+    CheckDeadlock();
+  }
+}
+
+void Scheduler::RunLoop(size_t& fuel) {
+  while (!run_queue_.IsEmpty() && fuel-- > 0) {
     Fiber* next = run_queue_.PopFront();
     Step(next);
     Reschedule(next);  // ~ Handle syscall
@@ -161,7 +169,7 @@ void Scheduler::CheckDeadlock() {
  if (alive_count_ > 0 && run_queue_.IsEmpty()) {
    // Deadlock
    deadlock_handler_();
-   WHEELS_PANIC("Deadlock handler returns control");
+   WHEELS_PANIC("Deadlock handler returns");
  }
 }
 
