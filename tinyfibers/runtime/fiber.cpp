@@ -18,6 +18,12 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
   SetupTrampoline();
 }
 
+Fiber::~Fiber() {
+  if (watcher_) {
+    watcher_->OnCompleted();
+  }
+}
+
 //////////////////////////////////////////////////////////////////////
 
 static void FiberTrampoline() {

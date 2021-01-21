@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tinyfibers/runtime/join_handle.hpp>
+
 #include <wheels/support/time.hpp>
 #include <wheels/support/function.hpp>
 
@@ -25,7 +27,7 @@ void RunScheduler(FiberRoutine init);
 // Starts a new fiber managed by the current scheduler and
 // puts this fiber to the end of the run queue.
 // Does not transfer control to the scheduler.
-void Spawn(FiberRoutine routine);
+JoinHandle Spawn(FiberRoutine routine);
 
 namespace self {
 

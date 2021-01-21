@@ -2,6 +2,7 @@
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/fiber.hpp>
+#include <tinyfibers/runtime/join_handle.hpp>
 
 #include <context/context.hpp>
 
@@ -21,7 +22,7 @@ class Scheduler {
 
   // System calls
 
-  void Spawn(FiberRoutine routine);
+  Fiber* Spawn(FiberRoutine routine);
   void Yield();
   // Sleep for _at_least_ delay
   void SleepFor(Duration delay);

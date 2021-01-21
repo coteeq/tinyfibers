@@ -4,6 +4,7 @@
 #include <context/stack.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
+#include <tinyfibers/runtime/watcher.hpp>
 
 #include <wheels/support/intrusive_list.hpp>
 
@@ -43,9 +44,15 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
     state_ = target;
   }
 
+  void SetWatcher(IWatcher* watcher) {
+    watcher_ = watcher;
+  }
+
   void InvokeUserRoutine() {
     routine_();
   }
+
+  ~Fiber();
 
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
@@ -58,6 +65,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
   context::ExecutionContext context_;
   FiberState state_;
   FiberId id_;
+  IWatcher* watcher_{nullptr};
 };
 
 }  // namespace tinyfibers
