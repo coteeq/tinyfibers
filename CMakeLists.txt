@@ -17,12 +17,18 @@ add_subdirectory(third_party)
 include(cmake/Platform.cmake)
 add_subdirectory(tinyfibers)
 
-option(TINY_FIBER_TESTS "Enable tinyfiber library tests" OFF)
-option(TINY_FIBER_BENCHMARKS "Enable tinyfiber library benchmarks" OFF)
+option(TINY_FIBER_EXAMPLES "Enable tinyfiber examples" OFF)
+option(TINY_FIBER_TESTS "Enable tinyfiber tests" OFF)
+option(TINY_FIBER_BENCHMARKS "Enable tinyfiber benchmarks" OFF)
+
+if(${TINY_FIBER_EXAMPLES})
+    add_subdirectory(examples)
+endif()
 
 if(${TINY_FIBER_TESTS})
     add_subdirectory(tests)
 endif()
+
 
 if(${TINY_FIBER_BENCHMARKS})
     add_subdirectory(benchmarks)
