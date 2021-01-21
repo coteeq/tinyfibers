@@ -7,11 +7,11 @@ using namespace tinyfibers;
 int main() {
   RunScheduler([]() {
     std::cout << "Hello from main!" << std::endl;
-    JoinHandle h = Spawn([]() {
+    JoinHandle child = Spawn([]() {
       std::cout << "Hello from child!" << std::endl;
       self::Yield();
     });
-    h.Join();
+    child.Join();
   });
   return 0;
 }
