@@ -48,7 +48,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
     watcher_ = watcher;
   }
 
-  void InvokeUserRoutine() {
+  void RunUserRoutine() {
     routine_();
   }
 
@@ -57,6 +57,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
 
+  [[noreturn]] static void Trampoline();
   void SetupTrampoline();
 
  private:

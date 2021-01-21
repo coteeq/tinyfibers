@@ -24,9 +24,7 @@ Fiber::~Fiber() {
   }
 }
 
-//////////////////////////////////////////////////////////////////////
-
-static void FiberTrampoline() {
+void Fiber::Trampoline() {
   // Fiber execution starts here
 
   // No RAII here!
@@ -39,7 +37,7 @@ static void FiberTrampoline() {
   fiber->SetState(FiberState::Running);
 
   try {
-    fiber->InvokeUserRoutine();
+    fiber->RunUserRoutine();
   } catch (...) {
     WHEELS_PANIC(
         "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
@@ -53,7 +51,7 @@ static void FiberTrampoline() {
 void Fiber::SetupTrampoline() {
   context_.Setup(
       /*stack=*/stack_.AsMemSpan(),
-      /*trampoline=*/FiberTrampoline);
+      /*trampoline=*/Trampoline);
 }
 
 }  // namespace tinyfibers
