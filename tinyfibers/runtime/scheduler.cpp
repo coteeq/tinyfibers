@@ -48,9 +48,10 @@ void Scheduler::SwitchToFiber(Fiber* fiber) {
 
 // System calls
 
-void Scheduler::Spawn(FiberRoutine routine) {
+Fiber* Scheduler::Spawn(FiberRoutine routine) {
   Fiber* newbie = CreateFiber(std::move(routine));
   Schedule(newbie);
+  return newbie;
 }
 
 void Scheduler::Yield() {
