@@ -1,4 +1,5 @@
 #include <wheels/test/test_framework.hpp>
+#include <tinyfibers/test/test.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/sync/wait_group.hpp>
@@ -22,7 +23,7 @@ SIMPLE_TEST(JustWorks) {
   });
 }
 
-SIMPLE_TEST(JoinHandle) {
+SIMPLE_TEST(Join) {
   RunScheduler([]() {
     bool done = false;
     JoinHandle h = Spawn([&]() {
@@ -34,7 +35,7 @@ SIMPLE_TEST(JoinHandle) {
   });
 }
 
-SIMPLE_TEST(JoinHandleCompleted) {
+SIMPLE_TEST(JoinCompleted) {
   RunScheduler([]() {
     bool done = false;
     JoinHandle h = Spawn([&]() {
@@ -43,6 +44,15 @@ SIMPLE_TEST(JoinHandleCompleted) {
     self::Yield();
     ASSERT_TRUE(done);
     h.Join();
+  });
+}
+
+// At least does not panic
+SIMPLE_TEST(Detach) {
+  RunScheduler([]() {
+    Spawn([&]() {
+      self::Yield();
+    }).Detach();
   });
 }
 

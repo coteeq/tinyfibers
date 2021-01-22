@@ -4,8 +4,7 @@
 
 namespace tinyfibers {
 
-JoinHandle::JoinHandle(Fiber* fiber)
-  : fiber_(fiber) {
+JoinHandle::JoinHandle(Fiber* fiber) : fiber_(fiber) {
   fiber_->SetWatcher(this);
 }
 
@@ -20,8 +19,7 @@ void JoinHandle::Join() {
 
   if (!completed_) {
     // Wake me on completion
-    waiter_ = GetCurrentFiber();
-    GetCurrentScheduler()->Suspend();
+    waiter_.Park();
   }
 
   fiber_ = nullptr;
@@ -33,7 +31,7 @@ void JoinHandle::Detach() {
 }
 
 JoinHandle::~JoinHandle() {
-  WHEELS_VERIFY(fiber_ == nullptr, "Explicit Join or Detach required, fiber = " << fiber_->Id());
+  WHEELS_VERIFY(fiber_ == nullptr, "Explicit Join or Detach required");
 }
 
 void JoinHandle::CheckAttached() {
@@ -42,9 +40,7 @@ void JoinHandle::CheckAttached() {
 
 void JoinHandle::OnCompleted() {
   completed_ = true;
-  if (waiter_) {
-    GetCurrentScheduler()->Resume(waiter_);
-  }
+  waiter_.Wake();
 }
 
 }  // namespace tinyfibers

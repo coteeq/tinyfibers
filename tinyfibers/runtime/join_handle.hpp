@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tinyfibers/runtime/watcher.hpp>
+#include <tinyfibers/runtime/parking_lot.hpp>
 
 namespace tinyfibers {
 
@@ -35,8 +36,7 @@ class JoinHandle : public IWatcher {
  private:
   Fiber* fiber_;
   bool completed_{false};
-
-  Fiber* waiter_{nullptr};
+  ParkingLot waiter_;
 };
 
 }  // namespace tinyfibers

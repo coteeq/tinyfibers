@@ -9,8 +9,8 @@ void WaitGroup::Spawn(FiberRoutine routine) {
 }
 
 void WaitGroup::Wait() {
-  for (auto& handle : join_handles_) {
-    handle.Join();
+  for (auto& h : join_handles_) {
+    h.Join();
   }
   join_handles_.clear();
 }

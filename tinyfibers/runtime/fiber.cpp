@@ -8,8 +8,6 @@
 
 namespace tinyfibers {
 
-//////////////////////////////////////////////////////////////////////
-
 Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
     : routine_(std::move(routine)),
       stack_(std::move(stack)),
