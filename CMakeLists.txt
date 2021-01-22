@@ -29,7 +29,6 @@ if(${TINY_FIBER_TESTS})
     add_subdirectory(tests)
 endif()
 
-
 if(${TINY_FIBER_BENCHMARKS})
     add_subdirectory(benchmarks)
 endif()
