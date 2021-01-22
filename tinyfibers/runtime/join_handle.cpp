@@ -10,8 +10,10 @@ JoinHandle::JoinHandle(Fiber* fiber) : fiber_(fiber) {
 
 JoinHandle::JoinHandle(JoinHandle&& that) {
   fiber_ = std::exchange(that.fiber_, nullptr);
-  fiber_->SetWatcher(this);
   completed_ = that.completed_;
+  if (!completed_) {
+    fiber_->SetWatcher(this);
+  }
 }
 
 void JoinHandle::Join() {

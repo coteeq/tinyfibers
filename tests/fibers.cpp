@@ -56,6 +56,15 @@ SIMPLE_TEST(Detach) {
   });
 }
 
+SIMPLE_TEST(MoveJoinHandle) {
+  RunScheduler([]() {
+    JoinHandle h = Spawn([](){});
+    self::Yield();
+    JoinHandle g{std::move(h)};
+    g.Join();
+  });
+}
+
 SIMPLE_TEST(Ids) {
   RunScheduler([]() {
     FiberId main_id = self::GetId();
