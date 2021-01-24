@@ -35,7 +35,7 @@ namespace self {
 // and puts the current fiber to the end of the run queue
 void Yield();
 
-// Blocks the execution of the current fiber for at least
+// Blocks the execution of the current fiber for _at_least_
 // the specified 'delay'
 void SleepFor(Duration delay);
 
