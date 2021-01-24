@@ -6,6 +6,5 @@ cmake_minimum_required(VERSION 3.5)
 
 file(GLOB TESTS_SRCS *.cpp)
 
-ADD_EXECUTABLE(tinyfibers_tests ${TESTS_SRCS})
-TARGET_LINK_LIBRARIES(tinyfibers_tests tinyfibers)
-add_test(NAME tinyfibers_tests COMMAND tinyfibers_tests)
+add_executable(tinyfibers_tests ${TESTS_SRCS})
+target_link_libraries(tinyfibers_tests tinyfibers)
