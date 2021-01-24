@@ -13,18 +13,18 @@ include(cmake/ClangTidy.cmake)
 
 add_subdirectory(tinyfibers)
 
-option(TINY_FIBER_EXAMPLES "Enable tinyfiber examples" OFF)
-option(TINY_FIBER_TESTS "Enable tinyfiber tests" OFF)
-option(TINY_FIBER_BENCHMARKS "Enable tinyfiber benchmarks" OFF)
+option(TINY_FIBERS_EXAMPLES "Enable tinyfibers examples" OFF)
+option(TINY_FIBERS_TESTS "Enable tinyfibers tests" OFF)
+option(TINY_FIBERS_BENCHMARKS "Enable tinyfibers benchmarks" OFF)
 
-if(${TINY_FIBER_EXAMPLES})
+if(${TINY_FIBERS_EXAMPLES})
     add_subdirectory(examples)
 endif()
 
-if(${TINY_FIBER_TESTS})
+if(${TINY_FIBERS_TESTS})
     add_subdirectory(tests)
 endif()
 
-if(${TINY_FIBER_BENCHMARKS})
+if(${TINY_FIBERS_BENCHMARKS})
     add_subdirectory(benchmarks)
 endif()
