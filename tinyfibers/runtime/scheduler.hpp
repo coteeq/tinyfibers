@@ -2,7 +2,6 @@
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/fiber.hpp>
-#include <tinyfibers/runtime/join_handle.hpp>
 
 #include <context/context.hpp>
 
