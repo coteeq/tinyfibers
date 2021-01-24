@@ -23,6 +23,10 @@ SIMPLE_TEST(JustWorks) {
   });
 }
 
+TINY_FIBERS_TEST(TestMacro) {
+  self::Yield();
+}
+
 SIMPLE_TEST(Join) {
   RunScheduler([]() {
     bool done = false;
