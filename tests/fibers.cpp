@@ -26,6 +26,10 @@ SIMPLE_TEST(JustWorks) {
   });
 }
 
+TINY_FIBERS_TEST(TestMacro) {
+  self::Yield();
+}
+
 SIMPLE_TEST(Join) {
   RunScheduler([]() {
     bool done = false;
@@ -53,9 +57,12 @@ SIMPLE_TEST(JoinCompleted) {
 // At least does not panic
 SIMPLE_TEST(Detach) {
   RunScheduler([]() {
-    Spawn([&]() {
-      self::Yield();
-    }).Detach();
+    {
+      JoinHandle h = Spawn([&]() {
+        self::Yield();
+      });
+      h.Detach();
+    }
   });
 }
 

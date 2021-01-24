@@ -12,6 +12,7 @@ JoinHandle::JoinHandle(JoinHandle&& that) {
   fiber_ = std::exchange(that.fiber_, nullptr);
   completed_ = that.completed_;
   if (!completed_) {
+    // Keep watching
     fiber_->SetWatcher(this);
   }
 }
@@ -29,6 +30,7 @@ void JoinHandle::Join() {
 
 void JoinHandle::Detach() {
   CheckAttached();
+  fiber_->SetWatcher(nullptr);
   fiber_ = nullptr;
 }
 

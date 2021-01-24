@@ -4,7 +4,7 @@
 
 // Run test routine in fiber scheduler
 
-#define TINY_FIBER_TEST(name)       \
+#define TINY_FIBERS_TEST(name)      \
   void FiberTestRoutine##name();    \
   SIMPLE_TEST(name) {               \
     tinyfibers::RunScheduler([]() { \
