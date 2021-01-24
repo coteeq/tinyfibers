@@ -13,13 +13,23 @@ _tinyfibers_ – минималистичная библиотека файбе�
 
 #include <iostream>
 
-tinyfibers::RunScheduler([]() {
-  std::cout << "Hello from fiber!" << std::endl;
-  tinyfibers::Yield();  // Reschedule current fiber to the end of the scheduler run queue
-});
+using namespace tinyfibers;
+
+int main() {
+  RunScheduler([]() {
+    std::cout << "Hello from main!" << std::endl;
+    JoinHandle h = Spawn([]() {
+      std::cout << "Hello from child!" << std::endl;
+      self::Yield();
+    });
+    h.Join();
+  });
+  return 0;
+}
+
 ```
 
-См. [тесты](/tests/fibers.cpp).
+См. [примеры](/examples) и [тесты](/tests/fibers.cpp).
 
 ## Ограничения 
 

@@ -24,7 +24,7 @@ class Scheduler {
 
   // System calls
 
-  void Spawn(FiberRoutine routine);
+  Fiber* Spawn(FiberRoutine routine);
   void Yield();
   // Sleep for _at_least_ delay
   void SleepFor(Duration delay);

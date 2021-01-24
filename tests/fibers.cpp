@@ -1,8 +1,10 @@
 #include <wheels/test/test_framework.hpp>
+#include <tinyfibers/test/test.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/scheduler.hpp>
 #include <tinyfibers/runtime/deadlock.hpp>
+#include <tinyfibers/sync/wait_group.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
@@ -18,9 +20,51 @@ using namespace std::chrono_literals;
 
 TEST_SUITE(Fibers) {
 
-SIMPLE_TEST(YieldOnce) {
+SIMPLE_TEST(JustWorks) {
   RunScheduler([]() {
     self::Yield();
+  });
+}
+
+SIMPLE_TEST(Join) {
+  RunScheduler([]() {
+    bool done = false;
+    JoinHandle h = Spawn([&]() {
+      done = true;
+    });
+    ASSERT_FALSE(done);
+    h.Join();
+    ASSERT_TRUE(done);
+  });
+}
+
+SIMPLE_TEST(JoinCompleted) {
+  RunScheduler([]() {
+    bool done = false;
+    JoinHandle h = Spawn([&]() {
+      done = true;
+    });
+    self::Yield();
+    ASSERT_TRUE(done);
+    h.Join();
+  });
+}
+
+// At least does not panic
+SIMPLE_TEST(Detach) {
+  RunScheduler([]() {
+    Spawn([&]() {
+      self::Yield();
+    }).Detach();
+  });
+}
+
+SIMPLE_TEST(MoveJoinHandle) {
+  RunScheduler([]() {
+    JoinHandle h = Spawn([](){});
+    self::Yield();
+    JoinHandle g{std::move(h)};
+    g.Join();
   });
 }
 
@@ -36,12 +80,15 @@ SIMPLE_TEST(Ids) {
       ASSERT_EQ(self::GetId(), main_id + 2);
     };
 
-    Spawn(finn);
-    Spawn(jake);
+    JoinHandle f1 = Spawn(finn);
+    JoinHandle f2 = Spawn(jake);
 
     self::Yield();
 
     ASSERT_EQ(main_id, self::GetId());
+
+    f1.Join();
+    f2.Join();
   });
 }
 
@@ -66,8 +113,10 @@ SIMPLE_TEST(PingPong) {
   };
 
   RunScheduler([&]() {
-    Spawn(finn);
-    Spawn(jake);
+    WaitGroup wg;
+    wg.Spawn(finn);
+    wg.Spawn(jake);
+    wg.Wait();
   });
 }
 
@@ -94,9 +143,11 @@ SIMPLE_TEST(FifoScheduling) {
   };
 
   RunScheduler([&]() {
+    WaitGroup wg;
     for (size_t k = 0; k < kFibers; ++k) {
-      Spawn([&, k]() { routine(k); });
+      wg.Spawn([&, k]() { routine(k); });
     }
+    wg.Wait();
   });
 }
 
@@ -114,12 +165,13 @@ SIMPLE_TEST(WaitQueue) {
   };
 
   auto main = [&]() {
-    Spawn(foo);
+    auto f = Spawn(foo);
     ++step;
     wait_queue.Park();
     ASSERT_EQ(step, 2);
     ++step;
     self::Yield();
+    f.Join();
   };
 
   RunScheduler(main);
@@ -145,8 +197,10 @@ SIMPLE_TEST(Mutex) {
   };
 
   RunScheduler([&]() {
-    Spawn(routine);
-    Spawn(routine);
+    WaitGroup wg;
+    wg.Spawn(routine);
+    wg.Spawn(routine);
+    wg.Wait();
   });
 }
 
@@ -167,8 +221,10 @@ SIMPLE_TEST(MutexTryLock) {
   };
 
   RunScheduler([&]() {
-    Spawn(locker);
-    Spawn(try_locker);
+    WaitGroup wg;
+    wg.Spawn(locker);
+    wg.Spawn(try_locker);
+    wg.Wait();
   });
 }
 
@@ -194,8 +250,10 @@ SIMPLE_TEST(ConditionVariable) {
   };
 
   auto init = [&]() {
-    Spawn(receive);
-    Spawn(send);
+    WaitGroup wg;
+    wg.Spawn(receive);
+    wg.Spawn(send);
+    wg.Wait();
   };
 
   RunScheduler(init);
@@ -236,9 +294,11 @@ SIMPLE_TEST(Barrier) {
   };
 
   RunScheduler([&]() {
+    WaitGroup wg;
     for (size_t i = 0; i < kFibers; ++i) {
-      Spawn(participant);
+      wg.Spawn(participant);
     }
+    wg.Wait();
   });
 }
 
@@ -255,29 +315,32 @@ SIMPLE_TEST(NoLeaks) {
 }
 
 SIMPLE_TEST(Deadlock) {
-  Mutex a;
-  Mutex b;
-
   RunScheduler([&]() {
     tinyfibers::SetDeadlockHandler([]() {
       std::cout << "Deadlock detected!";
       wheels::QuickExit(0);
     });
 
-    Spawn([&]() {
+    Mutex a;
+    Mutex b;
+
+    WaitGroup wg;
+
+    wg.Spawn([&]() {
       a.Lock();
       self::Yield();
       b.Lock();
     });
 
-    Spawn([&]() {
+    wg.Spawn([&]() {
       b.Lock();
       a.Lock();
     });
-  });
 
-  // Test routine never returns control
-  WHEELS_UNREACHABLE();
+    wg.Wait();
+
+    WHEELS_UNREACHABLE();
+  });
 }
 
 SIMPLE_TEST(Fuel) {

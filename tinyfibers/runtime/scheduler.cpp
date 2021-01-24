@@ -53,9 +53,10 @@ void Scheduler::SwitchToFiber(Fiber* fiber) {
 
 // System calls
 
-void Scheduler::Spawn(FiberRoutine routine) {
+Fiber* Scheduler::Spawn(FiberRoutine routine) {
   Fiber* newbie = CreateFiber(std::move(routine));
   Schedule(newbie);
+  return newbie;
 }
 
 void Scheduler::Yield() {
@@ -147,18 +148,16 @@ void Scheduler::Schedule(Fiber* fiber) {
 }
 
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
+  ++alive_count_;
   auto stack = AllocateStack();
   FiberId id = ids_.NextId();
-
-  ++alive_count_;
-
   return new Fiber(std::move(routine), std::move(stack), id);
 }
 
 void Scheduler::Destroy(Fiber* fiber) {
+  --alive_count_;
   ReleaseStack(std::move(fiber->Stack()));
   delete fiber;
-  --alive_count_;
 }
 
 void Scheduler::SetDeadlockHandler(std::function<void()> handler) {

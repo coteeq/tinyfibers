@@ -13,8 +13,9 @@ void RunScheduler(FiberRoutine init) {
 
 //////////////////////////////////////////////////////////////////////
 
-void Spawn(FiberRoutine routine) {
-  GetCurrentScheduler()->Spawn(std::move(routine));
+JoinHandle Spawn(FiberRoutine routine) {
+  Fiber* fiber = GetCurrentScheduler()->Spawn(std::move(routine));
+  return JoinHandle{fiber};
 }
 
 namespace self {
