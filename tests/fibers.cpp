@@ -54,9 +54,12 @@ SIMPLE_TEST(JoinCompleted) {
 // At least does not panic
 SIMPLE_TEST(Detach) {
   RunScheduler([]() {
-    Spawn([&]() {
-      self::Yield();
-    }).Detach();
+    {
+      JoinHandle h = Spawn([&]() {
+        self::Yield();
+      });
+      h.Detach();
+    }
   });
 }
 
