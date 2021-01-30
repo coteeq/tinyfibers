@@ -321,36 +321,52 @@ SIMPLE_TEST(NoLeaks) {
   ASSERT_FALSE(weak_ref.lock());
 }
 
-SIMPLE_TEST(Deadlock) {
-  RunScheduler([&]() {
+TEST(Deadlock, wheels::test::TestOptions().ForceFork()) {
+  RunScheduler([]() {
     tinyfibers::SetDeadlockHandler([]() {
       std::cout << "Deadlock detected!";
+      // World is broken, leave it
       wheels::QuickExit(0);
     });
 
     Mutex a;
     Mutex b;
 
-    WaitGroup wg;
-
-    wg.Spawn([&]() {
+    auto first = [&]() {
       a.Lock();
       self::Yield();
       b.Lock();
-    });
+      b.Unlock();
+      a.Unlock();
+    };
 
-    wg.Spawn([&]() {
+    auto second = [&]() {
       b.Lock();
       a.Lock();
-    });
+      a.Unlock();
+      b.Unlock();
+    };
 
+    // No deadlocks expected here
+    // Run routine twice to check that
+    // routine leaves locks in unlocked state
+    first();
+    first();
+
+    second();
+    second();
+
+    // Deadlock here
+    WaitGroup wg;
+    wg.Spawn(first);
+    wg.Spawn(second);
     wg.Wait();
 
     WHEELS_UNREACHABLE();
   });
 }
 
-SIMPLE_TEST(Fuel) {
+TEST(Fuel, wheels::test::TestOptions().ForceFork()) {
   static const size_t kFuel = 17;
 
   size_t iterations = 0;
@@ -364,6 +380,9 @@ SIMPLE_TEST(Fuel) {
   }, kFuel);
 
   ASSERT_EQ(iterations, kFuel);
+
+  // World is broken, leave it
+  wheels::QuickExit(0);
 }
 
 }
