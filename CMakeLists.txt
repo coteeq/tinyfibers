@@ -12,7 +12,7 @@ add_subdirectory(third_party)
 include(cmake/ClangFormat.cmake)
 include(cmake/ClangTidy.cmake)
 
-set(LIB_TARGET tinyfibers-tasks)
+set(LIB_TARGET ${PROJECT_NAME})
 
 option(TINY_FIBERS_DEVELOPER "Tinyfibers developer mode" OFF)
 option(TINY_FIBERS_EXAMPLES "Enable tinyfibers examples" OFF)
