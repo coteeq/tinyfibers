@@ -13,11 +13,12 @@ include(cmake/ClangTidy.cmake)
 
 set(LIB_TARGET ${PROJECT_NAME})
 
-add_subdirectory(tinyfibers)
-
+option(TINY_FIBERS_DEVELOPER "Tinyfibers developer mode" OFF)
 option(TINY_FIBERS_EXAMPLES "Enable tinyfibers examples" OFF)
 option(TINY_FIBERS_TESTS "Enable tinyfibers tests" OFF)
 option(TINY_FIBERS_BENCHMARKS "Enable tinyfibers benchmarks" OFF)
+
+add_subdirectory(tinyfibers)
 
 if(TINY_FIBERS_EXAMPLES)
     add_subdirectory(examples)

@@ -14,6 +14,8 @@ target_link_libraries(${LIB_TARGET} PUBLIC pthread wheels context)
 
 # --------------------------------------------------------------------
 
+if(TINY_FIBERS_DEVELOPER)
+
 # Linters
 
 if(CLANG_FORMAT_TOOL)
@@ -29,4 +31,6 @@ if(CLANG_TIDY_TOOL)
             ${CMAKE_CURRENT_SOURCE_DIR}
             ${LIB_INCLUDE_PATH}
             ${LIB_HEADERS} ${LIB_CXX_SOURCES})
+endif()
+
 endif()
