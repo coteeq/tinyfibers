@@ -4,7 +4,9 @@ cmake_minimum_required(VERSION 3.5)
 
 # Library tests
 
-file(GLOB TESTS_SRCS *.cpp)
+set(TESTS_TARGET ${LIB_TARGET}_tests)
 
-add_executable(tinyfibers_tests ${TESTS_SRCS})
-target_link_libraries(tinyfibers_tests tinyfibers)
+file(GLOB TESTS_CXX_SOURCES *.cpp)
+
+add_executable(${TESTS_TARGET} ${TESTS_CXX_SOURCES})
+target_link_libraries(${TESTS_TARGET} ${LIB_TARGET})

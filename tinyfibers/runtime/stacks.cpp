@@ -22,7 +22,7 @@ class StackAllocator {
       pool_.pop_back();
       return stack;
     }
-    return Stack::Allocate(kDefaultStackSizeInPages);
+    return Stack::AllocatePages(kDefaultStackSizeInPages);
   }
 
   void Release(Stack stack) {

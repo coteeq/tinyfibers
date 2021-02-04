@@ -8,7 +8,7 @@
 
 namespace tinyfibers {
 
-class ConditionVariable {
+class CondVar {
  public:
   void Wait(Mutex& mutex) {
     mutex.Unlock();

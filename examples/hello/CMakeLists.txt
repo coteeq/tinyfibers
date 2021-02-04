@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(EXAMPLE_TARGET tinyfibers_example_hello)
+set(EXAMPLE_TARGET ${LIB_TARGET}_example_hello)
 
 add_executable(${EXAMPLE_TARGET} main.cpp)
-target_link_libraries(${EXAMPLE_TARGET} tinyfibers)
+target_link_libraries(${EXAMPLE_TARGET} ${LIB_TARGET})
