@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.5)
-
 # --------------------------------------------------------------------
 
 get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
@@ -13,6 +11,8 @@ target_include_directories(${LIB_TARGET} PUBLIC ${LIB_INCLUDE_PATH})
 target_link_libraries(${LIB_TARGET} PUBLIC pthread wheels context)
 
 # --------------------------------------------------------------------
+
+if(TINY_FIBERS_DEVELOPER)
 
 # Linters
 
@@ -29,4 +29,6 @@ if(CLANG_TIDY_TOOL)
             ${CMAKE_CURRENT_SOURCE_DIR}
             ${LIB_INCLUDE_PATH}
             ${LIB_HEADERS} ${LIB_CXX_SOURCES})
+endif()
+
 endif()
