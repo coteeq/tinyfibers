@@ -11,6 +11,8 @@ add_subdirectory(third_party)
 include(cmake/ClangFormat.cmake)
 include(cmake/ClangTidy.cmake)
 
+set(LIB_TARGET ${PROJECT_NAME})
+
 add_subdirectory(tinyfibers)
 
 option(TINY_FIBERS_EXAMPLES "Enable tinyfibers examples" OFF)
