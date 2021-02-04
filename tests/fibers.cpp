@@ -23,6 +23,7 @@ SIMPLE_TEST(JustWorks) {
   });
 }
 
+// Runs test routine in fiber scheduler
 TINY_FIBERS_TEST(TestMacro) {
   self::Yield();
 }
