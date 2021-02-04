@@ -17,16 +17,23 @@ using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
-    std::cout << "Hello from main!" << std::endl;
-    JoinHandle h = Spawn([]() {
+    std::cout << "Hello from parent!" << std::endl;
+    JoinHandle child = Spawn([]() {
       std::cout << "Hello from child!" << std::endl;
       self::Yield();
     });
-    h.Join();
+    child.Join();
+    std::cout << "Child finished" << std::endl;
   });
   return 0;
 }
+```
 
+Вывод:
+```
+Hello from parent!
+Hello from child!
+Child finished
 ```
 
 См. [примеры](/examples) и [тесты](/tests/fibers.cpp).
