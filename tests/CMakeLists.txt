@@ -1,8 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
-
-# --------------------------------------------------------------------
-
-# Library tests
+# Tests
 
 set(TESTS_TARGET ${LIB_TARGET}_tests)
 
