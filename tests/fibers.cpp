@@ -27,49 +27,39 @@ TINY_FIBERS_TEST(TestMacro) {
   self::Yield();
 }
 
-SIMPLE_TEST(Join) {
-  RunScheduler([]() {
-    bool done = false;
-    JoinHandle h = Spawn([&]() {
-      done = true;
-    });
-    ASSERT_FALSE(done);
-    h.Join();
-    ASSERT_TRUE(done);
+TINY_FIBERS_TEST(Join) {
+  bool done = false;
+  JoinHandle h = Spawn([&]() {
+    done = true;
   });
+  ASSERT_FALSE(done);
+  h.Join();
+  ASSERT_TRUE(done);
 }
 
-SIMPLE_TEST(JoinCompleted) {
-  RunScheduler([]() {
-    bool done = false;
-    JoinHandle h = Spawn([&]() {
-      done = true;
-    });
-    self::Yield();
-    ASSERT_TRUE(done);
-    h.Join();
+TINY_FIBERS_TEST(JoinCompleted) {
+  bool done = false;
+  JoinHandle h = Spawn([&]() {
+    done = true;
   });
+  self::Yield();
+  ASSERT_TRUE(done);
+  h.Join();
 }
 
 // At least does not panic
-SIMPLE_TEST(Detach) {
-  RunScheduler([]() {
-    {
-      JoinHandle h = Spawn([&]() {
-        self::Yield();
-      });
-      h.Detach();
-    }
+TINY_FIBERS_TEST(Detach) {
+  JoinHandle h = Spawn([&]() {
+    self::Yield();
   });
+  h.Detach();
 }
 
-SIMPLE_TEST(MoveJoinHandle) {
-  RunScheduler([]() {
-    JoinHandle h = Spawn([](){});
-    self::Yield();
-    JoinHandle g{std::move(h)};
-    g.Join();
-  });
+TINY_FIBERS_TEST(MoveJoinHandle) {
+  JoinHandle h = Spawn([](){});
+  self::Yield();
+  JoinHandle g{std::move(h)};
+  g.Join();
 }
 
 SIMPLE_TEST(Ids) {
@@ -234,7 +224,7 @@ SIMPLE_TEST(MutexTryLock) {
 
 SIMPLE_TEST(ConditionVariable) {
   Mutex mutex;
-  ConditionVariable ready;
+  CondVar ready;
   std::string message;
 
   auto receive = [&]() {
@@ -282,7 +272,7 @@ class OnePassBarrier {
  private:
   size_t threads_;
   Mutex mutex_;
-  ConditionVariable all_arrived_;
+  CondVar all_arrived_;
 };
 
 SIMPLE_TEST(Barrier) {
