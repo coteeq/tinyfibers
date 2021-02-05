@@ -1,4 +1,4 @@
-#include <tinyfibers/runtime/api.hpp>
+#include <tinyfibers/api.hpp>
 
 #include <iostream>
 
