@@ -1,7 +1,7 @@
 #include <wheels/test/test_framework.hpp>
 #include <tinyfibers/test/test.hpp>
 
-#include <tinyfibers/runtime/api.hpp>
+#include <tinyfibers/api.hpp>
 #include <tinyfibers/sync/wait_group.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
