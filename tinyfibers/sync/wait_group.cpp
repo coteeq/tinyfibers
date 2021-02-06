@@ -4,8 +4,9 @@
 
 namespace tinyfibers {
 
-void WaitGroup::Spawn(FiberRoutine routine) {
+WaitGroup& WaitGroup::Spawn(FiberRoutine routine) {
   join_handles_.push_back(::tinyfibers::Spawn(std::move(routine)));
+  return *this;
 }
 
 void WaitGroup::Wait() {

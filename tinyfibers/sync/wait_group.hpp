@@ -8,7 +8,7 @@ namespace tinyfibers {
 
 class WaitGroup {
  public:
-  void Spawn(FiberRoutine routine);
+  WaitGroup& Spawn(FiberRoutine routine);
   void Wait();
 
   ~WaitGroup();
