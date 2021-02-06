@@ -193,8 +193,7 @@ SIMPLE_TEST(Mutex) {
 
   RunScheduler([&]() {
     WaitGroup wg;
-    wg.Spawn(routine);
-    wg.Spawn(routine);
+    wg.Spawn(routine).Spawn(routine);
     wg.Wait();
   });
 }
