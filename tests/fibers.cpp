@@ -62,34 +62,32 @@ TEST_SUITE(Fibers) {
     g.Join();
   }
 
-  SIMPLE_TEST(Ids) {
-    RunScheduler([]() {
-      FiberId main_id = self::GetId();
+  TINY_FIBERS_TEST(Ids) {
+    FiberId init_id = self::GetId();
 
-      auto finn = [&]() {
-        ASSERT_EQ(self::GetId(), main_id + 1);
-      };
+    auto first = [&]() {
+      ASSERT_EQ(self::GetId(), init_id + 1);
+    };
 
-      auto jake = [&]() {
-        ASSERT_EQ(self::GetId(), main_id + 2);
-      };
+    auto second = [&]() {
+      ASSERT_EQ(self::GetId(), init_id + 2);
+    };
 
-      JoinHandle f1 = Spawn(finn);
-      JoinHandle f2 = Spawn(jake);
+    JoinHandle f1 = Spawn(first);
+    JoinHandle f2 = Spawn(second);
 
-      self::Yield();
+    self::Yield();
 
-      ASSERT_EQ(main_id, self::GetId());
+    ASSERT_EQ(init_id, self::GetId());
 
-      f1.Join();
-      f2.Join();
-    });
+    f1.Join();
+    f2.Join();
   }
 
-  SIMPLE_TEST(PingPong) {
+  TINY_FIBERS_TEST(PingPong) {
     int count = 0;
 
-    auto finn = [&count]() {
+    auto first = [&count]() {
       for (size_t i = 0; i < 10; ++i) {
         ++count;
         self::Yield();
@@ -98,7 +96,7 @@ TEST_SUITE(Fibers) {
       ++count;
     };
 
-    auto jake = [&count]() {
+    auto second = [&count]() {
       for (size_t i = 0; i < 10; ++i) {
         --count;
         self::Yield();
@@ -106,23 +104,19 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    RunScheduler([&]() {
-      WaitGroup wg;
-      wg.Spawn(finn);
-      wg.Spawn(jake);
-      wg.Wait();
-    });
+    WaitGroup wg;
+    wg.Spawn(first);
+    wg.Spawn(second);
+    wg.Wait();
   }
 
-  SIMPLE_TEST(SleepFor) {
-    RunScheduler([]() {
-      wheels::StopWatch stop_watch;
-      self::SleepFor(1s);
-      ASSERT_GE(stop_watch.Elapsed(), 1s);
-    });
+  TINY_FIBERS_TEST(SleepFor) {
+    wheels::StopWatch stop_watch;
+    self::SleepFor(1s);
+    ASSERT_GE(stop_watch.Elapsed(), 1s);
   }
 
-  SIMPLE_TEST(FifoScheduling) {
+  TINY_FIBERS_TEST(FifoScheduling) {
     static const size_t kFibers = 5;
     static const size_t kRounds = 5;
 
@@ -136,44 +130,37 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    RunScheduler([&]() {
-      WaitGroup wg;
-      for (size_t k = 0; k < kFibers; ++k) {
-        wg.Spawn([&, k]() {
-          routine(k);
-        });
-      }
-      wg.Wait();
-    });
+    WaitGroup wg;
+    for (size_t k = 0; k < kFibers; ++k) {
+      wg.Spawn([&, k]() {
+        routine(k);
+      });
+    }
+    wg.Wait();
   }
 
-  SIMPLE_TEST(WaitQueue) {
+  TINY_FIBERS_TEST(WaitQueue) {
     WaitQueue wait_queue;
     int step = 0;
 
-    auto foo = [&]() {
+    JoinHandle waker = Spawn([&]() {
       ASSERT_EQ(step, 1);
       wait_queue.WakeOne();
       ASSERT_EQ(step, 1);
       ++step;
       self::Yield();
       ASSERT_EQ(step, 3);
-    };
+    });
 
-    auto main = [&]() {
-      auto f = Spawn(foo);
-      ++step;
-      wait_queue.Park();
-      ASSERT_EQ(step, 2);
-      ++step;
-      self::Yield();
-      f.Join();
-    };
-
-    RunScheduler(main);
+    ++step;
+    wait_queue.Park();
+    ASSERT_EQ(step, 2);
+    ++step;
+    self::Yield();
+    waker.Join();
   }
 
-  SIMPLE_TEST(Mutex) {
+  TINY_FIBERS_TEST(Mutex) {
     Mutex mutex;
     bool critical = false;
 
@@ -192,66 +179,57 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    RunScheduler([&]() {
-      WaitGroup wg;
-      wg.Spawn(routine).Spawn(routine);
-      wg.Wait();
-    });
+    WaitGroup wg;
+    wg.Spawn(routine).Spawn(routine);
+    wg.Wait();
   }
 
-  SIMPLE_TEST(MutexTryLock) {
+  TINY_FIBERS_TEST(MutexTryLock) {
     Mutex mutex;
 
-    auto locker = [&mutex]() {
+    WaitGroup wg;
+
+    wg.Spawn([&mutex]() {
       mutex.Lock();
       self::Yield();
       mutex.Unlock();
-    };
+    });
 
-    auto try_locker = [&mutex]() {
+    wg.Spawn([&mutex]() {
       ASSERT_FALSE(mutex.TryLock());
       self::Yield();
       ASSERT_TRUE(mutex.TryLock());
       mutex.Unlock();
-    };
-
-    RunScheduler([&]() {
-      WaitGroup wg;
-      wg.Spawn(locker);
-      wg.Spawn(try_locker);
-      wg.Wait();
     });
+
+    wg.Wait();
   }
 
-  SIMPLE_TEST(ConditionVariable) {
+  TINY_FIBERS_TEST(ConditionVariable) {
     Mutex mutex;
     CondVar ready;
     std::string message;
 
-    auto receive = [&]() {
+    WaitGroup wg;
+
+    wg.Spawn([&]() {
       std::unique_lock lock(mutex);
 
       ready.Wait(mutex);
       ASSERT_EQ(message, "Hello");
-    };
+    });
 
-    auto send = [&]() {
+    wg.Spawn([&]() {
       std::lock_guard guard(mutex);
+
       for (size_t i = 0; i < 100; ++i) {
         self::Yield();
       }
       message = "Hello";
       ready.NotifyOne();
-    };
+    });
 
-    auto init = [&]() {
-      WaitGroup wg;
-      wg.Spawn(receive);
-      wg.Spawn(send);
-      wg.Wait();
-    };
-
-    RunScheduler(init);
+    wg.Wait();
   }
 
   class OnePassBarrier {
@@ -277,25 +255,21 @@ TEST_SUITE(Fibers) {
     CondVar all_arrived_;
   };
 
-  SIMPLE_TEST(Barrier) {
+  TINY_FIBERS_TEST(Barrier) {
     static const size_t kFibers = 100;
 
     OnePassBarrier barrier{kFibers};
     size_t arrived = 0;
 
-    auto participant = [&]() {
-      ++arrived;
-      barrier.Arrive();
-      ASSERT_EQ(arrived, kFibers);
-    };
-
-    RunScheduler([&]() {
-      WaitGroup wg;
-      for (size_t i = 0; i < kFibers; ++i) {
-        wg.Spawn(participant);
-      }
-      wg.Wait();
-    });
+    WaitGroup wg;
+    for (size_t i = 0; i < kFibers; ++i) {
+      wg.Spawn([&]() {
+        ++arrived;
+        barrier.Arrive();
+        ASSERT_EQ(arrived, kFibers);
+      });
+    }
+    wg.Wait();
   }
 
   SIMPLE_TEST(NoLeaks) {
