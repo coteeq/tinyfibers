@@ -17,7 +17,7 @@ void WaitGroup::Wait() {
 }
 
 WaitGroup::~WaitGroup() {
-  WHEELS_VERIFY(join_handles_.empty(), "Explicit Join required");
+  WHEELS_VERIFY(join_handles_.empty(), "Explicit Wait required");
 }
 
 }  // namespace tinyfibers
