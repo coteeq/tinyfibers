@@ -2,7 +2,7 @@ include(FetchContent)
 
 # --------------------------------------------------------------------
 
-set(FETCHCONTENT_FULLY_DISCONNECTED ON)
+#set(FETCHCONTENT_FULLY_DISCONNECTED ON)
 #set(FETCHCONTENT_QUIET OFF)
 
 # --------------------------------------------------------------------
