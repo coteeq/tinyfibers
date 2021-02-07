@@ -1,10 +1,12 @@
 #pragma once
 
+#include <wheels/support/noncopyable.hpp>
+
 #include <memory>
 
 namespace tinyfibers {
 
-class WaitQueue {
+class WaitQueue : public wheels::NonCopyable {
  public:
   WaitQueue();
   ~WaitQueue();

@@ -205,6 +205,13 @@ TEST_SUITE(Fibers) {
     wg.Wait();
   }
 
+  /*
+  TINY_FIBERS_TEST(DoNotMoveMutex) {
+    Mutex m1;
+    Mutex m2{std::move(m1)};
+  }
+  */
+
   TINY_FIBERS_TEST(ConditionVariable) {
     Mutex mutex;
     CondVar ready;
