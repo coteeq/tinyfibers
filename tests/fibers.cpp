@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <chrono>
+#include <type_traits>
 
 using namespace tinyfibers;
 
@@ -277,6 +278,17 @@ TEST_SUITE(Fibers) {
       });
     }
     wg.Wait();
+  }
+
+  TINY_FIBERS_TEST(NonCopyable) {
+    static_assert(!std::is_copy_assignable<Mutex>::value, "Broken Mutex");
+    static_assert(!std::is_copy_constructible<Mutex>::value, "Broken Mutex");
+
+    static_assert(!std::is_copy_assignable<CondVar>::value, "Broken CondVar");
+    static_assert(!std::is_copy_constructible<CondVar>::value, "Broken CondVar");
+
+    static_assert(!std::is_copy_assignable<WaitQueue>::value, "Broken WaitQueue");
+    static_assert(!std::is_copy_constructible<WaitQueue>::value, "Broken WaitQueue");
   }
 
   SIMPLE_TEST(NoLeaks) {
