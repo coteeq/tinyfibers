@@ -6,7 +6,7 @@
 
 namespace tinyfibers {
 
-class WaitQueue : public wheels::NonCopyable {
+class WaitQueue : private wheels::NonCopyable {
  public:
   WaitQueue();
   ~WaitQueue();
