@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 project(tinyfibers)
 
+include(cmake/CheckCompiler.cmake)
 include(cmake/CompileOptions.cmake)
 include(cmake/Sanitize.cmake)
 
