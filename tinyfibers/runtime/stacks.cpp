@@ -22,11 +22,16 @@ class StackAllocator {
       pool_.pop_back();
       return stack;
     }
-    return Stack::AllocatePages(kDefaultStackSizeInPages);
+    return AllocateNewStack();
   }
 
   void Release(Stack stack) {
     pool_.push_back(std::move(stack));
+  }
+
+ private:
+  static Stack AllocateNewStack() {
+    return Stack::AllocatePages(kDefaultStackSizeInPages);
   }
 
  private:
