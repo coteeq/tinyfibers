@@ -12,7 +12,7 @@ namespace tinyfibers {
 
 enum class FiberState {
   Starting,
-  Runnable,
+  Runnable,  // in run queue
   Running,
   Suspended,  // in wait queue
   Terminated
@@ -42,7 +42,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
     state_ = target;
   }
 
-  void SetWatcher(IWatcher* watcher) {
+  void SetWatcher(IFiberWatcher* watcher) {
     watcher_ = watcher;
   }
 
@@ -64,7 +64,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
   context::ExecutionContext context_;
   FiberState state_;
   FiberId id_;
-  IWatcher* watcher_{nullptr};
+  IFiberWatcher* watcher_{nullptr};
 };
 
 }  // namespace tinyfibers

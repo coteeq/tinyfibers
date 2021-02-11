@@ -2,8 +2,8 @@
 
 namespace tinyfibers {
 
-struct IWatcher {
-  virtual ~IWatcher() = default;
+struct IFiberWatcher {
+  virtual ~IFiberWatcher() = default;
   virtual void OnCompleted() = 0;
 };
 

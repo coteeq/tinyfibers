@@ -10,7 +10,7 @@ class Fiber;
 // An owned permission to join on a fiber
 // ~ https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
 
-class JoinHandle : public IWatcher {
+class JoinHandle : public IFiberWatcher {
   friend class Fiber;
 
  public:
