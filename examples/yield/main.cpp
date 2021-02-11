@@ -6,7 +6,7 @@ using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
-    auto h1 = Spawn([]() {
+    JoinHandle h1 = Spawn([]() {
       std::cout << "2" << std::endl;
       self::Yield();
       std::cout << "4" << std::endl;
@@ -16,7 +16,7 @@ int main() {
     self::Yield();
     std::cout << "3" << std::endl;
 
-    auto h2 = Spawn([]() {
+    JoinHandle h2 = Spawn([]() {
       std::cout << "5" << std::endl;
     });
 
