@@ -49,7 +49,7 @@ Child finished
 - Поддерживается только x86-64
 - Нет сети, каналов и т.п.
 
-## Флаги CMake
+## Опции CMake
 
 - `TINY_FIBERS_TESTS=ON` – тесты
 - `TINY_FIBERS_EXAMPLES=ON` – примеры
