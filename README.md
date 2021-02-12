@@ -54,6 +54,21 @@ Child finished
 - `TINY_FIBERS_TESTS=ON` – тесты
 - `TINY_FIBERS_EXAMPLES=ON` – примеры
 
+## Сборка
+
+```shell
+# Clone repo
+git clone https://gitlab.com/Lipovsky/tinyfibers.git
+cd tinyfibers
+# Generate build files
+mkdir build && cd build
+cmake -DTINY_FIBERS_EXAMPLES=ON ..
+# Build `hello` example
+make tinyfibers_example_hello
+# Run example
+./examples/hello/bin/tinyfibers_example_hello
+```
+
 ## Зависимости
 
 - [Wheels](https://gitlab.com/Lipovsky/wheels) – общие компоненты
