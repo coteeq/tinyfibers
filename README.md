@@ -49,6 +49,12 @@ Child finished
 - Поддерживается только x86-64
 - Нет сети, каналов и т.п.
 
+## References
+
+- [Context switch в Xv6](https://github.com/guilleiguaran/xv6/blob/master/swtch.S)
+- [Boost.fiber](https://github.com/boostorg/fiber)
+- [Project Loom: Fibers and Continuations for the Java Virtual Machine](https://cr.openjdk.java.net/~rpressler/loom/Loom-Proposal.html)
+
 ## Опции CMake
 
 - `TINY_FIBERS_TESTS=ON` – тесты
