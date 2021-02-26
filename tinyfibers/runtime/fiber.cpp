@@ -25,8 +25,6 @@ Fiber::~Fiber() {
 void Fiber::Trampoline() {
   // Fiber execution starts here
 
-  // No RAII here!
-
   Fiber* fiber = GetCurrentFiber();
 
   // Finalize first context switch
