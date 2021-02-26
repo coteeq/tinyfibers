@@ -42,10 +42,6 @@ void Scheduler::SwitchToScheduler(Fiber* me) {
   me->Context().SwitchTo(loop_context_);
 }
 
-void Scheduler::SwitchToFiber(Fiber* fiber) {
-  loop_context_.SwitchTo(fiber->Context());
-}
-
 // System calls
 
 Fiber* Scheduler::Spawn(FiberRoutine routine) {
@@ -112,6 +108,10 @@ void Scheduler::Step(Fiber* fiber) {
   fiber->SetState(FiberState::Running);
   SwitchToFiber(fiber);
   running_ = nullptr;
+}
+
+void Scheduler::SwitchToFiber(Fiber* fiber) {
+  loop_context_.SwitchTo(fiber->Context());
 }
 
 void Scheduler::Reschedule(Fiber* fiber) {
