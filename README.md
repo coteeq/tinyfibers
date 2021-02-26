@@ -51,6 +51,7 @@ Child finished
 
 ## References
 
+- [System V ABI / AMD64](https://www.uclibc.org/docs/psABI-x86_64.pdf)
 - [Context switch в Xv6](https://github.com/guilleiguaran/xv6/blob/master/swtch.S)
 - [Boost.fiber](https://github.com/boostorg/fiber)
 - [Project Loom: Fibers and Continuations for the Java Virtual Machine](https://cr.openjdk.java.net/~rpressler/loom/Loom-Proposal.html)
