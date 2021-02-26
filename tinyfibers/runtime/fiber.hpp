@@ -4,16 +4,15 @@
 #include <context/stack.hpp>
 
 #include <tinyfibers/runtime/api.hpp>
+#include <tinyfibers/runtime/watcher.hpp>
 
 #include <wheels/support/intrusive_list.hpp>
 
 namespace tinyfibers {
 
-//////////////////////////////////////////////////////////////////////
-
 enum class FiberState {
   Starting,
-  Runnable,
+  Runnable,  // in run queue
   Running,
   Suspended,  // in wait queue
   Terminated
@@ -43,13 +42,20 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
     state_ = target;
   }
 
-  void InvokeUserRoutine() {
+  void SetWatcher(IFiberWatcher* watcher) {
+    watcher_ = watcher;
+  }
+
+  void RunUserRoutine() {
     routine_();
   }
+
+  ~Fiber();
 
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
 
+  [[noreturn]] static void Trampoline();
   void SetupTrampoline();
 
  private:
@@ -58,6 +64,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
   context::ExecutionContext context_;
   FiberState state_;
   FiberId id_;
+  IFiberWatcher* watcher_{nullptr};
 };
 
 }  // namespace tinyfibers

@@ -42,15 +42,12 @@ void Scheduler::SwitchToScheduler(Fiber* me) {
   me->Context().SwitchTo(loop_context_);
 }
 
-void Scheduler::SwitchToFiber(Fiber* fiber) {
-  loop_context_.SwitchTo(fiber->Context());
-}
-
 // System calls
 
-void Scheduler::Spawn(FiberRoutine routine) {
+Fiber* Scheduler::Spawn(FiberRoutine routine) {
   Fiber* newbie = CreateFiber(std::move(routine));
   Schedule(newbie);
+  return newbie;
 }
 
 void Scheduler::Yield() {
@@ -112,6 +109,10 @@ void Scheduler::Step(Fiber* fiber) {
   running_ = nullptr;
 }
 
+void Scheduler::SwitchToFiber(Fiber* fiber) {
+  loop_context_.SwitchTo(fiber->Context());
+}
+
 void Scheduler::Reschedule(Fiber* fiber) {
   switch (fiber->State()) {
     case FiberState::Runnable:  // From Yield
@@ -136,7 +137,6 @@ void Scheduler::Schedule(Fiber* fiber) {
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   auto stack = AllocateStack();
   FiberId id = ids_.NextId();
-
   return new Fiber(std::move(routine), std::move(stack), id);
 }
 

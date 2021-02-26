@@ -1,29 +1,35 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.15)
+
 project(tinyfibers)
 
-include(cmake/ClangFormat.cmake)
-include(cmake/ClangTidy.cmake)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-add_compile_options(-Wall -Wextra -Wpedantic -g -fno-omit-frame-pointer)
+include(cmake/CheckCompiler.cmake)
+include(cmake/CompileOptions.cmake)
+include(cmake/Sanitize.cmake)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
 add_subdirectory(third_party)
 
-include(cmake/Platform.cmake)
+include(cmake/ClangFormat.cmake)
+include(cmake/ClangTidy.cmake)
+
+set(LIB_TARGET ${PROJECT_NAME})
+
+option(TINY_FIBERS_DEVELOPER "Tinyfibers developer mode" OFF)
+option(TINY_FIBERS_EXAMPLES "Enable tinyfibers examples" OFF)
+option(TINY_FIBERS_TESTS "Enable tinyfibers tests" OFF)
+option(TINY_FIBERS_BENCHMARKS "Enable tinyfibers benchmarks" OFF)
+
 add_subdirectory(tinyfibers)
 
-option(TINY_FIBER_TESTS "Enable tinyfiber library tests" OFF)
-option(TINY_FIBER_BENCHMARKS "Enable tinyfiber library benchmarks" OFF)
+if(TINY_FIBERS_EXAMPLES)
+    add_subdirectory(examples)
+endif()
 
-if(${TINY_FIBER_TESTS})
+if(TINY_FIBERS_TESTS)
     add_subdirectory(tests)
 endif()
 
-if(${TINY_FIBER_BENCHMARKS})
+if(TINY_FIBERS_BENCHMARKS)
     add_subdirectory(benchmarks)
 endif()

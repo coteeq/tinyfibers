@@ -1,18 +1,8 @@
-cmake_minimum_required(VERSION 3.5)
+# Tests
 
-# --------------------------------------------------------------------
+set(TESTS_TARGET ${LIB_TARGET}_tests)
 
-# Google Test
+file(GLOB TESTS_CXX_SOURCES *.cpp)
 
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-
-# --------------------------------------------------------------------
-
-# Library tests
-
-file(GLOB TESTS_SRCS *.cpp)
-
-ADD_EXECUTABLE(tinyfibers_tests ${TESTS_SRCS})
-TARGET_LINK_LIBRARIES(tinyfibers_tests tinyfibers ${GTEST_BOTH_LIBRARIES})
-add_test(NAME tinyfibers_tests COMMAND tinyfibers_tests)
+add_executable(${TESTS_TARGET} ${TESTS_CXX_SOURCES})
+target_link_libraries(${TESTS_TARGET} ${LIB_TARGET})

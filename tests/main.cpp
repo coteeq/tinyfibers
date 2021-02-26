@@ -1,8 +1,3 @@
-#include "gtest/gtest.h"
+#include <wheels/test/test_framework.hpp>
 
-int main(int argc, char **argv)
-{
-  ::testing::InitGoogleTest(&argc, argv);
-  int ret = RUN_ALL_TESTS();
-  return ret;
-}
+RUN_ALL_TESTS()
