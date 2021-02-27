@@ -51,10 +51,22 @@ Child finished
 
 ## References
 
+### Context switch
+
 - [System V ABI / AMD64](https://www.uclibc.org/docs/psABI-x86_64.pdf)
 - [Context switch в Xv6](https://github.com/guilleiguaran/xv6/blob/master/swtch.S)
+
+### Fibers
+
 - [Boost.fiber](https://github.com/boostorg/fiber)
+- [folly::fibers](https://github.com/facebook/folly/blob/master/folly/fibers/README.md)
 - [Project Loom: Fibers and Continuations for the Java Virtual Machine](https://cr.openjdk.java.net/~rpressler/loom/Loom-Proposal.html)
+
+### Scheduler
+
+- [xv6](https://github.com/guilleiguaran/xv6/blob/4ce832ddd280a4cea36e16115ddeaea74213314e/proc.c#L258)
+- [Linux](https://github.com/torvalds/linux/blob/291009f656e8eaebbdfd3a8d99f6b190a9ce9deb/kernel/sched/core.c#L4921)
+- [Golang](https://golang.org/src/runtime/proc.go)
 
 ## Опции CMake
 
