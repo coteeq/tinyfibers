@@ -6,6 +6,8 @@
 
 namespace tinyfibers {
 
+// ~ Futex for cooperative fibers
+
 class WaitQueue : private wheels::NonCopyable {
  public:
   WaitQueue();
