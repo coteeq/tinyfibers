@@ -5,7 +5,7 @@
 using namespace tinyfibers;
 
 void Recurse(size_t depth) {
-  std::cout << "Recurse @ depth = " << depth << std::endl;
+  std::cout << "Recurse @ depth " << depth << std::endl;
   Recurse(depth + 1);
 }
 
