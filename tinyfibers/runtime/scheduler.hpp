@@ -51,7 +51,7 @@ class Scheduler {
   void Destroy(Fiber* fiber);
 
  private:
-  context::ExecutionContext loop_context_;
+  context::ExecutionContext loop_context_;  // Thread context!
   FiberQueue run_queue_;
   Fiber* running_{nullptr};
 
