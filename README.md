@@ -54,7 +54,7 @@ Child finished
 ### Context switch
 
 - [System V ABI / AMD64](https://www.uclibc.org/docs/psABI-x86_64.pdf)
-- [Context switch в Xv6](https://github.com/guilleiguaran/xv6/blob/master/swtch.S)
+- [Context switch в Xv6](https://github.com/mit-pdos/xv6-public/blob/master/swtch.S)
 
 ### Fibers
 
@@ -64,7 +64,7 @@ Child finished
 
 ### Scheduler
 
-- [xv6](https://github.com/guilleiguaran/xv6/blob/4ce832ddd280a4cea36e16115ddeaea74213314e/proc.c#L258)
+- [xv6](https://github.com/mit-pdos/xv6-public/blob/eeb7b415dbcb12cc362d0783e41c3d1f44066b17/proc.c#L323)
 - [Linux](https://github.com/torvalds/linux/blob/291009f656e8eaebbdfd3a8d99f6b190a9ce9deb/kernel/sched/core.c#L4921)
 - [Golang](https://golang.org/src/runtime/proc.go)
 
