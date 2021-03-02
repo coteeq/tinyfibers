@@ -15,7 +15,10 @@ class WaitQueue : private wheels::NonCopyable {
 
   void Park();
 
+  // Move one fiber to scheduler run queue
   void WakeOne();
+
+  // Move all fibers to scheduler run queue
   void WakeAll();
 
  private:
