@@ -52,6 +52,7 @@ Fiber* Scheduler::Spawn(FiberRoutine routine) {
 
 void Scheduler::Yield() {
   Fiber* caller = GetCurrentFiber();
+  // Running -> Runnable
   caller->SetState(FiberState::Runnable);
   SwitchToScheduler(caller);
 }
