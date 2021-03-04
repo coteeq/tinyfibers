@@ -48,7 +48,7 @@ void Fiber::Trampoline() {
 
 void Fiber::SetupTrampoline() {
   context_.Setup(
-      /*stack=*/stack_.AsMemSpan(),
+      /*stack=*/stack_.View(),
       /*trampoline=*/Trampoline);
 }
 
