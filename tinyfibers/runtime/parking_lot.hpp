@@ -10,7 +10,7 @@ class ParkingLot {
   void Wake();
 
  private:
-  Fiber* waiter_{nullptr};
+  Fiber* waitee_{nullptr};
 };
 
 }  // namespace tinyfibers

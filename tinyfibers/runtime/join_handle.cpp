@@ -22,7 +22,7 @@ void JoinHandle::Join() {
 
   if (!completed_) {
     // Wake me on completion
-    waiter_.Park();
+    waitee_.Park();
   }
 
   fiber_ = nullptr;
@@ -44,7 +44,7 @@ void JoinHandle::CheckAttached() {
 
 void JoinHandle::OnCompleted() {
   completed_ = true;
-  waiter_.Wake();
+  waitee_.Wake();
 }
 
 }  // namespace tinyfibers
