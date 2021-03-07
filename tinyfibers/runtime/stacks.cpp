@@ -18,7 +18,7 @@ class StackAllocator {
  public:
   Stack Allocate() {
     if (!pool_.empty()) {
-      TakeFromPool();
+      return TakeFromPool();
     }
     return AllocateNewStack();
   }

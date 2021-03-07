@@ -36,7 +36,7 @@ class JoinHandle : public IFiberWatcher {
  private:
   Fiber* fiber_;
   bool completed_{false};
-  ParkingLot waiter_;
+  ParkingLot waitee_;
 };
 
 }  // namespace tinyfibers
