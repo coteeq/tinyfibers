@@ -12,6 +12,11 @@ namespace tinyfibers {
 
 using FiberQueue = wheels::IntrusiveList<Fiber>;
 
+// Asymmetric control transfer:
+// RunLoop: S -> F_init -> S -> F1 -> S -> F2 -> S -> ...
+// 1) S -> F (SwitchToFiber)
+// 2) F -> S (SwitchToScheduler)
+
 class Scheduler {
  public:
   Scheduler();
