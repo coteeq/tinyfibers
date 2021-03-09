@@ -17,7 +17,7 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
 }
 
 Fiber::~Fiber() {
-  if (watcher_) {
+  if (watcher_ != nullptr) {
     watcher_->OnCompleted();
   }
 }

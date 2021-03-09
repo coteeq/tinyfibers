@@ -10,7 +10,7 @@ void ParkingLot::Park() {
 }
 
 void ParkingLot::Wake() {
-  if (waitee_) {
+  if (waitee_ != nullptr) {
     GetCurrentScheduler()->Resume(waitee_);
   }
 }
