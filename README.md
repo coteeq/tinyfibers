@@ -1,6 +1,6 @@
 # Tiny Fibers
 
-_tinyfibers_ – минималистичная библиотека файберов, написанная для образовательных целей.
+Минималистичная библиотека файберов, написанная для образовательных целей.
 
 ## Цель
 
@@ -60,6 +60,7 @@ Child finished
 
 - [Boost.fiber](https://github.com/boostorg/fiber)
 - [folly::fibers](https://github.com/facebook/folly/blob/master/folly/fibers/README.md)
+- [Marl](https://github.com/google/marl/)  
 - [Project Loom: Fibers and Continuations for the Java Virtual Machine](https://cr.openjdk.java.net/~rpressler/loom/Loom-Proposal.html)
 
 ### Scheduler
