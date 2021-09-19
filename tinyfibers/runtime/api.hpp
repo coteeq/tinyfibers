@@ -2,12 +2,11 @@
 
 #include <tinyfibers/runtime/join_handle.hpp>
 
-#include <wheels/support/time.hpp>
 #include <wheels/support/function.hpp>
 
-namespace tinyfibers {
+#include <chrono>
 
-using wheels::Duration;
+namespace tinyfibers {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -37,7 +36,7 @@ void Yield();
 
 // Blocks the execution of the current fiber for _at_least_
 // the specified 'delay'
-void SleepFor(Duration delay);
+void SleepFor(std::chrono::milliseconds delay);
 
 // Returns the id of the current fiber
 FiberId GetId();

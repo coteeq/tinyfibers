@@ -4,6 +4,7 @@
 
 #include <wheels/support/assert.hpp>
 #include <wheels/support/panic.hpp>
+#include <wheels/support/stop_watch.hpp>
 
 namespace tinyfibers {
 
@@ -56,7 +57,7 @@ void Scheduler::Yield() {
   SwitchToScheduler(caller);
 }
 
-void Scheduler::SleepFor(Duration delay) {
+void Scheduler::SleepFor(std::chrono::milliseconds delay) {
   // Intentionally ineffective implementation
   // Support for sleep in scheduler left as homework
 
