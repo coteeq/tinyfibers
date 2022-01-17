@@ -2,8 +2,6 @@
 
 #include <wheels/intrusive/list.hpp>
 
-#include <memory>
-
 namespace tinyfibers {
 
 // ~ Futex for cooperative _single-threaded_ fibers
