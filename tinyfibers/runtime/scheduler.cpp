@@ -137,7 +137,7 @@ void Scheduler::Schedule(Fiber* fiber) {
 
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   auto stack = AllocateStack();
-  FiberId id = ids_.NextId();
+  FiberId id = ++next_id_;
   return new Fiber(std::move(routine), std::move(stack), id);
 }
 

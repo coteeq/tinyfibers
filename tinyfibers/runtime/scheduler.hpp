@@ -5,8 +5,6 @@
 
 #include <context/context.hpp>
 
-#include <wheels/support/id.hpp>
-
 #include <chrono>
 
 namespace tinyfibers {
@@ -61,7 +59,7 @@ class Scheduler {
   FiberQueue run_queue_;
   Fiber* running_{nullptr};
 
-  wheels::IdGenerator ids_;
+  size_t next_id_{0};
 };
 
 //////////////////////////////////////////////////////////////////////
