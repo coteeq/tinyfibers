@@ -58,6 +58,7 @@ class Scheduler {
   wheels::IntrusiveList<Fiber> run_queue_;
   Fiber* running_{nullptr};
 
+  // Resources
   size_t next_id_{0};
   StackAllocator stacks_;
 };
