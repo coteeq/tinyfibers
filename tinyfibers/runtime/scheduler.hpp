@@ -2,6 +2,7 @@
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/fiber.hpp>
+#include <tinyfibers/runtime/stacks.hpp>
 
 #include <context/context.hpp>
 
@@ -58,6 +59,7 @@ class Scheduler {
   Fiber* running_{nullptr};
 
   size_t next_id_{0};
+  StackAllocator stacks_;
 };
 
 //////////////////////////////////////////////////////////////////////
