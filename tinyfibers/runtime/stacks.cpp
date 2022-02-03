@@ -18,15 +18,24 @@ class StackAllocator {
  public:
   Stack Allocate() {
     if (!pool_.empty()) {
-      Stack stack = std::move(pool_.back());
-      pool_.pop_back();
-      return stack;
+      return TakeFromPool();
     }
-    return Stack::AllocatePages(kDefaultStackSizeInPages);
+    return AllocateNewStack();
   }
 
   void Release(Stack stack) {
     pool_.push_back(std::move(stack));
+  }
+
+ private:
+  static Stack AllocateNewStack() {
+    return Stack::AllocatePages(kDefaultStackSizeInPages);
+  }
+
+  Stack TakeFromPool() {
+    Stack stack = std::move(pool_.back());
+    pool_.pop_back();
+    return stack;
   }
 
  private:

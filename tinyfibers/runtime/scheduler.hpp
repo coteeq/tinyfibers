@@ -5,14 +5,16 @@
 
 #include <context/context.hpp>
 
-#include <wheels/support/time.hpp>
-#include <wheels/support/id.hpp>
+#include <chrono>
 
 #include <functional>
 
 namespace tinyfibers {
 
-using FiberQueue = wheels::IntrusiveList<Fiber>;
+// Asymmetric control transfer:
+// RunLoop: S -> F_init -> S -> F1 -> S -> F2 -> S -> ...
+// 1) S -> F (SwitchToFiber)
+// 2) F -> S (SwitchToScheduler)
 
 class Scheduler {
  public:
@@ -27,7 +29,7 @@ class Scheduler {
   Fiber* Spawn(FiberRoutine routine);
   void Yield();
   // Sleep for _at_least_ delay
-  void SleepFor(Duration delay);
+  void SleepFor(std::chrono::milliseconds delay);
   void Suspend();
   void Resume(Fiber* fiber);
   void Terminate();
@@ -49,7 +51,7 @@ class Scheduler {
   // Switch to `fiber` and run it until this fiber calls Yield or terminates
   void Step(Fiber* fiber);
   // ~ Handle system call (Yield / SleepFor / Terminate)
-  void Reschedule(Fiber* fiber);
+  void Dispatch(Fiber* fiber);
   // Add fiber to run queue
   void Schedule(Fiber* fiber);
 
@@ -59,12 +61,11 @@ class Scheduler {
   void CheckDeadlock();
 
  private:
-  context::ExecutionContext loop_context_;
-  FiberQueue run_queue_;
+  context::ExecutionContext loop_context_;  // Thread context!
+  wheels::IntrusiveList<Fiber> run_queue_;
   Fiber* running_{nullptr};
 
-  wheels::IdGenerator ids_;
-
+  size_t next_id_{0};
   size_t alive_count_{0};
 
   std::function<void()> deadlock_handler_;

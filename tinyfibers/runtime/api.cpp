@@ -24,7 +24,7 @@ void Yield() {
   GetCurrentScheduler()->Yield();
 }
 
-void SleepFor(Duration delay) {
+void SleepFor(std::chrono::milliseconds delay) {
   GetCurrentScheduler()->SleepFor(delay);
 }
 

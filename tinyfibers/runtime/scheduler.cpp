@@ -4,6 +4,7 @@
 
 #include <wheels/support/assert.hpp>
 #include <wheels/support/panic.hpp>
+#include <wheels/support/stop_watch.hpp>
 
 #include <limits>
 
@@ -47,10 +48,6 @@ void Scheduler::SwitchToScheduler(Fiber* me) {
   me->Context().SwitchTo(loop_context_);
 }
 
-void Scheduler::SwitchToFiber(Fiber* fiber) {
-  loop_context_.SwitchTo(fiber->Context());
-}
-
 // System calls
 
 Fiber* Scheduler::Spawn(FiberRoutine routine) {
@@ -65,7 +62,7 @@ void Scheduler::Yield() {
   SwitchToScheduler(caller);
 }
 
-void Scheduler::SleepFor(Duration delay) {
+void Scheduler::SleepFor(std::chrono::milliseconds delay) {
   // Intentionally ineffective implementation
   // Support for sleep in scheduler left as homework
 
@@ -91,6 +88,7 @@ void Scheduler::Resume(Fiber* fiber) {
 void Scheduler::Terminate() {
   Fiber* caller = GetCurrentFiber();
   caller->SetState(FiberState::Terminated);
+  // Leave this context forever
   SwitchToScheduler(caller);
 }
 
@@ -113,7 +111,7 @@ void Scheduler::RunLoop(size_t& fuel) {
   while (!run_queue_.IsEmpty() && fuel-- > 0) {
     Fiber* next = run_queue_.PopFront();
     Step(next);
-    Reschedule(next);  // ~ Handle syscall
+    Dispatch(next);  // ~ Handle syscall
   }
 }
 
@@ -124,7 +122,11 @@ void Scheduler::Step(Fiber* fiber) {
   running_ = nullptr;
 }
 
-void Scheduler::Reschedule(Fiber* fiber) {
+void Scheduler::SwitchToFiber(Fiber* fiber) {
+  loop_context_.SwitchTo(fiber->Context());
+}
+
+void Scheduler::Dispatch(Fiber* fiber) {
   switch (fiber->State()) {
     case FiberState::Runnable:  // From Yield
       Schedule(fiber);
@@ -148,7 +150,7 @@ void Scheduler::Schedule(Fiber* fiber) {
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   ++alive_count_;
   auto stack = AllocateStack();
-  FiberId id = ids_.NextId();
+  FiberId id = ++next_id_;
   return new Fiber(std::move(routine), std::move(stack), id);
 }
 

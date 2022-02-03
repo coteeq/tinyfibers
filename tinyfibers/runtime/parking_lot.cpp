@@ -5,13 +5,13 @@
 namespace tinyfibers {
 
 void ParkingLot::Park() {
-  waiter_ = GetCurrentFiber();
+  waitee_ = GetCurrentFiber();
   GetCurrentScheduler()->Suspend();
 }
 
 void ParkingLot::Wake() {
-  if (waiter_) {
-    GetCurrentScheduler()->Resume(waiter_);
+  if (waitee_ != nullptr) {
+    GetCurrentScheduler()->Resume(waitee_);
   }
 }
 

@@ -4,11 +4,14 @@
 
 // Run test routine in fiber scheduler
 
-#define TINY_FIBERS_TEST(name)      \
-  void FiberTestRoutine##name();    \
-  SIMPLE_TEST(name) {               \
-    tinyfibers::RunScheduler([]() { \
-      FiberTestRoutine##name();     \
-    });                             \
-  }                                 \
+#define TINY_FIBERS_TEST(name)       \
+  void FiberTestRoutine##name();     \
+  SIMPLE_TEST(name) {                \
+    bool exit = false;               \
+    tinyfibers::RunScheduler([&]() { \
+      FiberTestRoutine##name();      \
+      exit = true;                   \
+    });                              \
+    ASSERT_TRUE(exit);               \
+  }                                  \
   void FiberTestRoutine##name()

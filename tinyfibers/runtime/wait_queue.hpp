@@ -1,25 +1,28 @@
 #pragma once
 
-#include <wheels/support/noncopyable.hpp>
-
-#include <memory>
+#include <wheels/intrusive/list.hpp>
 
 namespace tinyfibers {
 
-class WaitQueue : private wheels::NonCopyable {
+// ~ Futex for cooperative _single-threaded_ fibers
+
+// Forward declaration
+class Fiber;
+
+class WaitQueue {
  public:
-  WaitQueue();
   ~WaitQueue();
 
   void Park();
 
+  // Move one fiber to scheduler run queue
   void WakeOne();
+
+  // Move all fibers to scheduler run queue
   void WakeAll();
 
  private:
-  // https://en.cppreference.com/w/cpp/language/pimpl
-  class Impl;
-  std::unique_ptr<Impl> pimpl_;
+  wheels::IntrusiveList<Fiber> waiters_;
 };
 
 }  // namespace tinyfibers

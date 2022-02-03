@@ -17,15 +17,13 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
 }
 
 Fiber::~Fiber() {
-  if (watcher_) {
+  if (watcher_ != nullptr) {
     watcher_->OnCompleted();
   }
 }
 
 void Fiber::Trampoline() {
   // Fiber execution starts here
-
-  // No RAII here!
 
   Fiber* fiber = GetCurrentFiber();
 

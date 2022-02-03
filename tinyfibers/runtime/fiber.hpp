@@ -6,7 +6,7 @@
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/watcher.hpp>
 
-#include <wheels/support/intrusive_list.hpp>
+#include <wheels/intrusive/list.hpp>
 
 namespace tinyfibers {
 
@@ -14,7 +14,7 @@ enum class FiberState {
   Starting,
   Runnable,  // in run queue
   Running,
-  Suspended,  // in wait queue
+  Suspended,  // for example, in wait queue
   Terminated
 };
 
