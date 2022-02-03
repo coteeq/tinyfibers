@@ -2,6 +2,7 @@
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/fiber.hpp>
+#include <tinyfibers/runtime/stacks.hpp>
 
 #include <context/context.hpp>
 
@@ -66,8 +67,9 @@ class Scheduler {
   Fiber* running_{nullptr};
 
   size_t next_id_{0};
-  size_t alive_count_{0};
+  StackAllocator stacks_;
 
+  size_t alive_count_{0};
   std::function<void()> deadlock_handler_;
 };
 

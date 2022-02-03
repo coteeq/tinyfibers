@@ -58,7 +58,6 @@ Child finished
 ## Документация
 
 - [API](/docs/api.md)
-- [Internals](/docs/internals.md)
 
 ## Ограничения 
 

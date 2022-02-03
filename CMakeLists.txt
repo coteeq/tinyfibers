@@ -22,6 +22,8 @@ option(TINY_FIBERS_BENCHMARKS "Enable tinyfibers benchmarks" OFF)
 
 add_subdirectory(tinyfibers)
 
+add_subdirectory(play)
+
 if(TINY_FIBERS_EXAMPLES)
     add_subdirectory(examples)
 endif()
