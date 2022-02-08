@@ -36,7 +36,6 @@ int main() {
     // управление при этом остается у текущего файбера
     JoinHandle child = Spawn([]() {
       std::cout << "Hello from child!" << std::endl;
-      self::Yield();  // Отпускаем управление, текущий файбер встает в конец очереди планировщика
     });
     child.Join();  // Блокируем текущий файбер до завершения дочернего
     std::cout << "Child finished" << std::endl;
@@ -58,6 +57,7 @@ Child finished
 ## Документация
 
 - [API](/docs/api.md)
+- [Диаграммы](https://disk.yandex.ru/d/QCh7Yk-FwSIjtA)
 
 ## Ограничения 
 
