@@ -55,7 +55,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
 
-  [[noreturn]] static void Trampoline();
+  [[noreturn]] static void Trampoline(void* arg);
   void SetupTrampoline();
 
  private:

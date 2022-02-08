@@ -22,10 +22,10 @@ Fiber::~Fiber() {
   }
 }
 
-void Fiber::Trampoline() {
+void Fiber::Trampoline(void* arg) {
   // Fiber execution starts here
 
-  Fiber* fiber = GetCurrentFiber();
+  Fiber* fiber = (Fiber*)arg;
 
   // Finalize first context switch
   fiber->Context().AfterStart();
@@ -47,7 +47,8 @@ void Fiber::Trampoline() {
 void Fiber::SetupTrampoline() {
   context_.Setup(
       /*stack=*/stack_.View(),
-      /*trampoline=*/Trampoline);
+      /*trampoline=*/Trampoline,
+      /*arg=*/this);
 }
 
 }  // namespace tinyfibers
