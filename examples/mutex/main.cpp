@@ -1,18 +1,37 @@
 #include <tinyfibers/api.hpp>
+#include <tinyfibers/sync/mutex.hpp>
 
 #include <iostream>
 
 using namespace tinyfibers;
+using namespace std::chrono_literals;
 
 int main() {
   RunScheduler([]() {
-    std::cout << "Hello from parent!" << std::endl;
-    JoinHandle child = Spawn([]() {
-      std::cout << "Hello from child!" << std::endl;
-      self::Yield();
+    Mutex mutex;
+
+    std::cout << "Starting" << std::endl;
+
+    auto h2 = Spawn([&mutex]() {
+      mutex.Lock();
+      {
+        // Critical section
+        self::SleepFor(3s);
+      }
+      mutex.Unlock();
     });
-    child.Join();
-    std::cout << "Child finished" << std::endl;
+
+    auto h3 = Spawn([&mutex]() {
+      std::cout << "Try to lock mutex from Fiber #" << self::GetId() << std::endl;
+      mutex.Lock();  // <-- Blocks for 3s
+      {
+        std::cout << "Mutex locked by Fiber #" << self::GetId() << std::endl;
+      }
+      mutex.Unlock();
+    });
+
+    h2.Join();
+    h3.Join();
   });
   return 0;
 }
