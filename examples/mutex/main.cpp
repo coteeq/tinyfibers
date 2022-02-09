@@ -12,7 +12,7 @@ int main() {
 
     std::cout << "Starting" << std::endl;
 
-    auto h2 = Spawn([&mutex]() {
+    JoinHandle h2 = Spawn([&mutex]() {
       mutex.Lock();
       {
         // Critical section
@@ -21,7 +21,7 @@ int main() {
       mutex.Unlock();
     });
 
-    auto h3 = Spawn([&mutex]() {
+    JoinHandle h3 = Spawn([&mutex]() {
       std::cout << "Try to lock mutex from Fiber #" << self::GetId() << std::endl;
       mutex.Lock();  // <-- Blocks for 3s
       {
