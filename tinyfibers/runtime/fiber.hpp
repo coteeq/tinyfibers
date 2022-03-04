@@ -18,7 +18,8 @@ enum class FiberState {
   Terminated
 };
 
-class Fiber : public wheels::IntrusiveListNode<Fiber> {
+class Fiber : public wheels::IntrusiveListNode<Fiber>,
+              public context::ITrampoline {
   friend class Scheduler;
 
  public:
@@ -46,17 +47,14 @@ class Fiber : public wheels::IntrusiveListNode<Fiber> {
     watcher_ = watcher;
   }
 
-  void RunUserRoutine() {
-    routine_();
-  }
-
   ~Fiber();
 
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
-
-  [[noreturn]] static void Trampoline(void* arg);
   void SetupTrampoline();
+
+  // context::ITrampoline
+  void Run() override;
 
  private:
   FiberRoutine routine_;

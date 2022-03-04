@@ -19,6 +19,6 @@ FetchContent_MakeAvailable(wheels)
 FetchContent_Declare(
         context
         GIT_REPOSITORY https://gitlab.com/Lipovsky/context.git
-        GIT_TAG master
+        GIT_TAG itrampoline
 )
 FetchContent_MakeAvailable(context)

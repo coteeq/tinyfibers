@@ -22,18 +22,13 @@ Fiber::~Fiber() {
   }
 }
 
-void Fiber::Trampoline(void* arg) {
+void Fiber::Run() {
   // Fiber execution starts here
 
-  Fiber* fiber = (Fiber*)arg;
-
-  // Finalize first context switch
-  fiber->Context().AfterStart();
-
-  fiber->SetState(FiberState::Running);
+  SetState(FiberState::Running);
 
   try {
-    fiber->RunUserRoutine();
+    routine_();
   } catch (...) {
     WHEELS_PANIC(
         "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
@@ -47,8 +42,7 @@ void Fiber::Trampoline(void* arg) {
 void Fiber::SetupTrampoline() {
   context_.Setup(
       /*stack=*/stack_.View(),
-      /*trampoline=*/Trampoline,
-      /*arg=*/this);
+      /*trampoline=*/this);
 }
 
 }  // namespace tinyfibers
