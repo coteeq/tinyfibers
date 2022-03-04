@@ -51,7 +51,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
 
  private:
   Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
-  void SetupTrampoline();
+  void SetupContext();
 
   // context::ITrampoline
   void Run() override;

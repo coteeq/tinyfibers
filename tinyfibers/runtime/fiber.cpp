@@ -13,7 +13,7 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
       stack_(std::move(stack)),
       state_(FiberState::Starting),
       id_(id) {
-  SetupTrampoline();
+  SetupContext();
 }
 
 Fiber::~Fiber() {
@@ -39,7 +39,7 @@ void Fiber::Run() {
   WHEELS_UNREACHABLE();
 }
 
-void Fiber::SetupTrampoline() {
+void Fiber::SetupContext() {
   context_.Setup(
       /*stack=*/stack_.View(),
       /*trampoline=*/this);
