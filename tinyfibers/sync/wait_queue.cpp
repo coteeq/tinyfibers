@@ -1,4 +1,4 @@
-#include <tinyfibers/runtime/wait_queue.hpp>
+#include <tinyfibers/sync/wait_queue.hpp>
 
 #include <tinyfibers/runtime/scheduler.hpp>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tinyfibers/runtime/join_handle.hpp>
+#include <tinyfibers/sync/join_handle.hpp>
 
 #include <wheels/support/function.hpp>
 

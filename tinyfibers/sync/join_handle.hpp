@@ -1,7 +1,7 @@
 #pragma once
 
 #include <tinyfibers/runtime/watcher.hpp>
-#include <tinyfibers/runtime/parking_lot.hpp>
+#include <tinyfibers/sync/parking_lot.hpp>
 
 namespace tinyfibers {
 

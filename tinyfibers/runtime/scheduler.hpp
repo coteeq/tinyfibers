@@ -2,7 +2,7 @@
 
 #include <tinyfibers/runtime/api.hpp>
 #include <tinyfibers/runtime/fiber.hpp>
-#include <tinyfibers/runtime/stacks.hpp>
+#include <tinyfibers/runtime/stack_allocator.hpp>
 
 #include <context/context.hpp>
 
