@@ -40,7 +40,7 @@ class CondVar {
   }
 
  private:
-  WaitQueue wait_queue_;
+  detail::WaitQueue wait_queue_;
 };
 
 }  // namespace tinyfibers

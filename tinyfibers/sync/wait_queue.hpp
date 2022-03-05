@@ -4,10 +4,12 @@
 
 namespace tinyfibers {
 
-// ~ Futex for cooperative _single-threaded_ fibers
-
 // Forward declaration
 class Fiber;
+
+namespace detail {
+
+// ~ Futex for cooperative _single-threaded_ fibers
 
 class WaitQueue {
  public:
@@ -24,5 +26,7 @@ class WaitQueue {
  private:
   wheels::IntrusiveList<Fiber> waiters_;
 };
+
+}  // namespace detail
 
 }  // namespace tinyfibers

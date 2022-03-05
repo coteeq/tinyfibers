@@ -4,6 +4,8 @@ namespace tinyfibers {
 
 class Fiber;
 
+namespace detail {
+
 class ParkingLot {
  public:
   void Park();
@@ -12,5 +14,7 @@ class ParkingLot {
  private:
   Fiber* waitee_{nullptr};
 };
+
+}  // namespace detail
 
 }  // namespace tinyfibers

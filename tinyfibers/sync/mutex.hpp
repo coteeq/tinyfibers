@@ -44,7 +44,7 @@ class Mutex {
 
  private:
   bool locked_{false};
-  WaitQueue wait_queue_;
+  detail::WaitQueue wait_queue_;
 };
 
 }  // namespace tinyfibers

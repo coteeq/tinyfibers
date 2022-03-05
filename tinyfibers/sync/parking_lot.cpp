@@ -4,6 +4,8 @@
 
 namespace tinyfibers {
 
+namespace detail {
+
 void ParkingLot::Park() {
   waitee_ = GetCurrentFiber();
   GetCurrentScheduler()->Suspend();
@@ -14,5 +16,7 @@ void ParkingLot::Wake() {
     GetCurrentScheduler()->Resume(waitee_);
   }
 }
+
+}  // namespace detail
 
 }  // namespace tinyfibers

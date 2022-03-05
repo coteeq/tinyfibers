@@ -19,7 +19,7 @@ class WaitGroup : public IFiberWatcher {
 
  private:
   size_t active_{0};
-  ParkingLot parking_lot_;
+  detail::ParkingLot parking_lot_;
 };
 
 }  // namespace tinyfibers

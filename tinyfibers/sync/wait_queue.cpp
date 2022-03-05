@@ -6,6 +6,8 @@
 
 namespace tinyfibers {
 
+namespace detail {
+
 static inline void Suspend() {
   GetCurrentScheduler()->Suspend();
 }
@@ -38,5 +40,7 @@ void WaitQueue::WakeAll() {
 WaitQueue::~WaitQueue() {
   WHEELS_ASSERT(waiters_.IsEmpty(), "WaitQueue is not empty");
 }
+
+}  // namespace detail
 
 }  // namespace tinyfibers

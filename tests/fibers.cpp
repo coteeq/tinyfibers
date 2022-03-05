@@ -141,7 +141,7 @@ TEST_SUITE(Fibers) {
   }
 
   TINY_FIBERS_TEST(WaitQueue) {
-    WaitQueue wait_queue;
+    detail::WaitQueue wait_queue;
     int step = 0;
 
     JoinHandle waker = Spawn([&]() {
@@ -287,8 +287,8 @@ TEST_SUITE(Fibers) {
     static_assert(!std::is_copy_assignable<CondVar>::value, "Broken CondVar");
     static_assert(!std::is_copy_constructible<CondVar>::value, "Broken CondVar");
 
-    static_assert(!std::is_copy_assignable<WaitQueue>::value, "Broken WaitQueue");
-    static_assert(!std::is_copy_constructible<WaitQueue>::value, "Broken WaitQueue");
+    static_assert(!std::is_copy_assignable<detail::WaitQueue>::value, "Broken WaitQueue");
+    static_assert(!std::is_copy_constructible<detail::WaitQueue>::value, "Broken WaitQueue");
   }
 
   SIMPLE_TEST(NoLeaks) {
