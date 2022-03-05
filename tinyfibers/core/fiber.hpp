@@ -3,8 +3,8 @@
 #include <context/context.hpp>
 #include <context/stack.hpp>
 
-#include <tinyfibers/runtime/api.hpp>
-#include <tinyfibers/runtime/watcher.hpp>
+#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/core/watcher.hpp>
 
 #include <wheels/intrusive/list.hpp>
 

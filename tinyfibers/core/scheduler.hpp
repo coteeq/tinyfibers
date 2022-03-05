@@ -1,8 +1,8 @@
 #pragma once
 
-#include <tinyfibers/runtime/api.hpp>
-#include <tinyfibers/runtime/fiber.hpp>
-#include <tinyfibers/runtime/stack_allocator.hpp>
+#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/core/fiber.hpp>
+#include <tinyfibers/core/stack_allocator.hpp>
 
 #include <context/context.hpp>
 

@@ -1,6 +1,6 @@
-#include <tinyfibers/runtime/fiber.hpp>
+#include <tinyfibers/core/fiber.hpp>
 
-#include <tinyfibers/runtime/scheduler.hpp>
+#include <tinyfibers/core/scheduler.hpp>
 
 #include <wheels/support/compiler.hpp>
 #include <wheels/support/panic.hpp>
