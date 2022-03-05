@@ -4,12 +4,15 @@
 
 using namespace tinyfibers;
 
+void Breakpoint() {
+}
+
 void Bar() {
   std::cout << "Bar / before Yield" << std::endl;
-  // BP: Before first Yield
+  Breakpoint(); // Before first Yield
   self::Yield();
   std::cout << "Bar / after Yield" << std::endl;
-  // BP: After second Yield
+  Breakpoint(); // After second Yield
 }
 
 void Foo() {
@@ -18,7 +21,7 @@ void Foo() {
 
 void Baz() {
   std::cout << "Baz / after first Yield" << std::endl;
-  // BP: After first Yield
+  Breakpoint(); // After first Yield
   self::Yield();
 }
 

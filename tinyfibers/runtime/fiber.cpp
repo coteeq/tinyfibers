@@ -13,7 +13,7 @@ Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
       stack_(std::move(stack)),
       state_(FiberState::Starting),
       id_(id) {
-  SetupTrampoline();
+  SetupContext();
 }
 
 Fiber::~Fiber() {
@@ -22,18 +22,13 @@ Fiber::~Fiber() {
   }
 }
 
-void Fiber::Trampoline() {
+void Fiber::Run() {
   // Fiber execution starts here
 
-  Fiber* fiber = GetCurrentFiber();
-
-  // Finalize first context switch
-  fiber->Context().AfterStart();
-
-  fiber->SetState(FiberState::Running);
+  SetState(FiberState::Running);
 
   try {
-    fiber->RunUserRoutine();
+    routine_();
   } catch (...) {
     WHEELS_PANIC(
         "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
@@ -44,10 +39,10 @@ void Fiber::Trampoline() {
   WHEELS_UNREACHABLE();
 }
 
-void Fiber::SetupTrampoline() {
+void Fiber::SetupContext() {
   context_.Setup(
       /*stack=*/stack_.View(),
-      /*trampoline=*/Trampoline);
+      /*trampoline=*/this);
 }
 
 }  // namespace tinyfibers
