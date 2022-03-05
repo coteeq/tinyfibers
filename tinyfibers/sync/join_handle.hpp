@@ -10,30 +10,14 @@ class Fiber;
 // An owned permission to join on a fiber
 // ~ https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
 
-namespace detail {
+class JoinHandle : public IFiberWatcher {
+  friend class Fiber;
 
-class JoinState : public IFiberWatcher {
- public:
-  // Client
-  void Join();
-
-  // Fiber
-  void OnCompleted() override;
-
- private:
-  bool completed_{false};
-  ParkingLot waitee_;
-};
-
-}  // namespace detail
-
-class JoinHandle {
  public:
   JoinHandle(Fiber* fiber);
 
   // Movable
-  JoinHandle(JoinHandle&& that) = default;
-  JoinHandle& operator=(JoinHandle&& that) = default;
+  JoinHandle(JoinHandle&& that);
 
   // Non-copyable
   JoinHandle(const JoinHandle& that) = delete;
@@ -46,7 +30,13 @@ class JoinHandle {
   ~JoinHandle();
 
  private:
-  std::shared_ptr<detail::JoinState> state_;
+  void CheckAttached();
+  void OnCompleted() override;
+
+ private:
+  Fiber* fiber_;
+  bool completed_{false};
+  ParkingLot waitee_;
 };
 
 }  // namespace tinyfibers

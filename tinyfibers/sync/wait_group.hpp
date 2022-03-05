@@ -1,12 +1,13 @@
 #pragma once
 
 #include <tinyfibers/core/api.hpp>
+#include <tinyfibers/core/watcher.hpp>
 
 #include <vector>
 
 namespace tinyfibers {
 
-class WaitGroup {
+class WaitGroup : public IFiberWatcher {
  public:
   WaitGroup& Spawn(FiberRoutine routine);
   void Wait();
@@ -14,7 +15,11 @@ class WaitGroup {
   ~WaitGroup();
 
  private:
-  std::vector<JoinHandle> join_handles_;
+  void OnCompleted() override;
+
+ private:
+  size_t active_{0};
+  ParkingLot parking_lot_;
 };
 
 }  // namespace tinyfibers

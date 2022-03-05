@@ -9,6 +9,4 @@ struct IFiberWatcher {
   virtual void OnCompleted() = 0;
 };
 
-using IFiberWatcherPtr = std::shared_ptr<IFiberWatcher>;
-
 }  // namespace tinyfibers
