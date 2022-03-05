@@ -4,47 +4,38 @@
 
 namespace tinyfibers {
 
-JoinHandle::JoinHandle(Fiber* fiber) : fiber_(fiber) {
-  fiber_->SetWatcher(this);
-}
+namespace detail {
 
-JoinHandle::JoinHandle(JoinHandle&& that) {
-  fiber_ = std::exchange(that.fiber_, nullptr);
-  completed_ = that.completed_;
-  if (!completed_) {
-    // Keep watching
-    fiber_->SetWatcher(this);
-  }
-}
-
-void JoinHandle::Join() {
-  CheckAttached();
-
+void JoinState::Join() {
   if (!completed_) {
     // Wake me on completion
     waitee_.Park();
   }
+}
 
-  fiber_ = nullptr;
+void JoinState::OnCompleted() {
+  completed_ = true;
+  waitee_.Wake();
+}
+
+}   // namespace detail
+
+JoinHandle::JoinHandle(Fiber* fiber)
+    : state_(std::make_shared<detail::JoinState>()) {
+  fiber->SetWatcher(state_);
+}
+
+void JoinHandle::Join() {
+  state_->Join();
+  state_.reset();
 }
 
 void JoinHandle::Detach() {
-  CheckAttached();
-  fiber_->SetWatcher(nullptr);
-  fiber_ = nullptr;
+  state_.reset();
 }
 
 JoinHandle::~JoinHandle() {
-  WHEELS_VERIFY(fiber_ == nullptr, "Explicit Join or Detach required");
-}
-
-void JoinHandle::CheckAttached() {
-  WHEELS_VERIFY(fiber_, "Detached JoinHandle");
-}
-
-void JoinHandle::OnCompleted() {
-  completed_ = true;
-  waitee_.Wake();
+  WHEELS_VERIFY(!state_, "Explicit Join or Detach required");
 }
 
 }  // namespace tinyfibers

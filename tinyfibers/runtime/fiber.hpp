@@ -43,8 +43,8 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
     state_ = target;
   }
 
-  void SetWatcher(IFiberWatcher* watcher) {
-    watcher_ = watcher;
+  void SetWatcher(IFiberWatcherPtr watcher) {
+    watcher_ = std::move(watcher);
   }
 
   ~Fiber();
@@ -62,7 +62,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   context::ExecutionContext context_;
   FiberState state_;
   FiberId id_;
-  IFiberWatcher* watcher_{nullptr};
+  IFiberWatcherPtr watcher_{nullptr};
 };
 
 }  // namespace tinyfibers
