@@ -54,7 +54,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   void SetupContext();
 
   // context::ITrampoline
-  void Run() override;
+  [[noreturn]] void Run() override;
 
  private:
   FiberRoutine routine_;
