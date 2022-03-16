@@ -41,6 +41,10 @@ void Scheduler::SwitchToScheduler(Fiber* me) {
   me->Context().SwitchTo(loop_context_);
 }
 
+void Scheduler::ExitToScheduler(Fiber* me) {
+  me->Context().ExitTo(loop_context_);
+}
+
 // System calls
 
 Fiber* Scheduler::Spawn(FiberRoutine routine) {
@@ -82,7 +86,7 @@ void Scheduler::Terminate() {
   Fiber* caller = GetCurrentFiber();
   caller->SetState(FiberState::Terminated);
   // Leave this context forever
-  SwitchToScheduler(caller);
+  ExitToScheduler(/*me=*/caller);
 }
 
 // Scheduling

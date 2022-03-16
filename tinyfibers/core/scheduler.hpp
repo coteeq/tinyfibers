@@ -40,6 +40,7 @@ class Scheduler {
   // Context switches
   // Fiber context -> scheduler (thread) context
   void SwitchToScheduler(Fiber* me);
+  void ExitToScheduler(Fiber* me);
   // Scheduler context -> fiber context
   void SwitchToFiber(Fiber* fiber);
 
