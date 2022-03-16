@@ -2,7 +2,7 @@
 #include <tinyfibers/test/test.hpp>
 
 #include <tinyfibers/api.hpp>
-#include <tinyfibers/sync/wait_group.hpp>
+#include <tinyfibers/sync/nursery.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
@@ -105,10 +105,10 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    WaitGroup wg;
-    wg.Spawn(first);
-    wg.Spawn(second);
-    wg.Wait();
+    Nursery nursery;
+    nursery.Spawn(first);
+    nursery.Spawn(second);
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(SleepFor) {
@@ -131,13 +131,13 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    WaitGroup wg;
+    Nursery nursery;
     for (size_t k = 0; k < kFibers; ++k) {
-      wg.Spawn([&, k]() {
+      nursery.Spawn([&, k]() {
         routine(k);
       });
     }
-    wg.Wait();
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(WaitQueue) {
@@ -180,30 +180,30 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    WaitGroup wg;
-    wg.Spawn(routine).Spawn(routine);
-    wg.Wait();
+    Nursery nursery;
+    nursery.Spawn(routine).Spawn(routine);
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(MutexTryLock) {
     Mutex mutex;
 
-    WaitGroup wg;
+    Nursery nursery;
 
-    wg.Spawn([&mutex]() {
+    nursery.Spawn([&mutex]() {
       mutex.Lock();
       self::Yield();
       mutex.Unlock();
     });
 
-    wg.Spawn([&mutex]() {
+    nursery.Spawn([&mutex]() {
       ASSERT_FALSE(mutex.TryLock());
       self::Yield();
       ASSERT_TRUE(mutex.TryLock());
       mutex.Unlock();
     });
 
-    wg.Wait();
+    nursery.Wait();
   }
 
   /*
@@ -218,16 +218,16 @@ TEST_SUITE(Fibers) {
     CondVar ready;
     std::string message;
 
-    WaitGroup wg;
+    Nursery nursery;
 
-    wg.Spawn([&]() {
+    nursery.Spawn([&]() {
       std::unique_lock lock(mutex);
 
       ready.Wait(mutex);
       ASSERT_EQ(message, "Hello");
     });
 
-    wg.Spawn([&]() {
+    nursery.Spawn([&]() {
       std::lock_guard guard(mutex);
 
       for (size_t i = 0; i < 100; ++i) {
@@ -237,7 +237,7 @@ TEST_SUITE(Fibers) {
       ready.NotifyOne();
     });
 
-    wg.Wait();
+    nursery.Wait();
   }
 
   class OnePassBarrier {
@@ -269,15 +269,15 @@ TEST_SUITE(Fibers) {
     OnePassBarrier barrier{kFibers};
     size_t arrived = 0;
 
-    WaitGroup wg;
+    Nursery nursery;
     for (size_t i = 0; i < kFibers; ++i) {
-      wg.Spawn([&]() {
+      nursery.Spawn([&]() {
         ++arrived;
         barrier.Arrive();
         ASSERT_EQ(arrived, kFibers);
       });
     }
-    wg.Wait();
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(NonCopyable) {

@@ -7,12 +7,12 @@
 
 namespace tinyfibers {
 
-class WaitGroup : public IFiberWatcher {
+class Nursery : public IFiberWatcher {
  public:
-  WaitGroup& Spawn(FiberRoutine routine);
+  Nursery& Spawn(FiberRoutine routine);
   void Wait();
 
-  ~WaitGroup();
+  ~Nursery();
 
  private:
   void OnCompleted() override;
