@@ -2,6 +2,7 @@
 
 #include <context/stack.hpp>
 
+#include <optional>
 #include <vector>
 
 namespace tinyfibers {
@@ -15,7 +16,7 @@ class StackAllocator {
 
  private:
   static Stack AllocateNew();
-  Stack TakeFromPool();
+  std::optional<Stack> TryTakeFromPool();
 
  private:
   std::vector<Stack> pool_;

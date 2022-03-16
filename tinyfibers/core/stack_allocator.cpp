@@ -13,8 +13,8 @@ static const size_t kDefaultStackSizeInPages = 8;
 //////////////////////////////////////////////////////////////////////
 
 Stack StackAllocator::Allocate() {
-  if (!pool_.empty()) {
-    return TakeFromPool();
+  if (auto stack = TryTakeFromPool()) {
+    return std::move(*stack);
   }
   return AllocateNew();
 }
@@ -27,7 +27,11 @@ Stack StackAllocator::AllocateNew() {
   return Stack::AllocatePages(kDefaultStackSizeInPages);
 }
 
-Stack StackAllocator::TakeFromPool() {
+std::optional<Stack> StackAllocator::TryTakeFromPool() {
+  if (pool_.empty()) {
+    return std::nullopt;
+  }
+
   Stack stack = std::move(pool_.back());
   pool_.pop_back();
   return stack;

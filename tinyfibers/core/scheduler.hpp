@@ -26,7 +26,7 @@ class Scheduler {
 
   Fiber* Spawn(FiberRoutine routine);
   void Yield();
-  // Sleep for _at_least_ delay
+  // Sleep for _at_least_ `delay`
   void SleepFor(std::chrono::milliseconds delay);
   void Suspend();
   void Resume(Fiber* fiber);
