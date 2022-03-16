@@ -8,33 +8,31 @@ namespace tinyfibers {
 
 namespace detail {
 
-static inline void Suspend() {
-  GetCurrentScheduler()->Suspend();
-}
-
-static inline void Resume(Fiber* fiber) {
-  GetCurrentScheduler()->Resume(fiber);
-}
-
 void WaitQueue::Park() {
   Fiber* caller = GetCurrentFiber();
   waiters_.PushBack(caller);
-  Suspend();
+  SuspendCaller();
 }
 
 void WaitQueue::WakeOne() {
   if (waiters_.IsEmpty()) {
     return;
   }
-  Fiber* fiber = waiters_.PopFront();
-  Resume(fiber);
+  Resume(waiters_.PopFront());
 }
 
 void WaitQueue::WakeAll() {
   while (!waiters_.IsEmpty()) {
-    Fiber* fiber = waiters_.PopFront();
-    Resume(fiber);
+    Resume(waiters_.PopFront());
   }
+}
+
+void WaitQueue::Resume(Fiber* fiber) {
+  GetCurrentScheduler()->Resume(fiber);
+}
+
+void WaitQueue::SuspendCaller() {
+  GetCurrentScheduler()->Suspend();
 }
 
 WaitQueue::~WaitQueue() {
