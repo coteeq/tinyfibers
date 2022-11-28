@@ -18,7 +18,7 @@ FetchContent_MakeAvailable(wheels)
 
 FetchContent_Declare(
         sure
-        GIT_REPOSITORY https://gitlab.com/Lipovsky/context.git
+        GIT_REPOSITORY https://gitlab.com/Lipovsky/sure.git
         GIT_TAG master
 )
 FetchContent_MakeAvailable(sure)
