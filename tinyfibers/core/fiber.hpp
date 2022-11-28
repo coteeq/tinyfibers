@@ -1,7 +1,7 @@
 #pragma once
 
-#include <context/context.hpp>
-#include <context/stack.hpp>
+#include <sure/context.hpp>
+#include <sure/stack.hpp>
 
 #include <tinyfibers/core/api.hpp>
 #include <tinyfibers/core/watcher.hpp>
@@ -19,7 +19,7 @@ enum class FiberState {
 };
 
 class Fiber : public wheels::IntrusiveListNode<Fiber>,
-              public context::ITrampoline {
+              public sure::ITrampoline {
   friend class Scheduler;
 
  public:
@@ -27,11 +27,11 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
     return id_;
   }
 
-  context::ExecutionContext& Context() {
+  sure::ExecutionContext& Context() {
     return context_;
   }
 
-  context::Stack& Stack() {
+  sure::Stack& Stack() {
     return stack_;
   }
 
@@ -50,16 +50,16 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   ~Fiber();
 
  private:
-  Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id);
+  Fiber(FiberRoutine routine, sure::Stack&& stack, FiberId id);
   void SetupContext();
 
-  // context::ITrampoline
-  [[noreturn]] void Run() override;
+  // sure::ITrampoline
+  [[noreturn]] void Run() noexcept override;
 
  private:
   FiberRoutine routine_;
-  context::Stack stack_;
-  context::ExecutionContext context_;
+  sure::Stack stack_;
+  sure::ExecutionContext context_;
   FiberState state_;
   FiberId id_;
   IFiberWatcher* watcher_{nullptr};

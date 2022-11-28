@@ -4,7 +4,7 @@
 #include <tinyfibers/core/fiber.hpp>
 #include <tinyfibers/core/stack_allocator.hpp>
 
-#include <context/context.hpp>
+#include <sure/context.hpp>
 
 #include <chrono>
 
@@ -55,7 +55,7 @@ class Scheduler {
   void Destroy(Fiber* fiber);
 
  private:
-  context::ExecutionContext loop_context_;  // Thread context!
+  sure::ExecutionContext loop_context_;  // Thread context!
   wheels::IntrusiveList<Fiber> run_queue_;
   Fiber* running_{nullptr};
 
