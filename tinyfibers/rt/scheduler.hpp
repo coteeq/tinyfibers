@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tinyfibers/core/api.hpp>
-#include <tinyfibers/core/fiber.hpp>
-#include <tinyfibers/core/stack_allocator.hpp>
+#include <tinyfibers/rt/fiber.hpp>
+#include <tinyfibers/rt/stack_allocator.hpp>
 
 #include <sure/context.hpp>
 
@@ -16,6 +15,8 @@ namespace tinyfibers {
 // 2) F -> S (SwitchToScheduler)
 
 class Scheduler {
+  using FiberRoutine = std::function<void()>;
+
  public:
   Scheduler();
 

@@ -1,12 +1,12 @@
 #include <tinyfibers/sync/nursery.hpp>
 
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 #include <wheels/support/assert.hpp>
 
 namespace tinyfibers {
 
-Nursery& Nursery::Spawn(FiberRoutine routine) {
+Nursery& Nursery::Spawn(std::function<void()> routine) {
   Fiber* newbie = GetCurrentScheduler()->Spawn(std::move(routine));
   newbie->SetWatcher(this);
   ++active_;

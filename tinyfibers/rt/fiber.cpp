@@ -1,6 +1,6 @@
-#include <tinyfibers/core/fiber.hpp>
+#include <tinyfibers/rt/fiber.hpp>
 
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 #include <wheels/support/compiler.hpp>
 #include <wheels/support/panic.hpp>
@@ -8,7 +8,7 @@
 
 namespace tinyfibers {
 
-Fiber::Fiber(FiberRoutine routine, sure::Stack&& stack, FiberId id)
+Fiber::Fiber(Routine routine, sure::Stack&& stack, FiberId id)
     : routine_(std::move(routine)),
       stack_(std::move(stack)),
       state_(FiberState::Starting),

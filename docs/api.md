@@ -7,7 +7,7 @@
 
 ```cpp
 RunScheduler([]() {
-  std::cout << "I'm fiber!" << std::endl;
+  std::cout << "I'm a fiber!" << std::endl;
 });
 ```
 

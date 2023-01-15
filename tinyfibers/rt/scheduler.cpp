@@ -1,4 +1,4 @@
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 #include <wheels/support/assert.hpp>
 #include <wheels/support/panic.hpp>

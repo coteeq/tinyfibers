@@ -1,6 +1,6 @@
 #include <tinyfibers/sync/parking_lot.hpp>
 
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 namespace tinyfibers {
 

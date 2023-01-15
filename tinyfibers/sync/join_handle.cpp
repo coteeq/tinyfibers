@@ -1,6 +1,6 @@
 #include <tinyfibers/sync/join_handle.hpp>
 
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 namespace tinyfibers {
 

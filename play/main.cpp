@@ -1,4 +1,5 @@
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/sched/id.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 
 #include <iostream>

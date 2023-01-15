@@ -1,19 +1,13 @@
-#include <tinyfibers/core/api.hpp>
+#include <tinyfibers/sched/spawn.hpp>
+#include <tinyfibers/sched/yield.hpp>
+#include <tinyfibers/sched/sleep_for.hpp>
+#include <tinyfibers/sched/id.hpp>
 
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 namespace tinyfibers {
 
-//////////////////////////////////////////////////////////////////////
-
-void RunScheduler(FiberRoutine init) {
-  Scheduler scheduler;
-  scheduler.Run(std::move(init));
-}
-
-//////////////////////////////////////////////////////////////////////
-
-JoinHandle Spawn(FiberRoutine routine) {
+JoinHandle Spawn(std::function<void()> routine) {
   Fiber* fiber = GetCurrentScheduler()->Spawn(std::move(routine));
   return JoinHandle{fiber};
 }

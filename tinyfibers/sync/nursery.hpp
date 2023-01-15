@@ -1,7 +1,8 @@
 #pragma once
 
-#include <tinyfibers/core/api.hpp>
-#include <tinyfibers/core/watcher.hpp>
+#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/rt/watcher.hpp>
+#include <tinyfibers/sync/parking_lot.hpp>
 
 #include <vector>
 
@@ -9,7 +10,7 @@ namespace tinyfibers {
 
 class Nursery : public IFiberWatcher {
  public:
-  Nursery& Spawn(FiberRoutine routine);
+  Nursery& Spawn(std::function<void()> routine);
   void Wait();
 
   ~Nursery();

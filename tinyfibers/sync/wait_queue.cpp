@@ -1,6 +1,6 @@
 #include <tinyfibers/sync/wait_queue.hpp>
 
-#include <tinyfibers/core/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 #include <wheels/support/assert.hpp>
 

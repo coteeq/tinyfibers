@@ -1,12 +1,17 @@
 #include <wheels/test/test_framework.hpp>
 #include <tinyfibers/test/test.hpp>
 
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/rt/run.hpp>
+
+#include <tinyfibers/sched/spawn.hpp>
+#include <tinyfibers/sched/yield.hpp>
+#include <tinyfibers/sched/sleep_for.hpp>
+#include <tinyfibers/sched/id.hpp>
 #include <tinyfibers/sync/nursery.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
-#include <wheels/support/time.hpp>
+#include <wheels/support/stop_watch.hpp>
 
 #include <memory>
 #include <chrono>

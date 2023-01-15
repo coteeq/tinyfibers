@@ -3,8 +3,8 @@
 #include <sure/context.hpp>
 #include <sure/stack.hpp>
 
-#include <tinyfibers/core/api.hpp>
-#include <tinyfibers/core/watcher.hpp>
+#include <tinyfibers/rt/id.hpp>
+#include <tinyfibers/rt/watcher.hpp>
 
 #include <wheels/intrusive/list.hpp>
 
@@ -21,6 +21,8 @@ enum class FiberState {
 class Fiber : public wheels::IntrusiveListNode<Fiber>,
               public sure::ITrampoline {
   friend class Scheduler;
+
+  using Routine = std::function<void()>;
 
  public:
   FiberId Id() const {
@@ -50,14 +52,14 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   ~Fiber();
 
  private:
-  Fiber(FiberRoutine routine, sure::Stack&& stack, FiberId id);
+  Fiber(Routine routine, sure::Stack&& stack, FiberId id);
   void SetupContext();
 
   // sure::ITrampoline
   [[noreturn]] void Run() noexcept override;
 
  private:
-  FiberRoutine routine_;
+  Routine routine_;
   sure::Stack stack_;
   sure::ExecutionContext context_;
   FiberState state_;

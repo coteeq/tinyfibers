@@ -1,4 +1,6 @@
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/sched/spawn.hpp>
+#include <tinyfibers/sched/yield.hpp>
 
 #include <iostream>
 

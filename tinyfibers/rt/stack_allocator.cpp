@@ -1,4 +1,4 @@
-#include <tinyfibers/core/stack_allocator.hpp>
+#include <tinyfibers/rt/stack_allocator.hpp>
 
 #include <vector>
 

@@ -21,7 +21,8 @@
 ## Пример
 
 ```cpp
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/sched/spawn.hpp>
 
 #include <iostream>
 
@@ -108,4 +109,4 @@ make tinyfibers_example_hello
 ## Зависимости
 
 - [Wheels](https://gitlab.com/Lipovsky/wheels) – общие компоненты
-- [Context](https://gitlab.com/Lipovsky/context) – контекст исполнения
+- [Sure](https://gitlab.com/Lipovsky/sure) – контекст исполнения
