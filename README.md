@@ -1,4 +1,4 @@
-# Tiny Fibers
+# <sub>Tiny</sub>Fibers
 
 Минималистичная библиотека файберов, написанная для образовательных целей.
 
@@ -21,7 +21,7 @@
 ## Пример
 
 ```cpp
-#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/run.hpp>
 #include <tinyfibers/sched/spawn.hpp>
 
 #include <iostream>
@@ -29,27 +29,28 @@
 using namespace tinyfibers;
 
 int main() {
-  // Стартуем планировщик и запускаем в нем файбер,
-  // исполняющий переданную лямбду
+  // Стартуем планировщик и запускаем в нем первый файбер,
+  // который будет исполнять переданную лямбду
   RunScheduler([]() {
-    std::cout << "Hello from parent!" << std::endl;
+    std::cout << "Hello from parent" << std::endl;
     // Запускаем еще один файбер,
     // управление при этом остается у текущего файбера
     JoinHandle child = Spawn([]() {
-      std::cout << "Hello from child!" << std::endl;
+      std::cout << "Hello from child" << std::endl;
     });
     child.Join();  // Блокируем текущий файбер до завершения дочернего
     std::cout << "Child finished" << std::endl;
   });
   // Вызов RunScheduler завершится когда не останется готовых исполняться файберов
+  
   return 0;
 }
 ```
 
 Вывод:
 ```
-Hello from parent!
-Hello from child!
+Hello from parent
+Hello from child
 Child finished
 ```
 
