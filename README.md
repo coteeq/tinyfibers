@@ -24,7 +24,7 @@
 #include <tinyfibers/run.hpp>
 #include <tinyfibers/sched/spawn.hpp>
 
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 
@@ -32,14 +32,14 @@ int main() {
   // Стартуем планировщик и запускаем в нем первый файбер,
   // который будет исполнять переданную лямбду
   RunScheduler([]() {
-    std::cout << "Hello from parent" << std::endl;
+    fmt::print("Hello from parent\n");
     // Запускаем еще один файбер,
     // управление при этом остается у текущего файбера
     JoinHandle child = Spawn([]() {
-      std::cout << "Hello from child" << std::endl;
+      fmt::print("Hello from child\n");
     });
     child.Join();  // Блокируем текущий файбер до завершения дочернего
-    std::cout << "Child finished" << std::endl;
+    fmt::print("Child finished\n");
   });
   // Вызов RunScheduler завершится когда не останется готовых исполняться файберов
   

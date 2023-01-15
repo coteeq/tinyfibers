@@ -2,7 +2,7 @@
 #include <tinyfibers/sched/spawn.hpp>
 #include <tinyfibers/sched/yield.hpp>
 
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 
@@ -10,10 +10,10 @@ void Breakpoint() {
 }
 
 void Bar() {
-  std::cout << "Bar / before Yield" << std::endl;
+  fmt::print("Bar / before Yield\n");
   Breakpoint(); // Before first Yield
   self::Yield();
-  std::cout << "Bar / after Yield" << std::endl;
+  fmt::print("Bar / after Yield\n");
   Breakpoint(); // After second Yield
 }
 
@@ -22,7 +22,7 @@ void Foo() {
 }
 
 void Baz() {
-  std::cout << "Baz / after first Yield" << std::endl;
+  fmt::print("Baz / after first Yield\n");
   Breakpoint(); // After first Yield
   self::Yield();
 }

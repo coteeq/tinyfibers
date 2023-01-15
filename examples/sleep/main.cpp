@@ -3,7 +3,7 @@
 #include <tinyfibers/sched/sleep_for.hpp>
 #include <tinyfibers/sync/nursery.hpp>
 
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 
@@ -26,11 +26,11 @@ int main() {
   RunScheduler([]() {
     auto sorted_ints = SleepSort({1, 3, 7, 2, 5, 4, 9, 8, 6});
 
-    std::cout << "Sorted: ";
+    fmt::print("Sorted: ");
     for (size_t i = 0; i < sorted_ints.size(); ++i) {
-      std::cout << sorted_ints[i] << ", ";
+      fmt::print("{}, ", sorted_ints[i]);
     }
-    std::cout << std::endl;
+    fmt::print("\n");
   });
   return 0;
 }
