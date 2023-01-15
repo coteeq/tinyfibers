@@ -1,22 +1,15 @@
 #pragma once
 
-#include <sure/context.hpp>
-#include <sure/stack.hpp>
-
+#include <tinyfibers/rt/state.hpp>
 #include <tinyfibers/rt/id.hpp>
 #include <tinyfibers/rt/watcher.hpp>
+
+#include <sure/context.hpp>
+#include <sure/stack.hpp>
 
 #include <wheels/intrusive/list.hpp>
 
 namespace tinyfibers {
-
-enum class FiberState {
-  Starting,
-  Runnable,  // in run queue
-  Running,
-  Suspended,  // for example, in wait queue
-  Terminated
-};
 
 class Fiber : public wheels::IntrusiveListNode<Fiber>,
               public sure::ITrampoline {
