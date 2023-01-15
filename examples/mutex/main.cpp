@@ -1,5 +1,7 @@
-#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/run.hpp>
 #include <tinyfibers/sched/spawn.hpp>
+#include <tinyfibers/sched/sleep_for.hpp>
+#include <tinyfibers/sched/id.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 
 #include <iostream>

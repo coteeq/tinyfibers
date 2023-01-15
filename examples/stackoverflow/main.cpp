@@ -1,4 +1,4 @@
-#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/run.hpp>
 
 #include <iostream>
 

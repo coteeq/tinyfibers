@@ -1,4 +1,4 @@
-#include <tinyfibers/rt/run.hpp>
+#include <tinyfibers/run.hpp>
 
 #include <tinyfibers/sched/sleep_for.hpp>
 #include <tinyfibers/sync/nursery.hpp>
