@@ -1,4 +1,4 @@
-#include <tinyfibers/sync/parking_lot.hpp>
+#include <tinyfibers/sync/detail/parking_lot.hpp>
 
 #include <tinyfibers/rt/scheduler.hpp>
 

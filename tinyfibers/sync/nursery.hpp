@@ -2,7 +2,7 @@
 
 #include <tinyfibers/rt/run.hpp>
 #include <tinyfibers/rt/watcher.hpp>
-#include <tinyfibers/sync/parking_lot.hpp>
+#include <tinyfibers/sync/detail/parking_lot.hpp>
 
 #include <vector>
 
