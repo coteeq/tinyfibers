@@ -64,7 +64,6 @@ Child finished
 ## Ограничения 
 
 - Библиотека однопоточная
-- Поддерживается только x86-64
 - Нет сети, каналов и т.п.
 
 ## References
@@ -111,3 +110,7 @@ make tinyfibers_example_hello
 
 - [Wheels](https://gitlab.com/Lipovsky/wheels) – общие компоненты
 - [Sure](https://gitlab.com/Lipovsky/sure) – контекст исполнения
+
+### Внешние
+
+- [Fmt](https://github.com/fmtlib/fmt) – форматированный вывод
