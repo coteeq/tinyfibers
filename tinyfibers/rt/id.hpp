@@ -2,8 +2,8 @@
 
 #include <cstdlib>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 using FiberId = size_t;
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

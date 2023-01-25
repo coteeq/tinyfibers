@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tinyfibers/sync/detail/wait_queue.hpp>
+#include <tinyfibers/rt/wait_queue.hpp>
 
 #include <wheels/support/assert.hpp>
 
@@ -44,7 +44,7 @@ class Mutex {
 
  private:
   bool locked_{false};
-  detail::WaitQueue wait_queue_;
+  rt::WaitQueue wait_queue_;
 };
 
 }  // namespace tinyfibers

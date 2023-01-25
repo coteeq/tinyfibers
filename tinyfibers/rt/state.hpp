@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 enum class FiberState {
   Starting,
@@ -10,4 +10,4 @@ enum class FiberState {
   Terminated
 };
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

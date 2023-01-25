@@ -7,7 +7,7 @@
 
 #include <chrono>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 // Asymmetric control transfer:
 // RunLoop: S -> F_init -> S -> F1 -> S -> F2 -> S -> ...
@@ -70,4 +70,4 @@ class Scheduler {
 Scheduler* CurrentScheduler();
 Fiber* CurrentFiber();
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

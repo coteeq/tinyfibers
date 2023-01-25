@@ -2,10 +2,16 @@
 
 #include <tinyfibers/rt/id.hpp>
 
-namespace tinyfibers::self {
+namespace tinyfibers {
 
 // Returns the id of the current fiber
 
+using rt::FiberId;
+
+namespace self {
+
 FiberId GetId();
 
-}  // namespace tinyfibers::self
+}  // namespace self
+
+}  // namespace tinyfibers

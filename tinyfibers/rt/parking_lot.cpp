@@ -1,10 +1,8 @@
-#include <tinyfibers/sync/detail/parking_lot.hpp>
+#include <tinyfibers/rt/parking_lot.hpp>
 
 #include <tinyfibers/rt/scheduler.hpp>
 
-namespace tinyfibers {
-
-namespace detail {
+namespace tinyfibers::rt {
 
 void ParkingLot::Park() {
   waitee_ = CurrentFiber();
@@ -17,6 +15,4 @@ void ParkingLot::Wake() {
   }
 }
 
-}  // namespace detail
-
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

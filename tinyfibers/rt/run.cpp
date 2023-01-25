@@ -2,11 +2,11 @@
 
 #include <tinyfibers/rt/scheduler.hpp>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 void RunScheduler(std::function<void()> init) {
   Scheduler scheduler;
   scheduler.Run(std::move(init));
 }
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

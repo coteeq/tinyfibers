@@ -5,7 +5,7 @@
 #include <optional>
 #include <vector>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 class StackAllocator {
   using Stack = sure::Stack;
@@ -22,4 +22,4 @@ class StackAllocator {
   std::vector<Stack> pool_;
 };
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

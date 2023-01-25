@@ -1,12 +1,10 @@
-#include <tinyfibers/sync/detail/wait_queue.hpp>
+#include <tinyfibers/rt/wait_queue.hpp>
 
 #include <tinyfibers/rt/scheduler.hpp>
 
 #include <wheels/support/assert.hpp>
 
-namespace tinyfibers {
-
-namespace detail {
+namespace tinyfibers::rt {
 
 void WaitQueue::Park() {
   Fiber* caller = CurrentFiber();
@@ -39,6 +37,4 @@ WaitQueue::~WaitQueue() {
   WHEELS_ASSERT(waiters_.IsEmpty(), "WaitQueue is not empty");
 }
 
-}  // namespace detail
-
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

@@ -2,9 +2,7 @@
 
 #include <tinyfibers/rt/fwd.hpp>
 
-namespace tinyfibers {
-
-namespace detail {
+namespace tinyfibers::rt {
 
 class ParkingLot {
  public:
@@ -15,6 +13,4 @@ class ParkingLot {
   Fiber* waitee_{nullptr};
 };
 
-}  // namespace detail
-
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

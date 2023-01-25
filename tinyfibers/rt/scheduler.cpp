@@ -4,7 +4,7 @@
 #include <wheels/support/panic.hpp>
 #include <wheels/support/stop_watch.hpp>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -154,4 +154,4 @@ Fiber* CurrentFiber() {
   return CurrentScheduler()->GetCurrentFiber();
 }
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

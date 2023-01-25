@@ -2,13 +2,13 @@
 
 #include <tinyfibers/rt/run.hpp>
 #include <tinyfibers/rt/watcher.hpp>
-#include <tinyfibers/sync/detail/parking_lot.hpp>
+#include <tinyfibers/rt/parking_lot.hpp>
 
 #include <vector>
 
 namespace tinyfibers {
 
-class Nursery : public IFiberWatcher {
+class Nursery : public rt::IFiberWatcher {
  public:
   Nursery& Spawn(std::function<void()> routine);
   void Wait();
@@ -20,7 +20,7 @@ class Nursery : public IFiberWatcher {
 
  private:
   size_t active_{0};
-  detail::ParkingLot parking_lot_;
+  rt::ParkingLot parking_lot_;
 };
 
 }  // namespace tinyfibers

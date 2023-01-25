@@ -9,7 +9,7 @@
 
 #include <wheels/intrusive/list.hpp>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 class Fiber : public wheels::IntrusiveListNode<Fiber>,
               public sure::ITrampoline {
@@ -60,4 +60,4 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   IFiberWatcher* watcher_{nullptr};
 };
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

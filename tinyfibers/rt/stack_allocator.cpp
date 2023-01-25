@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 using sure::Stack;
 
@@ -37,4 +37,4 @@ std::optional<Stack> StackAllocator::TryTakeFromPool() {
   return stack;
 }
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

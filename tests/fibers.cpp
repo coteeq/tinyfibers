@@ -23,7 +23,7 @@ using namespace std::chrono_literals;
 
 TEST_SUITE(Fibers) {
   SIMPLE_TEST(JustWorks) {
-    RunScheduler([]() {
+    rt::RunScheduler([]() {
       self::Yield();
     });
   }
@@ -146,7 +146,7 @@ TEST_SUITE(Fibers) {
   }
 
   TINY_FIBERS_TEST(WaitQueue) {
-    detail::WaitQueue wait_queue;
+    rt::WaitQueue wait_queue;
     int step = 0;
 
     JoinHandle waker = Spawn([&]() {
@@ -292,15 +292,15 @@ TEST_SUITE(Fibers) {
     static_assert(!std::is_copy_assignable<CondVar>::value, "Broken CondVar");
     static_assert(!std::is_copy_constructible<CondVar>::value, "Broken CondVar");
 
-    static_assert(!std::is_copy_assignable<detail::WaitQueue>::value, "Broken WaitQueue");
-    static_assert(!std::is_copy_constructible<detail::WaitQueue>::value, "Broken WaitQueue");
+    static_assert(!std::is_copy_assignable<rt::WaitQueue>::value, "Broken WaitQueue");
+    static_assert(!std::is_copy_constructible<rt::WaitQueue>::value, "Broken WaitQueue");
   }
 
   SIMPLE_TEST(NoLeaks) {
     auto strong_ref = std::make_shared<int>(42);
     std::weak_ptr<int> weak_ref = strong_ref;
 
-    RunScheduler([ref = std::move(strong_ref)]() {
+    rt::RunScheduler([ref = std::move(strong_ref)]() {
       std::cout << "Answer to the Ultimate Question of Life, the Universe, and "
                    "Everything: "
                 << *ref << std::endl;

@@ -6,7 +6,7 @@
 #include <wheels/support/panic.hpp>
 #include <wheels/support/exception.hpp>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 Fiber::Fiber(Routine routine, sure::Stack stack, FiberId id)
     : routine_(std::move(routine)),
@@ -45,4 +45,4 @@ void Fiber::SetupContext() {
       /*trampoline=*/this);
 }
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

@@ -4,9 +4,7 @@
 
 #include <wheels/intrusive/list.hpp>
 
-namespace tinyfibers {
-
-namespace detail {
+namespace tinyfibers::rt {
 
 // ~ Futex for cooperative single-threaded fibers
 
@@ -30,6 +28,4 @@ class WaitQueue {
   wheels::IntrusiveList<Fiber> waiters_;
 };
 
-}  // namespace detail
-
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

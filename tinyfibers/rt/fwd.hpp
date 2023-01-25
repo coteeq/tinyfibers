@@ -1,7 +1,7 @@
 #pragma once
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 class Fiber;
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt
