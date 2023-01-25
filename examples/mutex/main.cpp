@@ -13,7 +13,7 @@ int main() {
   RunScheduler([]() {
     Mutex mutex;
 
-    fmt::print("Starting\n");
+    fmt::println("Starting");
 
     JoinHandle h2 = Spawn([&mutex]() {
       mutex.Lock();
@@ -25,10 +25,10 @@ int main() {
     });
 
     JoinHandle h3 = Spawn([&mutex]() {
-      fmt::print("Try to lock mutex from Fiber #{}\n", self::GetId());
+      fmt::println("Try to lock mutex from Fiber #{}", self::GetId());
       mutex.Lock();  // <-- Blocks for 3s
       {
-        fmt::print("Mutex locked by Fiber #{}\n", self::GetId());
+        fmt::println("Mutex locked by Fiber #{}", self::GetId());
       }
       mutex.Unlock();
     });

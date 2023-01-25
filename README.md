@@ -32,14 +32,14 @@ int main() {
   // Стартуем планировщик и запускаем в нем первый файбер,
   // который будет исполнять переданную лямбду
   RunScheduler([]() {
-    fmt::print("Hello from parent\n");
+    fmt::println("Parent");
     // Запускаем еще один файбер,
     // управление при этом остается у текущего файбера
     JoinHandle child = Spawn([]() {
-      fmt::print("Hello from child\n");
+      fmt::println("Child");
     });
     child.Join();  // Блокируем текущий файбер до завершения дочернего
-    fmt::print("Child finished\n");
+    fmt::println("Child completed");
   });
   // Вызов RunScheduler завершится когда не останется готовых исполняться файберов
   
@@ -49,9 +49,9 @@ int main() {
 
 Вывод:
 ```
-Hello from parent
-Hello from child
-Child finished
+Parent
+Child
+Child completed
 ```
 
 См. [примеры](/examples) и [тесты](/tests/fibers.cpp).

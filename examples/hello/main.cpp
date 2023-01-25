@@ -7,12 +7,12 @@ using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
-    fmt::print("Hello from parent\n");
+    fmt::println("Parent");
     JoinHandle child = Spawn([]() {
-      fmt::print("Hello from child\n");
+      fmt::println("Child");
     });
     child.Join();
-    fmt::print("Child finished\n");
+    fmt::println("Child completed");
   });
   return 0;
 }

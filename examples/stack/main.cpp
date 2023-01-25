@@ -10,10 +10,10 @@ void Breakpoint() {
 }
 
 void Bar() {
-  fmt::print("Bar / before Yield\n");
+  fmt::println("Bar / before Yield");
   Breakpoint(); // Before first Yield
   self::Yield();
-  fmt::print("Bar / after Yield\n");
+  fmt::println("Bar / after Yield");
   Breakpoint(); // After second Yield
 }
 
@@ -22,7 +22,7 @@ void Foo() {
 }
 
 void Baz() {
-  fmt::print("Baz / after first Yield\n");
+  fmt::println("Baz / after first Yield");
   Breakpoint(); // After first Yield
   self::Yield();
 }

@@ -5,7 +5,7 @@
 using namespace tinyfibers;
 
 void Recurse(size_t depth) {
-  fmt::print("Recurse @ depth {}\n", depth);
+  fmt::println("Recurse @ depth {}", depth);
   Recurse(depth + 1);
 }
 
