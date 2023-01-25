@@ -2,13 +2,13 @@
 #include <tinyfibers/sched/id.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
-    std::cout << "Hi, I am Fiber #" << self::GetId() << std::endl;
+    fmt::println("Hi, I am Fiber #{}", self::GetId());
   });
   return 0;
 }
