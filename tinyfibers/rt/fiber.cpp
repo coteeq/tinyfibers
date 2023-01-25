@@ -8,7 +8,7 @@
 
 namespace tinyfibers {
 
-Fiber::Fiber(Routine routine, sure::Stack&& stack, FiberId id)
+Fiber::Fiber(Routine routine, sure::Stack stack, FiberId id)
     : routine_(std::move(routine)),
       stack_(std::move(stack)),
       state_(FiberState::Starting),
