@@ -7,13 +7,13 @@ namespace tinyfibers {
 namespace detail {
 
 void ParkingLot::Park() {
-  waitee_ = GetCurrentFiber();
-  GetCurrentScheduler()->Suspend();
+  waitee_ = CurrentFiber();
+  CurrentScheduler()->Suspend();
 }
 
 void ParkingLot::Wake() {
   if (waitee_ != nullptr) {
-    GetCurrentScheduler()->Resume(waitee_);
+    CurrentScheduler()->Resume(waitee_);
   }
 }
 

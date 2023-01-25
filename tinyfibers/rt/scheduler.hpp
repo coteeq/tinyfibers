@@ -67,7 +67,7 @@ class Scheduler {
 
 //////////////////////////////////////////////////////////////////////
 
-Scheduler* GetCurrentScheduler();
-Fiber* GetCurrentFiber();
+Scheduler* CurrentScheduler();
+Fiber* CurrentFiber();
 
 }  // namespace tinyfibers

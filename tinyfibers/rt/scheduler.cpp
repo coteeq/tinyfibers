@@ -10,7 +10,7 @@ namespace tinyfibers {
 
 static Scheduler* current_scheduler;
 
-Scheduler* GetCurrentScheduler() {
+Scheduler* CurrentScheduler() {
   WHEELS_VERIFY(current_scheduler, "Not in fiber context");
   return current_scheduler;
 }
@@ -150,8 +150,8 @@ void Scheduler::Destroy(Fiber* fiber) {
 
 //////////////////////////////////////////////////////////////////////
 
-Fiber* GetCurrentFiber() {
-  return GetCurrentScheduler()->GetCurrentFiber();
+Fiber* CurrentFiber() {
+  return CurrentScheduler()->GetCurrentFiber();
 }
 
 }  // namespace tinyfibers

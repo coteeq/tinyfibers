@@ -7,7 +7,7 @@
 namespace tinyfibers {
 
 Nursery& Nursery::Spawn(std::function<void()> routine) {
-  Fiber* newbie = GetCurrentScheduler()->Spawn(std::move(routine));
+  Fiber* newbie = CurrentScheduler()->Spawn(std::move(routine));
   newbie->SetWatcher(this);
   ++active_;
   return *this;
