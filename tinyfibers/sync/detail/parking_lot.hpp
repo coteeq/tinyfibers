@@ -1,8 +1,8 @@
 #pragma once
 
-namespace tinyfibers {
+#include <tinyfibers/rt/fwd.hpp>
 
-class Fiber;
+namespace tinyfibers {
 
 namespace detail {
 

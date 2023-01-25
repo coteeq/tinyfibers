@@ -1,11 +1,10 @@
 #pragma once
 
+#include <tinyfibers/rt/fwd.hpp>
 #include <tinyfibers/rt/watcher.hpp>
 #include <tinyfibers/sync/detail/parking_lot.hpp>
 
 namespace tinyfibers {
-
-class Fiber;
 
 // An owned permission to join on a fiber
 // ~ https://doc.rust-lang.org/std/thread/struct.JoinHandle.html

@@ -1,10 +1,10 @@
 #pragma once
 
+#include <tinyfibers/rt/fwd.hpp>
+
 #include <wheels/intrusive/list.hpp>
 
 namespace tinyfibers {
-
-class Fiber;
 
 namespace detail {
 
