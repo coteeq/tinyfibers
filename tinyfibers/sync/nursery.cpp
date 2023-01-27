@@ -2,7 +2,7 @@
 
 #include <tinyfibers/rt/scheduler.hpp>
 
-#include <wheels/support/assert.hpp>
+#include <wheels/core/assert.hpp>
 
 namespace tinyfibers {
 

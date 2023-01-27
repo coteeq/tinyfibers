@@ -1,8 +1,8 @@
 #include <tinyfibers/rt/scheduler.hpp>
 
-#include <wheels/support/assert.hpp>
-#include <wheels/support/panic.hpp>
-#include <wheels/support/stop_watch.hpp>
+#include <wheels/core/assert.hpp>
+#include <wheels/core/panic.hpp>
+#include <wheels/core/stop_watch.hpp>
 
 namespace tinyfibers::rt {
 

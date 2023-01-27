@@ -2,9 +2,9 @@
 
 #include <tinyfibers/rt/scheduler.hpp>
 
-#include <wheels/support/compiler.hpp>
-#include <wheels/support/panic.hpp>
-#include <wheels/support/exception.hpp>
+#include <wheels/core/compiler.hpp>
+#include <wheels/core/panic.hpp>
+#include <wheels/core/exception.hpp>
 
 namespace tinyfibers::rt {
 

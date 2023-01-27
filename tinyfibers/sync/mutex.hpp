@@ -2,7 +2,7 @@
 
 #include <tinyfibers/rt/wait_queue.hpp>
 
-#include <wheels/support/assert.hpp>
+#include <wheels/core/assert.hpp>
 
 #include <utility>
 

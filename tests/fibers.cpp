@@ -11,7 +11,7 @@
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
-#include <wheels/support/stop_watch.hpp>
+#include <wheels/core/stop_watch.hpp>
 
 #include <memory>
 #include <chrono>
