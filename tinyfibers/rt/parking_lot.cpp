@@ -6,7 +6,7 @@ namespace tinyfibers::rt {
 
 void ParkingLot::Park() {
   waitee_ = CurrentFiber();
-  CurrentScheduler()->Suspend();
+  CurrentScheduler()->Suspend(waitee_);
 }
 
 void ParkingLot::Wake() {

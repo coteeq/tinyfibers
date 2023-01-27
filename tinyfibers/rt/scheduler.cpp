@@ -69,10 +69,9 @@ void Scheduler::SleepFor(std::chrono::milliseconds delay) {
   } while (stop_watch.Elapsed() < delay);
 }
 
-void Scheduler::Suspend() {
-  Fiber* caller = GetCurrentFiber();
-  caller->SetState(FiberState::Suspended);
-  SwitchToScheduler(caller);
+void Scheduler::Suspend(Fiber* me) {
+  me->SetState(FiberState::Suspended);
+  SwitchToScheduler(me);
 }
 
 void Scheduler::Resume(Fiber* fiber) {

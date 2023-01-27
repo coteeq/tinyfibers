@@ -29,7 +29,7 @@ class Scheduler {
   void Yield();
   // Sleep for _at_least_ `delay`
   void SleepFor(std::chrono::milliseconds delay);
-  void Suspend();
+  void Suspend(Fiber* me);
   void Resume(Fiber* fiber);
   void Terminate();
 

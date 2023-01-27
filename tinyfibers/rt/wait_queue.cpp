@@ -9,7 +9,7 @@ namespace tinyfibers::rt {
 void WaitQueue::Park() {
   Fiber* caller = CurrentFiber();
   waiters_.PushBack(caller);
-  SuspendCaller();
+  CurrentScheduler()->Suspend(caller);
 }
 
 void WaitQueue::WakeOne() {
@@ -27,10 +27,6 @@ void WaitQueue::WakeAll() {
 
 void WaitQueue::Resume(Fiber* fiber) {
   CurrentScheduler()->Resume(fiber);
-}
-
-void WaitQueue::SuspendCaller() {
-  CurrentScheduler()->Suspend();
 }
 
 WaitQueue::~WaitQueue() {

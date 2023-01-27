@@ -22,7 +22,6 @@ class WaitQueue {
 
  private:
   void Resume(Fiber* fiber);
-  void SuspendCaller();
 
  private:
   wheels::IntrusiveList<Fiber> waiters_;
