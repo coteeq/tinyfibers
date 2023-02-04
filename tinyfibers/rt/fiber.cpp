@@ -41,7 +41,7 @@ void Fiber::Run() noexcept {
 
 void Fiber::SetupContext() {
   context_.Setup(
-      /*stack=*/stack_.View(),
+      /*stack=*/stack_.MutView(),
       /*trampoline=*/this);
 }
 
