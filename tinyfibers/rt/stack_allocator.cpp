@@ -1,14 +1,17 @@
 #include <tinyfibers/rt/stack_allocator.hpp>
 
+#include <wheels/core/size_literals.hpp>
+
 #include <vector>
+
+using sure::Stack;
+using namespace wheels::size_literals;
 
 namespace tinyfibers::rt {
 
-using sure::Stack;
-
 //////////////////////////////////////////////////////////////////////
 
-static const size_t kDefaultStackSizeInPages = 8;
+static const size_t kDefaultStackSize = 64_KiB;
 
 //////////////////////////////////////////////////////////////////////
 
@@ -24,7 +27,7 @@ void StackAllocator::Release(Stack stack) {
 }
 
 Stack StackAllocator::AllocateNew() {
-  return Stack::AllocatePages(kDefaultStackSizeInPages);
+  return Stack::AllocateBytes(/*at_least=*/kDefaultStackSize);
 }
 
 std::optional<Stack> StackAllocator::TryTakeFromPool() {
