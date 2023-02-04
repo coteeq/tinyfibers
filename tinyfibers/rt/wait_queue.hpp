@@ -1,13 +1,12 @@
 #pragma once
 
+#include <tinyfibers/rt/fwd.hpp>
+
 #include <wheels/intrusive/list.hpp>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
-// ~ Futex for cooperative _single-threaded_ fibers
-
-// Forward declaration
-class Fiber;
+// ~ Futex for cooperative single-threaded fibers
 
 class WaitQueue {
  public:
@@ -22,7 +21,10 @@ class WaitQueue {
   void WakeAll();
 
  private:
+  void Resume(Fiber* fiber);
+
+ private:
   wheels::IntrusiveList<Fiber> waiters_;
 };
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

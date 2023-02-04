@@ -1,4 +1,4 @@
-# Tiny Fibers
+# <sub>Tiny</sub>Fibers
 
 Минималистичная библиотека файберов, написанная для образовательных целей.
 
@@ -21,35 +21,37 @@
 ## Пример
 
 ```cpp
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/run.hpp>
+#include <tinyfibers/sched/spawn.hpp>
 
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 
 int main() {
-  // Стартуем планировщик и запускаем в нем файбер,
-  // исполняющий переданную лямбду
+  // Стартуем планировщик и запускаем в нем первый файбер,
+  // который будет исполнять переданную лямбду
   RunScheduler([]() {
-    std::cout << "Hello from parent!" << std::endl;
+    fmt::println("Parent");
     // Запускаем еще один файбер,
     // управление при этом остается у текущего файбера
     JoinHandle child = Spawn([]() {
-      std::cout << "Hello from child!" << std::endl;
+      fmt::println("Child");
     });
     child.Join();  // Блокируем текущий файбер до завершения дочернего
-    std::cout << "Child finished" << std::endl;
+    fmt::println("Child completed");
   });
   // Вызов RunScheduler завершится когда не останется готовых исполняться файберов
+  
   return 0;
 }
 ```
 
 Вывод:
 ```
-Hello from parent!
-Hello from child!
-Child finished
+Parent
+Child
+Child completed
 ```
 
 См. [примеры](/examples) и [тесты](/tests/fibers.cpp).
@@ -62,7 +64,6 @@ Child finished
 ## Ограничения 
 
 - Библиотека однопоточная
-- Поддерживается только x86-64
 - Нет сети, каналов и т.п.
 
 ## References
@@ -108,4 +109,8 @@ make tinyfibers_example_hello
 ## Зависимости
 
 - [Wheels](https://gitlab.com/Lipovsky/wheels) – общие компоненты
-- [Context](https://gitlab.com/Lipovsky/context) – контекст исполнения
+- [Sure](https://gitlab.com/Lipovsky/sure) – контекст исполнения
+
+### Внешние
+
+- [Fmt](https://github.com/fmtlib/fmt) – форматированный вывод

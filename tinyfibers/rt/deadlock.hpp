@@ -2,8 +2,8 @@
 
 #include <functional>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 void SetDeadlockHandler(std::function<void()> handler);
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

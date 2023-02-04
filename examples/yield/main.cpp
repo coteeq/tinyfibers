@@ -1,30 +1,37 @@
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/run.hpp>
 
-#include <iostream>
+#include <tinyfibers/sched/spawn.hpp>
+#include <tinyfibers/sched/yield.hpp>
+
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
+    // run queue
     JoinHandle h1 = Spawn([]() {
-      std::cout << "2" << std::endl;
-      self::Yield();
-      std::cout << "4" << std::endl;
+      // <--
+      fmt::print("2");
+      // run queue: f0
+      self::Yield();  // <--
+      fmt::print("4");
     });
 
-    std::cout << "1" << std::endl;
-    self::Yield();
-    std::cout << "3" << std::endl;
+    fmt::print("1");
+    self::Yield();  // <--
+    // run queue: f1
+    fmt::print("3");
 
     JoinHandle h2 = Spawn([]() {
-      std::cout << "5" << std::endl;
+      fmt::print("5");
     });
 
     // running = init, run queue: f1, f2
 
-    self::Yield();
+    self::Yield();  // <-- [execution] context switch
 
-    std::cout << "6" << std::endl;
+    fmt::print("6");
 
     h1.Join();
     h2.Join();

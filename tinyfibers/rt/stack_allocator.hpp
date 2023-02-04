@@ -1,13 +1,14 @@
 #pragma once
 
-#include <context/stack.hpp>
+#include <sure/stack.hpp>
 
+#include <optional>
 #include <vector>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 class StackAllocator {
-  using Stack = context::Stack;
+  using Stack = sure::Stack;
 
  public:
   Stack Allocate();
@@ -15,10 +16,10 @@ class StackAllocator {
 
  private:
   static Stack AllocateNew();
-  Stack TakeFromPool();
+  std::optional<Stack> TryTakeFromPool();
 
  private:
   std::vector<Stack> pool_;
 };
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

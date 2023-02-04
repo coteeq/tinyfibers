@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tinyfibers/runtime/wait_queue.hpp>
+#include <tinyfibers/rt/wait_queue.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 
 // std::unique_lock
@@ -40,7 +40,7 @@ class CondVar {
   }
 
  private:
-  WaitQueue wait_queue_;
+  rt::WaitQueue wait_queue_;
 };
 
 }  // namespace tinyfibers

@@ -1,17 +1,18 @@
 #include <wheels/test/test_framework.hpp>
 #include <tinyfibers/test/test.hpp>
 
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
-#include <tinyfibers/runtime/scheduler.hpp>
-#include <tinyfibers/runtime/deadlock.hpp>
-
-#include <tinyfibers/sync/wait_group.hpp>
+#include <tinyfibers/sched/spawn.hpp>
+#include <tinyfibers/sched/yield.hpp>
+#include <tinyfibers/sched/sleep_for.hpp>
+#include <tinyfibers/sched/id.hpp>
+#include <tinyfibers/sync/nursery.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 #include <tinyfibers/sync/condvar.hpp>
 
-#include <wheels/support/time.hpp>
-#include <wheels/support/quick_exit.hpp>
+#include <wheels/core/stop_watch.hpp>
+#include <wheels/system/quick_exit.hpp>
 
 #include <memory>
 #include <chrono>
@@ -23,7 +24,7 @@ using namespace std::chrono_literals;
 
 TEST_SUITE(Fibers) {
   SIMPLE_TEST(JustWorks) {
-    RunScheduler([]() {
+    rt::RunScheduler([]() {
       self::Yield();
     });
   }
@@ -110,10 +111,10 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    WaitGroup wg;
-    wg.Spawn(first);
-    wg.Spawn(second);
-    wg.Wait();
+    Nursery nursery;
+    nursery.Spawn(first);
+    nursery.Spawn(second);
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(SleepFor) {
@@ -136,17 +137,17 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    WaitGroup wg;
+    Nursery nursery;
     for (size_t k = 0; k < kFibers; ++k) {
-      wg.Spawn([&, k]() {
+      nursery.Spawn([&, k]() {
         routine(k);
       });
     }
-    wg.Wait();
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(WaitQueue) {
-    WaitQueue wait_queue;
+    rt::WaitQueue wait_queue;
     int step = 0;
 
     JoinHandle waker = Spawn([&]() {
@@ -185,30 +186,30 @@ TEST_SUITE(Fibers) {
       }
     };
 
-    WaitGroup wg;
-    wg.Spawn(routine).Spawn(routine);
-    wg.Wait();
+    Nursery nursery;
+    nursery.Spawn(routine).Spawn(routine);
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(MutexTryLock) {
     Mutex mutex;
 
-    WaitGroup wg;
+    Nursery nursery;
 
-    wg.Spawn([&mutex]() {
+    nursery.Spawn([&mutex]() {
       mutex.Lock();
       self::Yield();
       mutex.Unlock();
     });
 
-    wg.Spawn([&mutex]() {
+    nursery.Spawn([&mutex]() {
       ASSERT_FALSE(mutex.TryLock());
       self::Yield();
       ASSERT_TRUE(mutex.TryLock());
       mutex.Unlock();
     });
 
-    wg.Wait();
+    nursery.Wait();
   }
 
   /*
@@ -223,16 +224,16 @@ TEST_SUITE(Fibers) {
     CondVar ready;
     std::string message;
 
-    WaitGroup wg;
+    Nursery nursery;
 
-    wg.Spawn([&]() {
+    nursery.Spawn([&]() {
       std::unique_lock lock(mutex);
 
       ready.Wait(mutex);
       ASSERT_EQ(message, "Hello");
     });
 
-    wg.Spawn([&]() {
+    nursery.Spawn([&]() {
       std::lock_guard guard(mutex);
 
       for (size_t i = 0; i < 100; ++i) {
@@ -242,7 +243,7 @@ TEST_SUITE(Fibers) {
       ready.NotifyOne();
     });
 
-    wg.Wait();
+    nursery.Wait();
   }
 
   class OnePassBarrier {
@@ -274,15 +275,15 @@ TEST_SUITE(Fibers) {
     OnePassBarrier barrier{kFibers};
     size_t arrived = 0;
 
-    WaitGroup wg;
+    Nursery nursery;
     for (size_t i = 0; i < kFibers; ++i) {
-      wg.Spawn([&]() {
+      nursery.Spawn([&]() {
         ++arrived;
         barrier.Arrive();
         ASSERT_EQ(arrived, kFibers);
       });
     }
-    wg.Wait();
+    nursery.Wait();
   }
 
   TINY_FIBERS_TEST(NonCopyable) {
@@ -292,15 +293,15 @@ TEST_SUITE(Fibers) {
     static_assert(!std::is_copy_assignable<CondVar>::value, "Broken CondVar");
     static_assert(!std::is_copy_constructible<CondVar>::value, "Broken CondVar");
 
-    static_assert(!std::is_copy_assignable<WaitQueue>::value, "Broken WaitQueue");
-    static_assert(!std::is_copy_constructible<WaitQueue>::value, "Broken WaitQueue");
+    static_assert(!std::is_copy_assignable<rt::WaitQueue>::value, "Broken WaitQueue");
+    static_assert(!std::is_copy_constructible<rt::WaitQueue>::value, "Broken WaitQueue");
   }
 
   SIMPLE_TEST(NoLeaks) {
     auto strong_ref = std::make_shared<int>(42);
     std::weak_ptr<int> weak_ref = strong_ref;
 
-    RunScheduler([ref = std::move(strong_ref)]() {
+    rt::RunScheduler([ref = std::move(strong_ref)]() {
       std::cout << "Answer to the Ultimate Question of Life, the Universe, and "
                    "Everything: "
                 << *ref << std::endl;
@@ -310,13 +311,15 @@ TEST_SUITE(Fibers) {
   }
 
   TEST(Deadlock, wheels::test::TestOptions().ForceFork()) {
-    RunScheduler([]() {
-      tinyfibers::SetDeadlockHandler([]() {
-        std::cout << "Deadlock detected!";
-        // World is broken, leave it
-        wheels::QuickExit(0);
-      });
+    rt::Scheduler scheduler;
 
+    scheduler.SetDeadlockHandler([]() {
+      std::cout << "Deadlock detected!";
+      // World is broken, leave it
+      wheels::QuickExit(0);
+    });
+
+    scheduler.Run([]() {
       Mutex a;
       Mutex b;
 
@@ -345,7 +348,7 @@ TEST_SUITE(Fibers) {
       second();
 
       // Deadlock here
-      WaitGroup wg;
+      Nursery wg;
       wg.Spawn(first);
       wg.Spawn(second);
       wg.Wait();
@@ -359,7 +362,7 @@ TEST_SUITE(Fibers) {
 
     size_t iterations = 0;
 
-    Scheduler scheduler;
+    rt::Scheduler scheduler;
     scheduler.Run(
         [&]() {
           while (true) {

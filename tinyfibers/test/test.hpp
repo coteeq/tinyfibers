@@ -8,7 +8,7 @@
   void FiberTestRoutine##name();     \
   SIMPLE_TEST(name) {                \
     bool exit = false;               \
-    tinyfibers::RunScheduler([&]() { \
+    tinyfibers::rt::RunScheduler([&]() { \
       FiberTestRoutine##name();      \
       exit = true;                   \
     });                              \

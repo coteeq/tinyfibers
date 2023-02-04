@@ -1,8 +1,8 @@
 #pragma once
 
-namespace tinyfibers {
+#include <tinyfibers/rt/fwd.hpp>
 
-class Fiber;
+namespace tinyfibers::rt {
 
 class ParkingLot {
  public:
@@ -13,4 +13,4 @@ class ParkingLot {
   Fiber* waitee_{nullptr};
 };
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

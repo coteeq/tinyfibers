@@ -8,7 +8,7 @@ file(GLOB_RECURSE LIB_HEADERS ${LIB_PATH}/*.hpp)
 
 add_library(${LIB_TARGET} STATIC ${LIB_CXX_SOURCES} ${LIB_HEADERS})
 target_include_directories(${LIB_TARGET} PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(${LIB_TARGET} PUBLIC pthread wheels context)
+target_link_libraries(${LIB_TARGET} PUBLIC pthread fmt wheels sure)
 
 # --------------------------------------------------------------------
 

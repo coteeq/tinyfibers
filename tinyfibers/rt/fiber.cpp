@@ -1,14 +1,14 @@
-#include <tinyfibers/runtime/fiber.hpp>
+#include <tinyfibers/rt/fiber.hpp>
 
-#include <tinyfibers/runtime/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
-#include <wheels/support/compiler.hpp>
-#include <wheels/support/panic.hpp>
-#include <wheels/support/exception.hpp>
+#include <wheels/core/compiler.hpp>
+#include <wheels/core/panic.hpp>
+#include <wheels/core/exception.hpp>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
-Fiber::Fiber(FiberRoutine routine, context::Stack&& stack, FiberId id)
+Fiber::Fiber(Routine routine, sure::Stack stack, FiberId id)
     : routine_(std::move(routine)),
       stack_(std::move(stack)),
       state_(FiberState::Starting),
@@ -22,7 +22,7 @@ Fiber::~Fiber() {
   }
 }
 
-void Fiber::Run() {
+void Fiber::Run() noexcept {
   // Fiber execution starts here
 
   SetState(FiberState::Running);
@@ -34,7 +34,7 @@ void Fiber::Run() {
         "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
   }
 
-  GetCurrentScheduler()->Terminate();  // Never returns
+  CurrentScheduler()->Terminate();  // Never returns
 
   WHEELS_UNREACHABLE();
 }
@@ -45,4 +45,4 @@ void Fiber::SetupContext() {
       /*trampoline=*/this);
 }
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

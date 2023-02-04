@@ -1,10 +1,10 @@
-#include <tinyfibers/runtime/stacks.hpp>
+#include <tinyfibers/rt/stack_allocator.hpp>
 
 #include <vector>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
-using context::Stack;
+using sure::Stack;
 
 //////////////////////////////////////////////////////////////////////
 
@@ -13,8 +13,8 @@ static const size_t kDefaultStackSizeInPages = 8;
 //////////////////////////////////////////////////////////////////////
 
 Stack StackAllocator::Allocate() {
-  if (!pool_.empty()) {
-    return TakeFromPool();
+  if (auto stack = TryTakeFromPool()) {
+    return std::move(*stack);
   }
   return AllocateNew();
 }
@@ -27,10 +27,14 @@ Stack StackAllocator::AllocateNew() {
   return Stack::AllocatePages(kDefaultStackSizeInPages);
 }
 
-Stack StackAllocator::TakeFromPool() {
+std::optional<Stack> StackAllocator::TryTakeFromPool() {
+  if (pool_.empty()) {
+    return std::nullopt;
+  }
+
   Stack stack = std::move(pool_.back());
   pool_.pop_back();
   return stack;
 }
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

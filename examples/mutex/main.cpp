@@ -1,7 +1,10 @@
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/run.hpp>
+#include <tinyfibers/sched/spawn.hpp>
+#include <tinyfibers/sched/sleep_for.hpp>
+#include <tinyfibers/sched/id.hpp>
 #include <tinyfibers/sync/mutex.hpp>
 
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 using namespace std::chrono_literals;
@@ -10,7 +13,7 @@ int main() {
   RunScheduler([]() {
     Mutex mutex;
 
-    std::cout << "Starting" << std::endl;
+    fmt::println("Starting");
 
     JoinHandle h2 = Spawn([&mutex]() {
       mutex.Lock();
@@ -22,10 +25,10 @@ int main() {
     });
 
     JoinHandle h3 = Spawn([&mutex]() {
-      std::cout << "Try to lock mutex from Fiber #" << self::GetId() << std::endl;
+      fmt::println("Try to lock mutex from Fiber #{}", self::GetId());
       mutex.Lock();  // <-- Blocks for 3s
       {
-        std::cout << "Mutex locked by Fiber #" << self::GetId() << std::endl;
+        fmt::println("Mutex locked by Fiber #{}", self::GetId());
       }
       mutex.Unlock();
     });
@@ -33,5 +36,6 @@ int main() {
     h2.Join();
     h3.Join();
   });
+
   return 0;
 }

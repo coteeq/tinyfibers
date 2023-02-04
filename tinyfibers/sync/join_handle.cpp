@@ -1,10 +1,10 @@
-#include <tinyfibers/runtime/join_handle.hpp>
+#include <tinyfibers/sync/join_handle.hpp>
 
-#include <tinyfibers/runtime/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
 namespace tinyfibers {
 
-JoinHandle::JoinHandle(Fiber* fiber) : fiber_(fiber) {
+JoinHandle::JoinHandle(rt::Fiber* fiber) : fiber_(fiber) {
   fiber_->SetWatcher(this);
 }
 

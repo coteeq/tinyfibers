@@ -1,16 +1,14 @@
 #pragma once
 
-#include <tinyfibers/runtime/api.hpp>
-#include <tinyfibers/runtime/fiber.hpp>
-#include <tinyfibers/runtime/stacks.hpp>
+#include <tinyfibers/rt/fiber.hpp>
+#include <tinyfibers/rt/stack_allocator.hpp>
 
-#include <context/context.hpp>
+#include <sure/context.hpp>
 
 #include <chrono>
-
 #include <functional>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 // Asymmetric control transfer:
 // RunLoop: S -> F_init -> S -> F1 -> S -> F2 -> S -> ...
@@ -18,6 +16,8 @@ namespace tinyfibers {
 // 2) F -> S (SwitchToScheduler)
 
 class Scheduler {
+  using FiberRoutine = std::function<void()>;
+
  public:
   Scheduler();
 
@@ -29,9 +29,9 @@ class Scheduler {
 
   Fiber* Spawn(FiberRoutine routine);
   void Yield();
-  // Sleep for _at_least_ delay
+  // Sleep for _at_least_ `delay`
   void SleepFor(std::chrono::milliseconds delay);
-  void Suspend();
+  void Suspend(Fiber* me);
   void Resume(Fiber* fiber);
   void Terminate();
 
@@ -46,6 +46,7 @@ class Scheduler {
   // Context switches
   // Fiber context -> scheduler (thread) context
   void SwitchToScheduler(Fiber* me);
+  void ExitToScheduler(Fiber* me);
   // Scheduler context -> fiber context
   void SwitchToFiber(Fiber* fiber);
 
@@ -62,7 +63,7 @@ class Scheduler {
   void CheckDeadlock();
 
  private:
-  context::ExecutionContext loop_context_;  // Thread context!
+  sure::ExecutionContext loop_context_;  // Thread context!
   wheels::IntrusiveList<Fiber> run_queue_;
   Fiber* running_{nullptr};
 
@@ -76,7 +77,7 @@ class Scheduler {
 
 //////////////////////////////////////////////////////////////////////
 
-Scheduler* GetCurrentScheduler();
-Fiber* GetCurrentFiber();
+Scheduler* CurrentScheduler();
+Fiber* CurrentFiber();
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt

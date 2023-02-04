@@ -1,17 +1,18 @@
-#include <tinyfibers/api.hpp>
+#include <tinyfibers/run.hpp>
+#include <tinyfibers/sched/spawn.hpp>
 
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
-    std::cout << "Hello from parent!" << std::endl;
+    fmt::println("Parent");
     JoinHandle child = Spawn([]() {
-      std::cout << "Hello from child!" << std::endl;
+      fmt::println("Child");
     });
     child.Join();
-    std::cout << "Child finished" << std::endl;
+    fmt::println("Child completed");
   });
   return 0;
 }

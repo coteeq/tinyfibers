@@ -1,0 +1,33 @@
+#include <tinyfibers/sync/nursery.hpp>
+
+#include <tinyfibers/rt/scheduler.hpp>
+
+#include <wheels/core/assert.hpp>
+
+namespace tinyfibers {
+
+Nursery& Nursery::Spawn(std::function<void()> routine) {
+  rt::Fiber* newbie = rt::CurrentScheduler()->Spawn(std::move(routine));
+  newbie->SetWatcher(this);
+  ++active_;
+  return *this;
+}
+
+void Nursery::Wait() {
+  if (active_ > 0) {
+    parking_lot_.Park();
+  }
+}
+
+void Nursery::OnCompleted() {
+  if (--active_ == 0) {
+    // Last fiber
+    parking_lot_.Wake();
+  }
+}
+
+Nursery::~Nursery() {
+  WHEELS_VERIFY(active_ == 0, "Wait required");
+}
+
+}  // namespace tinyfibers

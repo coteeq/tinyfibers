@@ -1,18 +1,18 @@
-#include <tinyfibers/runtime/scheduler.hpp>
+#include <tinyfibers/rt/scheduler.hpp>
 
-#include <wheels/support/assert.hpp>
-#include <wheels/support/panic.hpp>
-#include <wheels/support/stop_watch.hpp>
+#include <wheels/core/assert.hpp>
+#include <wheels/core/panic.hpp>
+#include <wheels/core/stop_watch.hpp>
 
 #include <limits>
 
-namespace tinyfibers {
+namespace tinyfibers::rt {
 
 //////////////////////////////////////////////////////////////////////
 
-static thread_local Scheduler* current_scheduler;
+static Scheduler* current_scheduler;
 
-Scheduler* GetCurrentScheduler() {
+Scheduler* CurrentScheduler() {
   WHEELS_VERIFY(current_scheduler, "Not in fiber context");
   return current_scheduler;
 }
@@ -46,6 +46,10 @@ void Scheduler::SwitchToScheduler(Fiber* me) {
   me->Context().SwitchTo(loop_context_);
 }
 
+void Scheduler::ExitToScheduler(Fiber* me) {
+  me->Context().ExitTo(loop_context_);
+}
+
 // System calls
 
 Fiber* Scheduler::Spawn(FiberRoutine routine) {
@@ -70,10 +74,9 @@ void Scheduler::SleepFor(std::chrono::milliseconds delay) {
   } while (stop_watch.Elapsed() < delay);
 }
 
-void Scheduler::Suspend() {
-  Fiber* caller = GetCurrentFiber();
-  caller->SetState(FiberState::Suspended);
-  SwitchToScheduler(caller);
+void Scheduler::Suspend(Fiber* me) {
+  me->SetState(FiberState::Suspended);
+  SwitchToScheduler(me);
 }
 
 void Scheduler::Resume(Fiber* fiber) {
@@ -87,7 +90,7 @@ void Scheduler::Terminate() {
   Fiber* caller = GetCurrentFiber();
   caller->SetState(FiberState::Terminated);
   // Leave this context forever
-  SwitchToScheduler(caller);
+  ExitToScheduler(/*me=*/caller);
 }
 
 // Scheduling
@@ -172,12 +175,12 @@ void Scheduler::CheckDeadlock() {
 
 //////////////////////////////////////////////////////////////////////
 
-Fiber* GetCurrentFiber() {
-  return GetCurrentScheduler()->GetCurrentFiber();
+Fiber* CurrentFiber() {
+  return CurrentScheduler()->GetCurrentFiber();
 }
 
 void SetDeadlockHandler(std::function<void()> handler) {
-  GetCurrentScheduler()->SetDeadlockHandler(handler);
+  CurrentScheduler()->SetDeadlockHandler(handler);
 }
 
-}  // namespace tinyfibers
+}  // namespace tinyfibers::rt
