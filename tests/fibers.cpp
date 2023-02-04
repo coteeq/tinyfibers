@@ -363,6 +363,7 @@ TEST_SUITE(Fibers) {
     size_t iterations = 0;
 
     rt::Scheduler scheduler;
+
     scheduler.Run(
         [&]() {
           while (true) {
