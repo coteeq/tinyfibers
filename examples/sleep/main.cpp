@@ -1,7 +1,7 @@
 #include <tinyfibers/run.hpp>
 
 #include <tinyfibers/sched/sleep_for.hpp>
-#include <tinyfibers/sync/nursery.hpp>
+#include <tinyfibers/sync/wait_group.hpp>
 
 #include <fmt/core.h>
 
@@ -10,14 +10,14 @@ using namespace tinyfibers;
 std::vector<int> SleepSort(std::vector<int> ints) {
   std::vector<int> sorted_ints;
 
-  Nursery nursery;
+  WaitGroup wg;
   for (int value : ints) {
-    nursery.Spawn([&, value]() {
+    wg.Spawn([&, value]() {
       self::SleepFor(std::chrono::seconds(value));
       sorted_ints.push_back(value);
     });
   }
-  nursery.Wait();
+  wg.Wait();
 
   return sorted_ints;
 }

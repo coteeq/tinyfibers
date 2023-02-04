@@ -8,12 +8,12 @@
 
 namespace tinyfibers {
 
-class Nursery : public rt::IFiberWatcher {
+class WaitGroup : public rt::IFiberWatcher {
  public:
-  Nursery& Spawn(std::function<void()> routine);
+  WaitGroup& Spawn(std::function<void()> routine);
   void Wait();
 
-  ~Nursery();
+  ~WaitGroup();
 
  private:
   void OnCompleted() override;

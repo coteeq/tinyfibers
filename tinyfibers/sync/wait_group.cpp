@@ -1,4 +1,4 @@
-#include <tinyfibers/sync/nursery.hpp>
+#include <tinyfibers/sync/wait_group.hpp>
 
 #include <tinyfibers/rt/scheduler.hpp>
 
@@ -6,27 +6,27 @@
 
 namespace tinyfibers {
 
-Nursery& Nursery::Spawn(std::function<void()> routine) {
+WaitGroup& WaitGroup::Spawn(std::function<void()> routine) {
   rt::Fiber* newbie = rt::CurrentScheduler()->Spawn(std::move(routine));
   newbie->SetWatcher(this);
   ++active_;
   return *this;
 }
 
-void Nursery::Wait() {
+void WaitGroup::Wait() {
   if (active_ > 0) {
     parking_lot_.Park();
   }
 }
 
-void Nursery::OnCompleted() {
+void WaitGroup::OnCompleted() {
   if (--active_ == 0) {
     // Last fiber
     parking_lot_.Wake();
   }
 }
 
-Nursery::~Nursery() {
+WaitGroup::~WaitGroup() {
   WHEELS_VERIFY(active_ == 0, "Wait required");
 }
 
