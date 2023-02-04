@@ -347,7 +347,7 @@ TEST_SUITE(Fibers) {
       second();
 
       // Deadlock here
-      Nursery wg;
+      WaitGroup wg;
       wg.Spawn(first);
       wg.Spawn(second);
       wg.Wait();
