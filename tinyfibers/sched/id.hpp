@@ -8,10 +8,6 @@ namespace tinyfibers {
 
 using rt::FiberId;
 
-namespace self {
-
 FiberId GetId();
-
-}  // namespace self
 
 }  // namespace tinyfibers

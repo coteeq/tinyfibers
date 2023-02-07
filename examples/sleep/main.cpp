@@ -13,7 +13,7 @@ std::vector<int> SleepSort(std::vector<int> ints) {
   WaitGroup wg;
   for (int value : ints) {
     wg.Spawn([&, value]() {
-      self::SleepFor(std::chrono::seconds(value));
+      SleepFor(std::chrono::seconds(value));
       sorted_ints.push_back(value);
     });
   }

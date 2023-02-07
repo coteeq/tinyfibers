@@ -19,16 +19,16 @@ int main() {
       mutex.Lock();
       {
         // Critical section
-        self::SleepFor(3s);
+        SleepFor(3s);
       }
       mutex.Unlock();
     });
 
     JoinHandle h3 = Spawn([&mutex]() {
-      fmt::println("Try to lock mutex from Fiber #{}", self::GetId());
+      fmt::println("Try to lock mutex from Fiber #{}", GetId());
       mutex.Lock();  // <-- Blocks for 3s
       {
-        fmt::println("Mutex locked by Fiber #{}", self::GetId());
+        fmt::println("Mutex locked by Fiber #{}", GetId());
       }
       mutex.Unlock();
     });

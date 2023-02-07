@@ -12,7 +12,7 @@ void Breakpoint() {
 void Bar() {
   fmt::println("Bar / before Yield");
   Breakpoint(); // Before first Yield
-  self::Yield();
+  Yield();
   fmt::println("Bar / after Yield");
   Breakpoint(); // After second Yield
 }
@@ -24,7 +24,7 @@ void Foo() {
 void Baz() {
   fmt::println("Baz / after first Yield");
   Breakpoint(); // After first Yield
-  self::Yield();
+  Yield();
 }
 
 int main() {

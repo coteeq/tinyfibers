@@ -14,12 +14,12 @@ int main() {
       // <--
       fmt::print("2");
       // run queue: f0
-      self::Yield();  // <--
+      Yield();  // <--
       fmt::print("4");
     });
 
     fmt::print("1");
-    self::Yield();  // <--
+    Yield();  // <--
     // run queue: f1
     fmt::print("3");
 
@@ -29,7 +29,7 @@ int main() {
 
     // running = init, run queue: f1, f2
 
-    self::Yield();  // <-- [execution] context switch
+    Yield();  // <-- [execution] context switch
 
     fmt::print("6");
 
