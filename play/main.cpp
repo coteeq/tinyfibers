@@ -8,7 +8,7 @@ using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
-    fmt::println("Hi, I am Fiber #{}", self::GetId());
+    fmt::println("Hi, I am Fiber #{}", GetId());
   });
   return 0;
 }

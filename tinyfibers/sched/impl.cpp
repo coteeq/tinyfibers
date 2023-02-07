@@ -12,8 +12,6 @@ JoinHandle Spawn(std::function<void()> routine) {
   return JoinHandle{fiber};
 }
 
-namespace self {
-
 void Yield() {
   rt::CurrentScheduler()->Yield();
 }
@@ -25,7 +23,5 @@ void SleepFor(std::chrono::milliseconds delay) {
 FiberId GetId() {
   return rt::CurrentFiber()->Id();
 }
-
-}  // namespace self
 
 }  // namespace tinyfibers

@@ -25,13 +25,13 @@ using namespace std::chrono_literals;
 TEST_SUITE(Fibers) {
   SIMPLE_TEST(JustWorks) {
     rt::RunScheduler([]() {
-      self::Yield();
+      Yield();
     });
   }
 
   // Runs test routine in fiber scheduler
   TINY_FIBERS_TEST(TestMacro) {
-    self::Yield();
+    Yield();
   }
 
   TINY_FIBERS_TEST(Join) {
@@ -49,7 +49,7 @@ TEST_SUITE(Fibers) {
     JoinHandle h = Spawn([&]() {
       done = true;
     });
-    self::Yield();
+    Yield();
     ASSERT_TRUE(done);
     h.Join();
   }
@@ -57,35 +57,35 @@ TEST_SUITE(Fibers) {
   // At least does not panic
   TINY_FIBERS_TEST(Detach) {
     JoinHandle h = Spawn([&]() {
-      self::Yield();
+      Yield();
     });
     h.Detach();
   }
 
   TINY_FIBERS_TEST(MoveJoinHandle) {
     JoinHandle h = Spawn([]() {});
-    self::Yield();
+    Yield();
     JoinHandle g{std::move(h)};
     g.Join();
   }
 
   TINY_FIBERS_TEST(Ids) {
-    FiberId init_id = self::GetId();
+    FiberId init_id = GetId();
 
     auto first = [&]() {
-      ASSERT_EQ(self::GetId(), init_id + 1);
+      ASSERT_EQ(GetId(), init_id + 1);
     };
 
     auto second = [&]() {
-      ASSERT_EQ(self::GetId(), init_id + 2);
+      ASSERT_EQ(GetId(), init_id + 2);
     };
 
     JoinHandle f1 = Spawn(first);
     JoinHandle f2 = Spawn(second);
 
-    self::Yield();
+    Yield();
 
-    ASSERT_EQ(init_id, self::GetId());
+    ASSERT_EQ(init_id, GetId());
 
     f1.Join();
     f2.Join();
@@ -97,7 +97,7 @@ TEST_SUITE(Fibers) {
     auto first = [&count]() {
       for (size_t i = 0; i < 10; ++i) {
         ++count;
-        self::Yield();
+        Yield();
         ASSERT_EQ(count, 0);
       }
       ++count;
@@ -106,7 +106,7 @@ TEST_SUITE(Fibers) {
     auto second = [&count]() {
       for (size_t i = 0; i < 10; ++i) {
         --count;
-        self::Yield();
+        Yield();
         ASSERT_EQ(count, 1);
       }
     };
@@ -118,7 +118,7 @@ TEST_SUITE(Fibers) {
 
   TINY_FIBERS_TEST(SleepFor) {
     wheels::StopWatch stop_watch;
-    self::SleepFor(1s);
+    SleepFor(1s);
     ASSERT_GE(stop_watch.Elapsed(), 1s);
   }
 
@@ -132,7 +132,7 @@ TEST_SUITE(Fibers) {
       for (size_t i = 0; i < kRounds; ++i) {
         ASSERT_EQ(next, k);
         next = (next + 1) % kFibers;
-        self::Yield();
+        Yield();
       }
     };
 
@@ -154,7 +154,7 @@ TEST_SUITE(Fibers) {
       wait_queue.WakeOne();
       ASSERT_EQ(step, 1);
       ++step;
-      self::Yield();
+      Yield();
       ASSERT_EQ(step, 3);
     });
 
@@ -162,7 +162,7 @@ TEST_SUITE(Fibers) {
     wait_queue.Park();
     ASSERT_EQ(step, 2);
     ++step;
-    self::Yield();
+    Yield();
     waker.Join();
   }
 
@@ -176,12 +176,12 @@ TEST_SUITE(Fibers) {
         ASSERT_FALSE(critical);
         critical = true;
         for (size_t j = 0; j < 3; ++j) {
-          self::Yield();
+          Yield();
         }
         ASSERT_TRUE(critical);
         critical = false;
         mutex.Unlock();
-        self::Yield();
+        Yield();
       }
     };
 
@@ -197,13 +197,13 @@ TEST_SUITE(Fibers) {
 
     wg.Spawn([&mutex]() {
       mutex.Lock();
-      self::Yield();
+      Yield();
       mutex.Unlock();
     });
 
     wg.Spawn([&mutex]() {
       ASSERT_FALSE(mutex.TryLock());
-      self::Yield();
+      Yield();
       ASSERT_TRUE(mutex.TryLock());
       mutex.Unlock();
     });
@@ -236,7 +236,7 @@ TEST_SUITE(Fibers) {
       std::lock_guard guard(mutex);
 
       for (size_t i = 0; i < 100; ++i) {
-        self::Yield();
+        Yield();
       }
       message = "Hello";
       ready.NotifyOne();
