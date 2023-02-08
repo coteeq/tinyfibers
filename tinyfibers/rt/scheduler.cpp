@@ -12,7 +12,7 @@ namespace tinyfibers::rt {
 
 static Scheduler* current_scheduler;
 
-Scheduler* CurrentScheduler() {
+Scheduler* Scheduler::Current() {
   WHEELS_VERIFY(current_scheduler, "Not in fiber context");
   return current_scheduler;
 }
@@ -37,7 +37,7 @@ Scheduler::Scheduler() {
   });
 }
 
-Fiber* Scheduler::GetCurrentFiber() {
+Fiber* Scheduler::RunningFiber() {
   WHEELS_VERIFY(running_ != nullptr, "Not in fiber context");
   return running_;
 }
@@ -59,7 +59,7 @@ Fiber* Scheduler::Spawn(FiberRoutine routine) {
 }
 
 void Scheduler::Yield() {
-  Fiber* caller = GetCurrentFiber();
+  Fiber* caller = RunningFiber();
   caller->SetState(FiberState::Runnable);
   SwitchToScheduler(caller);
 }
@@ -87,7 +87,7 @@ void Scheduler::Resume(Fiber* fiber) {
 }
 
 void Scheduler::Terminate() {
-  Fiber* caller = GetCurrentFiber();
+  Fiber* caller = RunningFiber();
   caller->SetState(FiberState::Terminated);
   // Leave this context forever
   ExitToScheduler(/*me=*/caller);
@@ -152,7 +152,7 @@ Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   ++alive_count_;
   auto stack = stacks_.Allocate();
   FiberId id = ++next_id_;
-  return new Fiber(std::move(routine), std::move(stack), id);
+  return new Fiber(this, std::move(routine), std::move(stack), id);
 }
 
 void Scheduler::Destroy(Fiber* fiber) {
@@ -171,16 +171,6 @@ void Scheduler::CheckDeadlock() {
    deadlock_handler_();
    WHEELS_PANIC("Deadlock handler returns");
  }
-}
-
-//////////////////////////////////////////////////////////////////////
-
-Fiber* CurrentFiber() {
-  return CurrentScheduler()->GetCurrentFiber();
-}
-
-void SetDeadlockHandler(std::function<void()> handler) {
-  CurrentScheduler()->SetDeadlockHandler(handler);
 }
 
 }  // namespace tinyfibers::rt

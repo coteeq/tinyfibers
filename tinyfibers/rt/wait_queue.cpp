@@ -7,26 +7,24 @@
 namespace tinyfibers::rt {
 
 void WaitQueue::Park() {
-  Fiber* caller = CurrentFiber();
+  auto* scheduler = Scheduler::Current();
+  Fiber* caller = Scheduler::Current()->RunningFiber();
+
   waiters_.PushBack(caller);
-  CurrentScheduler()->Suspend(caller);
+  scheduler->Suspend(caller);
 }
 
 void WaitQueue::WakeOne() {
   if (waiters_.IsEmpty()) {
     return;
   }
-  Resume(waiters_.PopFront());
+  waiters_.PopFront()->Resume();
 }
 
 void WaitQueue::WakeAll() {
   while (!waiters_.IsEmpty()) {
-    Resume(waiters_.PopFront());
+    waiters_.PopFront()->Resume();
   }
-}
-
-void WaitQueue::Resume(Fiber* fiber) {
-  CurrentScheduler()->Resume(fiber);
 }
 
 WaitQueue::~WaitQueue() {

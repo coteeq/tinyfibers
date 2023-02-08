@@ -25,6 +25,8 @@ class Scheduler {
   void Run(FiberRoutine init);
   void Run(FiberRoutine init, size_t fuel);
 
+  static Scheduler* Current();
+
   // System calls
 
   Fiber* Spawn(FiberRoutine routine);
@@ -35,7 +37,7 @@ class Scheduler {
   void Resume(Fiber* fiber);
   void Terminate();
 
-  Fiber* GetCurrentFiber();
+  Fiber* RunningFiber();
 
   void SetDeadlockHandler(std::function<void()> handler);
 
@@ -74,10 +76,5 @@ class Scheduler {
   size_t alive_count_{0};
   std::function<void()> deadlock_handler_;
 };
-
-//////////////////////////////////////////////////////////////////////
-
-Scheduler* CurrentScheduler();
-Fiber* CurrentFiber();
 
 }  // namespace tinyfibers::rt

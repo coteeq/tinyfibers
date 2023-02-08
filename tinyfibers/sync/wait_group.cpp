@@ -7,7 +7,7 @@
 namespace tinyfibers {
 
 WaitGroup& WaitGroup::Spawn(std::function<void()> routine) {
-  rt::Fiber* newbie = rt::CurrentScheduler()->Spawn(std::move(routine));
+  rt::Fiber* newbie = rt::Scheduler::Current()->Spawn(std::move(routine));
   newbie->SetWatcher(this);
   ++active_;
   return *this;

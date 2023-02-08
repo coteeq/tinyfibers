@@ -324,7 +324,7 @@ TEST_SUITE(Fibers) {
 
       auto first = [&]() {
         a.Lock();
-        self::Yield();
+        Yield();
         b.Lock();
         b.Unlock();
         a.Unlock();
@@ -367,7 +367,7 @@ TEST_SUITE(Fibers) {
         [&]() {
           while (true) {
             ++iterations;
-            self::Yield();
+            Yield();
           }
         },
         kFuel);

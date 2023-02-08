@@ -21,9 +21,6 @@ class WaitQueue {
   void WakeAll();
 
  private:
-  void Resume(Fiber* fiber);
-
- private:
   wheels::IntrusiveList<Fiber> waiters_;
 };
 

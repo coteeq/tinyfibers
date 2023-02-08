@@ -3,5 +3,6 @@
 namespace tinyfibers::rt {
 
 class Fiber;
+class Scheduler;
 
 }  // namespace tinyfibers::rt
