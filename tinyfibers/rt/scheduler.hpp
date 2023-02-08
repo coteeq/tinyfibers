@@ -12,7 +12,7 @@ namespace tinyfibers::rt {
 
 // Asymmetric control transfer:
 // RunLoop: S -> F_init -> S -> F1 -> S -> F2 -> S -> ...
-// 1) S -> F (SwitchToFiber)
+// 1) S -> F (SwitchTo(Fiber*))
 // 2) F -> S (SwitchToScheduler)
 
 class Scheduler {
@@ -46,7 +46,7 @@ class Scheduler {
   void SwitchToScheduler();
   void ExitToScheduler();
   // Scheduler context -> fiber context
-  void SwitchToFiber(Fiber* fiber);
+  void SwitchTo(Fiber* fiber);
 
   // Switch to `fiber` and run it until this fiber calls Yield or terminates
   void Step(Fiber* fiber);
