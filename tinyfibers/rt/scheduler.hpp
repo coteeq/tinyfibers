@@ -16,8 +16,6 @@ namespace tinyfibers::rt {
 // 2) F -> S (SwitchToScheduler)
 
 class Scheduler {
-  using FiberRoutine = std::function<void()>;
-
  public:
   Scheduler();
 
