@@ -23,6 +23,8 @@ class Scheduler {
   // One-shot
   void Run(FiberRoutine init);
 
+  static Scheduler* Current();
+
   // System calls
 
   Fiber* Spawn(FiberRoutine routine);
@@ -33,7 +35,7 @@ class Scheduler {
   void Resume(Fiber* fiber);
   void Terminate();
 
-  Fiber* GetCurrentFiber();
+  Fiber* RunningFiber();
 
  private:
   void RunLoop();
@@ -64,10 +66,5 @@ class Scheduler {
   size_t next_id_{0};
   StackAllocator stacks_;
 };
-
-//////////////////////////////////////////////////////////////////////
-
-Scheduler* CurrentScheduler();
-Fiber* CurrentFiber();
 
 }  // namespace tinyfibers::rt

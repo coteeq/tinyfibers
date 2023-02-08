@@ -34,7 +34,7 @@ void Fiber::Run() noexcept {
         "Uncaught exception in fiber: " << wheels::CurrentExceptionMessage());
   }
 
-  CurrentScheduler()->Terminate();  // Never returns
+  Scheduler::Current()->Terminate();  // Never returns
 
   WHEELS_UNREACHABLE();
 }

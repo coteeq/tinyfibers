@@ -10,7 +10,7 @@ namespace tinyfibers::rt {
 
 static Scheduler* current_scheduler;
 
-Scheduler* CurrentScheduler() {
+Scheduler* Scheduler::Current() {
   WHEELS_VERIFY(current_scheduler, "Not in fiber context");
   return current_scheduler;
 }
@@ -32,7 +32,7 @@ struct SchedulerScope {
 Scheduler::Scheduler() {
 }
 
-Fiber* Scheduler::GetCurrentFiber() {
+Fiber* Scheduler::RunningFiber() {
   WHEELS_VERIFY(running_ != nullptr, "Not in fiber context");
   return running_;
 }
@@ -54,7 +54,7 @@ Fiber* Scheduler::Spawn(FiberRoutine routine) {
 }
 
 void Scheduler::Yield() {
-  Fiber* caller = GetCurrentFiber();
+  Fiber* caller = RunningFiber();
   caller->SetState(FiberState::Runnable);
   SwitchToScheduler(caller);
 }
@@ -82,7 +82,7 @@ void Scheduler::Resume(Fiber* fiber) {
 }
 
 void Scheduler::Terminate() {
-  Fiber* caller = GetCurrentFiber();
+  Fiber* caller = RunningFiber();
   caller->SetState(FiberState::Terminated);
   // Leave this context forever
   ExitToScheduler(/*me=*/caller);
@@ -145,12 +145,6 @@ Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
 void Scheduler::Destroy(Fiber* fiber) {
   stacks_.Release(std::move(fiber->Stack()));
   delete fiber;
-}
-
-//////////////////////////////////////////////////////////////////////
-
-Fiber* CurrentFiber() {
-  return CurrentScheduler()->GetCurrentFiber();
 }
 
 }  // namespace tinyfibers::rt

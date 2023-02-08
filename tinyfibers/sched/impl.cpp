@@ -8,20 +8,20 @@
 namespace tinyfibers {
 
 JoinHandle Spawn(std::function<void()> routine) {
-  rt::Fiber* fiber = rt::CurrentScheduler()->Spawn(std::move(routine));
+  rt::Fiber* fiber = rt::Scheduler::Current()->Spawn(std::move(routine));
   return JoinHandle{fiber};
 }
 
 void Yield() {
-  rt::CurrentScheduler()->Yield();
+  rt::Scheduler::Current()->Yield();
 }
 
 void SleepFor(std::chrono::milliseconds delay) {
-  rt::CurrentScheduler()->SleepFor(delay);
+  rt::Scheduler::Current()->SleepFor(delay);
 }
 
 FiberId GetId() {
-  return rt::CurrentFiber()->Id();
+  return rt::Scheduler::Current()->RunningFiber()->Id();
 }
 
 }  // namespace tinyfibers
