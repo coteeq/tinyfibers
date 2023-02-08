@@ -1,5 +1,6 @@
 #pragma once
 
+#include <tinyfibers/rt/fwd.hpp>
 #include <tinyfibers/rt/state.hpp>
 #include <tinyfibers/rt/id.hpp>
 #include <tinyfibers/rt/watcher.hpp>
@@ -42,16 +43,19 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
     watcher_ = watcher;
   }
 
+  void Resume();
+
   ~Fiber();
 
  private:
-  Fiber(Routine routine, sure::Stack stack, FiberId id);
+  Fiber(Scheduler* scheduler, Routine routine, sure::Stack stack, FiberId id);
   void SetupContext();
 
   // sure::ITrampoline
   [[noreturn]] void Run() noexcept override;
 
  private:
+  Scheduler* scheduler_;
   Routine routine_;
   sure::Stack stack_;
   sure::ExecutionContext context_;

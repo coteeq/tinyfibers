@@ -8,8 +8,12 @@
 
 namespace tinyfibers::rt {
 
-Fiber::Fiber(Routine routine, sure::Stack stack, FiberId id)
-    : routine_(std::move(routine)),
+Fiber::Fiber(Scheduler* scheduler,
+             Routine routine,
+             sure::Stack stack,
+             FiberId id)
+    : scheduler_(scheduler),
+      routine_(std::move(routine)),
       stack_(std::move(stack)),
       state_(FiberState::Starting),
       id_(id) {
@@ -43,6 +47,10 @@ void Fiber::SetupContext() {
   context_.Setup(
       /*stack=*/stack_.MutView(),
       /*trampoline=*/this);
+}
+
+void Fiber::Resume() {
+  scheduler_->Resume(this);
 }
 
 }  // namespace tinyfibers::rt

@@ -6,14 +6,15 @@ namespace tinyfibers::rt {
 
 void ParkingLot::Park() {
   auto* scheduler = Scheduler::Current();
+  Fiber* caller = scheduler->RunningFiber();
 
-  waitee_ = scheduler->RunningFiber();
-  scheduler->Suspend(waitee_);
+  waitee_ = caller;
+  scheduler->Suspend(caller);
 }
 
 void ParkingLot::Wake() {
   if (waitee_ != nullptr) {
-    Scheduler::Current()->Resume(waitee_);
+    waitee_->Resume();
   }
 }
 

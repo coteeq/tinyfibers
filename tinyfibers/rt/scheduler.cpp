@@ -139,7 +139,7 @@ void Scheduler::Schedule(Fiber* fiber) {
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   auto stack = stacks_.Allocate();
   FiberId id = ++next_id_;
-  return new Fiber(std::move(routine), std::move(stack), id);
+  return new Fiber(this, std::move(routine), std::move(stack), id);
 }
 
 void Scheduler::Destroy(Fiber* fiber) {

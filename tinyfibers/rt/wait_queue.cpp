@@ -8,8 +8,8 @@ namespace tinyfibers::rt {
 
 void WaitQueue::Park() {
   auto* scheduler = Scheduler::Current();
+  Fiber* caller = Scheduler::Current()->RunningFiber();
 
-  Fiber* caller = scheduler->RunningFiber();
   waiters_.PushBack(caller);
   scheduler->Suspend(caller);
 }
@@ -18,14 +18,12 @@ void WaitQueue::WakeOne() {
   if (waiters_.IsEmpty()) {
     return;
   }
-  Scheduler::Current()->Resume(waiters_.PopFront());
+  waiters_.PopFront()->Resume();
 }
 
 void WaitQueue::WakeAll() {
-  auto* scheduler = Scheduler::Current();
-
   while (!waiters_.IsEmpty()) {
-    scheduler->Resume(waiters_.PopFront());
+    waiters_.PopFront()->Resume();
   }
 }
 
