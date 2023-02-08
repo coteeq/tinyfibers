@@ -31,7 +31,7 @@ class Scheduler {
   void Yield();
   // Sleep for _at_least_ `delay`
   void SleepFor(std::chrono::milliseconds delay);
-  void Suspend(Fiber* me);
+  void Suspend();
   void Resume(Fiber* fiber);
   void Terminate();
 
@@ -42,8 +42,8 @@ class Scheduler {
 
   // Context switches
   // Fiber context -> scheduler (thread) context
-  void SwitchToScheduler(Fiber* me);
-  void ExitToScheduler(Fiber* me);
+  void SwitchToScheduler();
+  void ExitToScheduler();
   // Scheduler context -> fiber context
   void SwitchToFiber(Fiber* fiber);
 

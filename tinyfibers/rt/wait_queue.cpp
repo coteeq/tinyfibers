@@ -8,10 +8,9 @@ namespace tinyfibers::rt {
 
 void WaitQueue::Park() {
   auto* scheduler = Scheduler::Current();
-  Fiber* caller = Scheduler::Current()->RunningFiber();
 
-  waiters_.PushBack(caller);
-  scheduler->Suspend(caller);
+  waiters_.PushBack(scheduler->RunningFiber());
+  scheduler->Suspend();
 }
 
 void WaitQueue::WakeOne() {

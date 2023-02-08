@@ -37,12 +37,12 @@ Fiber* Scheduler::RunningFiber() {
   return running_;
 }
 
-void Scheduler::SwitchToScheduler(Fiber* me) {
-  me->Context().SwitchTo(loop_context_);
+void Scheduler::SwitchToScheduler() {
+  running_->Context().SwitchTo(loop_context_);
 }
 
-void Scheduler::ExitToScheduler(Fiber* me) {
-  me->Context().ExitTo(loop_context_);
+void Scheduler::ExitToScheduler() {
+  running_->Context().ExitTo(loop_context_);
 }
 
 // System calls
@@ -54,9 +54,8 @@ Fiber* Scheduler::Spawn(FiberRoutine routine) {
 }
 
 void Scheduler::Yield() {
-  Fiber* caller = RunningFiber();
-  caller->SetState(FiberState::Runnable);
-  SwitchToScheduler(caller);
+  running_->SetState(FiberState::Runnable);
+  SwitchToScheduler();
 }
 
 void Scheduler::SleepFor(std::chrono::milliseconds delay) {
@@ -69,9 +68,9 @@ void Scheduler::SleepFor(std::chrono::milliseconds delay) {
   } while (stop_watch.Elapsed() < delay);
 }
 
-void Scheduler::Suspend(Fiber* me) {
-  me->SetState(FiberState::Suspended);
-  SwitchToScheduler(me);
+void Scheduler::Suspend() {
+  running_->SetState(FiberState::Suspended);
+  SwitchToScheduler();
 }
 
 void Scheduler::Resume(Fiber* fiber) {
@@ -82,10 +81,9 @@ void Scheduler::Resume(Fiber* fiber) {
 }
 
 void Scheduler::Terminate() {
-  Fiber* caller = RunningFiber();
-  caller->SetState(FiberState::Terminated);
+  running_->SetState(FiberState::Terminated);
   // Leave this context forever
-  ExitToScheduler(/*me=*/caller);
+  ExitToScheduler();
 }
 
 // Scheduling

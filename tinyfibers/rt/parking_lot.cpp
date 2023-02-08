@@ -6,10 +6,9 @@ namespace tinyfibers::rt {
 
 void ParkingLot::Park() {
   auto* scheduler = Scheduler::Current();
-  Fiber* caller = scheduler->RunningFiber();
 
-  waitee_ = caller;
-  scheduler->Suspend(caller);
+  waitee_ = scheduler->RunningFiber();
+  scheduler->Suspend();
 }
 
 void ParkingLot::Wake() {
