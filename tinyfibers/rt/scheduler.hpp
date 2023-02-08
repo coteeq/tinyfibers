@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tinyfibers/rt/fiber.hpp>
+#include <tinyfibers/rt/id_generator.hpp>
 #include <tinyfibers/rt/stack_allocator.hpp>
 
 #include <sure/context.hpp>
@@ -63,7 +64,7 @@ class Scheduler {
   Fiber* running_{nullptr};
 
   // Resources
-  size_t next_id_{0};
+  IdGenerator ids_;
   StackAllocator stacks_;
 };
 
