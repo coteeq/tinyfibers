@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tinyfibers/rt/fwd.hpp>
+#include <tinyfibers/rt/routine.hpp>
 #include <tinyfibers/rt/state.hpp>
 #include <tinyfibers/rt/id.hpp>
 #include <tinyfibers/rt/watcher.hpp>
@@ -13,10 +14,8 @@
 namespace tinyfibers::rt {
 
 class Fiber : public wheels::IntrusiveListNode<Fiber>,
-              public sure::ITrampoline {
+              private sure::ITrampoline {
   friend class Scheduler;
-
-  using Routine = std::function<void()>;
 
  public:
   FiberId Id() const {
@@ -48,7 +47,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   ~Fiber();
 
  private:
-  Fiber(Scheduler* scheduler, Routine routine, sure::Stack stack, FiberId id);
+  Fiber(Scheduler* scheduler, FiberRoutine routine, sure::Stack stack, FiberId id);
   void SetupContext();
 
   // sure::ITrampoline
@@ -56,7 +55,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
 
  private:
   Scheduler* scheduler_;
-  Routine routine_;
+  FiberRoutine routine_;
   sure::Stack stack_;
   sure::ExecutionContext context_;
   FiberState state_;

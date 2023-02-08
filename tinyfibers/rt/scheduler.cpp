@@ -117,11 +117,11 @@ void Scheduler::RunLoop(size_t& fuel) {
 void Scheduler::Step(Fiber* fiber) {
   running_ = fiber;
   fiber->SetState(FiberState::Running);
-  SwitchToFiber(fiber);
+  SwitchTo(fiber);
   running_ = nullptr;
 }
 
-void Scheduler::SwitchToFiber(Fiber* fiber) {
+void Scheduler::SwitchTo(Fiber* fiber) {
   loop_context_.SwitchTo(fiber->Context());
 }
 
@@ -148,8 +148,12 @@ void Scheduler::Schedule(Fiber* fiber) {
 
 Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   ++alive_count_;
+
+  // Allocate resources
   auto stack = stacks_.Allocate();
-  FiberId id = ++next_id_;
+  FiberId id = ids_.Generate();
+
+  // Create fiber
   return new Fiber(this, std::move(routine), std::move(stack), id);
 }
 

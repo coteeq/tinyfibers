@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tinyfibers/rt/fiber.hpp>
+#include <tinyfibers/rt/id_generator.hpp>
 #include <tinyfibers/rt/stack_allocator.hpp>
 
 #include <sure/context.hpp>
@@ -12,12 +13,10 @@ namespace tinyfibers::rt {
 
 // Asymmetric control transfer:
 // RunLoop: S -> F_init -> S -> F1 -> S -> F2 -> S -> ...
-// 1) S -> F (SwitchToFiber)
+// 1) S -> F (SwitchTo(Fiber*))
 // 2) F -> S (SwitchToScheduler)
 
 class Scheduler {
-  using FiberRoutine = std::function<void()>;
-
  public:
   Scheduler();
 
@@ -50,7 +49,7 @@ class Scheduler {
   void SwitchToScheduler();
   void ExitToScheduler();
   // Scheduler context -> fiber context
-  void SwitchToFiber(Fiber* fiber);
+  void SwitchTo(Fiber* fiber);
 
   // Switch to `fiber` and run it until this fiber calls Yield or terminates
   void Step(Fiber* fiber);
@@ -70,7 +69,7 @@ class Scheduler {
   Fiber* running_{nullptr};
 
   // Resources
-  size_t next_id_{0};
+  IdGenerator ids_;
   StackAllocator stacks_;
 
   size_t alive_count_{0};
