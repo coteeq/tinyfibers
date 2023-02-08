@@ -13,7 +13,7 @@
 namespace tinyfibers::rt {
 
 class Fiber : public wheels::IntrusiveListNode<Fiber>,
-              public sure::ITrampoline {
+              private sure::ITrampoline {
   friend class Scheduler;
 
   using Routine = std::function<void()>;
