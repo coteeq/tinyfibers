@@ -1,12 +1,12 @@
-#include <tinyfibers/run.hpp>
-#include <tinyfibers/sched/spawn.hpp>
-#include <tinyfibers/sched/sleep_for.hpp>
-#include <tinyfibers/sched/id.hpp>
-#include <tinyfibers/sync/mutex.hpp>
+#include <tf/run.hpp>
+#include <tf/sched/spawn.hpp>
+#include <tf/sched/sleep_for.hpp>
+#include <tf/sched/id.hpp>
+#include <tf/sync/mutex.hpp>
 
 #include <fmt/core.h>
 
-using namespace tinyfibers;
+using namespace tf;
 using namespace std::chrono_literals;
 
 int main() {

@@ -1,9 +1,9 @@
-#include <tinyfibers/run.hpp>
-#include <tinyfibers/sched/spawn.hpp>
+#include <tf/run.hpp>
+#include <tf/sched/spawn.hpp>
 
 #include <fmt/core.h>
 
-using namespace tinyfibers;
+using namespace tf;
 
 int main() {
   RunScheduler([]() {

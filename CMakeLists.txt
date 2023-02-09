@@ -20,7 +20,7 @@ option(TINY_FIBERS_EXAMPLES "Enable tinyfibers examples" OFF)
 option(TINY_FIBERS_TESTS "Enable tinyfibers tests" OFF)
 option(TINY_FIBERS_BENCHMARKS "Enable tinyfibers benchmarks" OFF)
 
-add_subdirectory(tinyfibers)
+add_subdirectory(tf)
 
 add_subdirectory(play)
 

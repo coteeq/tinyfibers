@@ -1,11 +1,11 @@
-#include <tinyfibers/run.hpp>
+#include <tf/run.hpp>
 
-#include <tinyfibers/sched/sleep_for.hpp>
-#include <tinyfibers/sync/wait_group.hpp>
+#include <tf/sched/sleep_for.hpp>
+#include <tf/sync/wait_group.hpp>
 
 #include <fmt/core.h>
 
-using namespace tinyfibers;
+using namespace tf;
 
 std::vector<int> SleepSort(std::vector<int> ints) {
   std::vector<int> sorted_ints;
