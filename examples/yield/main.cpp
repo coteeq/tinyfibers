@@ -9,33 +9,29 @@ using namespace tinyfibers;
 
 int main() {
   RunScheduler([]() {
-    // run queue
-    JoinHandle h1 = Spawn([]() {
-      // <--
-      fmt::print("2");
-      // run queue: f0
-      Yield();  // <--
-      fmt::print("4");
+    JoinHandle h1 = Spawn([] {
+      fmt::print("->2");
+      Yield();
+      fmt::print("->4");
     });
 
     fmt::print("1");
-    Yield();  // <--
-    // run queue: f1
-    fmt::print("3");
+    Yield();
+    fmt::print("->3");
 
-    JoinHandle h2 = Spawn([]() {
-      fmt::print("5");
+    JoinHandle h2 = Spawn([] {
+      fmt::print("->5");
     });
 
-    // running = init, run queue: f1, f2
+    Yield();
 
-    Yield();  // <-- [execution] context switch
-
-    fmt::print("6");
+    fmt::print("->6");
 
     h1.Join();
     h2.Join();
   });
+
+  // Output: 1->2->3->4->5
 
   return 0;
 }
