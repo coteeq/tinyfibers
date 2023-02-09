@@ -40,11 +40,12 @@ class Scheduler {
   void RunLoop();
 
   // Context switches
+
+  // Scheduler context -> fiber context
+  void SwitchTo(Fiber* fiber);
   // Fiber context -> scheduler (thread) context
   void SwitchToScheduler();
   void ExitToScheduler();
-  // Scheduler context -> fiber context
-  void SwitchTo(Fiber* fiber);
 
   // Switch to `fiber` and run it until this fiber calls Yield or terminates
   void Step(Fiber* fiber);
