@@ -47,7 +47,11 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   ~Fiber();
 
  private:
-  Fiber(Scheduler* scheduler, FiberRoutine routine, sure::Stack stack, FiberId id);
+  Fiber(Scheduler* scheduler,  //
+        FiberRoutine routine,  //
+        sure::Stack stack,     //
+        FiberId id);
+
   void SetupContext();
 
   // sure::ITrampoline

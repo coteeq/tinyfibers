@@ -4,7 +4,8 @@
 
 namespace tinyfibers {
 
-JoinHandle::JoinHandle(rt::Fiber* fiber) : fiber_(fiber) {
+JoinHandle::JoinHandle(rt::Fiber* fiber)
+    : fiber_(fiber) {
   fiber_->SetWatcher(this);
 }
 

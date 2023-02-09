@@ -8,9 +8,9 @@
 
 namespace tinyfibers::rt {
 
-Fiber::Fiber(Scheduler* scheduler,
-             FiberRoutine routine,
-             sure::Stack stack,
+Fiber::Fiber(Scheduler* scheduler,  //
+             FiberRoutine routine,  //
+             sure::Stack stack,     //
              FiberId id)
     : scheduler_(scheduler),
       routine_(std::move(routine)),
