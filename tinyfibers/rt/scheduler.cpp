@@ -8,7 +8,7 @@ namespace tinyfibers::rt {
 
 //////////////////////////////////////////////////////////////////////
 
-static Scheduler* current_scheduler;
+static Scheduler* current_scheduler = nullptr;
 
 Scheduler* Scheduler::Current() {
   WHEELS_VERIFY(current_scheduler, "Not in fiber context");
