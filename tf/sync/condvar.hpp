@@ -1,0 +1,46 @@
+#pragma once
+
+#include <tf/rt/wait_queue.hpp>
+#include <tf/sync/mutex.hpp>
+
+// std::unique_lock
+#include <mutex>
+
+namespace tf {
+
+class CondVar {
+ public:
+  void Wait(Mutex& mutex) {
+    mutex.Unlock();
+    wait_queue_.Park();
+    mutex.Lock();
+  }
+
+  void NotifyOne() {
+    wait_queue_.WakeOne();
+  }
+
+  void NotifyAll() {
+    wait_queue_.WakeAll();
+  }
+
+  // std::condition_variable interface
+
+  using Lock = std::unique_lock<Mutex>;
+
+  void Wait(Lock& lock) {
+    Wait(*lock.mutex());
+  }
+
+  template <typename Predicate>
+  void Wait(Lock& lock, Predicate predicate) {
+    while (!predicate()) {
+      Wait(lock);
+    }
+  }
+
+ private:
+  rt::WaitQueue wait_queue_;
+};
+
+}  // namespace tf

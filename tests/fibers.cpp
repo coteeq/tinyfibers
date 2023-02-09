@@ -1,15 +1,16 @@
 #include <wheels/test/test_framework.hpp>
-#include <tinyfibers/test/test.hpp>
+#include <tf/test/test.hpp>
 
-#include <tinyfibers/rt/scheduler.hpp>
+#include <tf/rt/run.hpp>
+#include <tf/rt/scheduler.hpp>
 
-#include <tinyfibers/sched/spawn.hpp>
-#include <tinyfibers/sched/yield.hpp>
-#include <tinyfibers/sched/sleep_for.hpp>
-#include <tinyfibers/sched/id.hpp>
-#include <tinyfibers/sync/wait_group.hpp>
-#include <tinyfibers/sync/mutex.hpp>
-#include <tinyfibers/sync/condvar.hpp>
+#include <tf/sched/spawn.hpp>
+#include <tf/sched/yield.hpp>
+#include <tf/sched/sleep_for.hpp>
+#include <tf/sched/id.hpp>
+#include <tf/sync/wait_group.hpp>
+#include <tf/sync/mutex.hpp>
+#include <tf/sync/condvar.hpp>
 
 #include <wheels/core/stop_watch.hpp>
 #include <wheels/system/quick_exit.hpp>
@@ -18,7 +19,7 @@
 #include <chrono>
 #include <type_traits>
 
-using namespace tinyfibers;
+using namespace tf;
 
 using namespace std::chrono_literals;
 

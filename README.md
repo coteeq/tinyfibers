@@ -21,21 +21,19 @@
 ## Пример
 
 ```cpp
-#include <tinyfibers/run.hpp>
-#include <tinyfibers/sched/spawn.hpp>
+#include <tf/run.hpp>
+#include <tf/sched/spawn.hpp>
 
 #include <fmt/core.h>
-
-using namespace tinyfibers;
 
 int main() {
   // Стартуем планировщик и запускаем в нем первый файбер,
   // который будет исполнять переданную лямбду
-  RunScheduler([]() {
+  tf::RunScheduler([]() {
     fmt::println("Parent");
     // Запускаем еще один файбер,
     // управление при этом остается у текущего файбера
-    JoinHandle child = Spawn([]() {
+    tf::JoinHandle child = tf::Spawn([]() {
       fmt::println("Child");
     });
     child.Join();  // Блокируем текущий файбер до завершения дочернего

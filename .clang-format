@@ -4,7 +4,10 @@ Language: Cpp
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLambdasOnASingleLine: Empty
+AllowShortEnumsOnASingleLine: false
 DerivePointerAlignment: false
 PointerAlignment: Left
 SortIncludes: false
-ColumnLimit: 80
+PackConstructorInitializers: Never
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: AfterComma

@@ -1,8 +1,8 @@
-#include <tinyfibers/run.hpp>
+#include <tf/run.hpp>
 
 #include <fmt/core.h>
 
-using namespace tinyfibers;
+using tf::RunScheduler;
 
 void Recurse(size_t depth) {
   fmt::println("Recurse @ depth {}", depth);

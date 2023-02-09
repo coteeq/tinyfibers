@@ -1,11 +1,14 @@
-#include <tinyfibers/run.hpp>
+#include <tf/run.hpp>
 
-#include <tinyfibers/sched/spawn.hpp>
-#include <tinyfibers/sched/yield.hpp>
+#include <tf/sched/spawn.hpp>
+#include <tf/sched/yield.hpp>
 
 #include <fmt/core.h>
 
-using namespace tinyfibers;
+using tf::RunScheduler;
+using tf::Spawn;
+using tf::Yield;
+using tf::JoinHandle;
 
 int main() {
   RunScheduler([]() {

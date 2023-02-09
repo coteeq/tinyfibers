@@ -1,14 +1,15 @@
-#include <tinyfibers/run.hpp>
-#include <tinyfibers/sched/id.hpp>
-#include <tinyfibers/sync/mutex.hpp>
+#include <tf/run.hpp>
+#include <tf/sched/id.hpp>
+#include <tf/sync/mutex.hpp>
 
 #include <fmt/core.h>
 
-using namespace tinyfibers;
+using tf::RunScheduler;
+using tf::GetId;
 
 int main() {
-  RunScheduler([]() {
-    fmt::println("Hi, I am Fiber #{}", GetId());
+  tf::RunScheduler([]() {
+    fmt::println("Hi, I am Fiber #{}", tf::GetId());
   });
   return 0;
 }
