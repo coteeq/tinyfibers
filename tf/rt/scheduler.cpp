@@ -168,11 +168,11 @@ void Scheduler::SetDeadlockHandler(std::function<void()> handler) {
 }
 
 void Scheduler::CheckDeadlock() {
- if (alive_count_ > 0 && run_queue_.IsEmpty()) {
-   // Deadlock
-   deadlock_handler_();
-   WHEELS_PANIC("Deadlock handler returns");
- }
+  if (alive_count_ > 0 && run_queue_.IsEmpty()) {
+    // Deadlock
+    deadlock_handler_();
+    WHEELS_PANIC("Deadlock handler returns");
+  }
 }
 
 }  // namespace tf::rt
