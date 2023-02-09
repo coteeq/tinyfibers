@@ -3,32 +3,39 @@
 get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
 get_filename_component(LIB_PATH "." ABSOLUTE)
 
-file(GLOB_RECURSE LIB_CXX_SOURCES ${LIB_PATH}/*.cpp)
-file(GLOB_RECURSE LIB_HEADERS ${LIB_PATH}/*.hpp)
+add_library(${LIB_TARGET} STATIC
+        rt/fiber.hpp
+        rt/fiber.cpp
+        rt/fwd.hpp
+        rt/id.hpp
+        rt/id_generator.hpp
+        rt/parking_lot.hpp
+        rt/parking_lot.cpp
+        rt/routine.hpp
+        rt/run.hpp
+        rt/run.cpp
+        rt/scheduler.hpp
+        rt/scheduler.cpp
+        rt/stack_allocator.hpp
+        rt/stack_allocator.cpp
+        rt/state.hpp
+        rt/wait_queue.hpp
+        rt/wait_queue.cpp
+        rt/watcher.hpp
+        sched/id.hpp
+        sched/sleep_for.hpp
+        sched/spawn.hpp
+        sched/yield.hpp
+        sched/syscalls.cpp
+        sync/condvar.hpp
+        sync/join_handle.hpp
+        sync/join_handle.cpp
+        sync/mutex.hpp
+        sync/wait_group.hpp
+        sync/wait_group.cpp
+        run.hpp)
 
-add_library(${LIB_TARGET} STATIC ${LIB_CXX_SOURCES} ${LIB_HEADERS})
 target_include_directories(${LIB_TARGET} PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(${LIB_TARGET} PUBLIC pthread fmt wheels sure)
+target_link_libraries(${LIB_TARGET} PUBLIC fmt sure wheels)
 
 # --------------------------------------------------------------------
-
-if(TINY_FIBERS_DEVELOPER)
-
-# Linters
-
-if(CLANG_FORMAT_TOOL)
-    add_clang_format_target(
-            ${LIB_TARGET}_clang_format
-            ${CMAKE_CURRENT_SOURCE_DIR}
-            ${LIB_HEADERS} ${LIB_CXX_SOURCES})
-endif()
-
-if(CLANG_TIDY_TOOL)
-    add_clang_tidy_target(
-            ${LIB_TARGET}_clang_tidy
-            ${CMAKE_CURRENT_SOURCE_DIR}
-            ${LIB_INCLUDE_PATH}
-            ${LIB_HEADERS} ${LIB_CXX_SOURCES})
-endif()
-
-endif()
