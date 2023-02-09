@@ -10,7 +10,7 @@ namespace tinyfibers::rt {
 
 //////////////////////////////////////////////////////////////////////
 
-static Scheduler* current_scheduler;
+static Scheduler* current_scheduler = nullptr;
 
 Scheduler* Scheduler::Current() {
   WHEELS_VERIFY(current_scheduler, "Not in fiber context");
@@ -151,7 +151,7 @@ Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
 
   // Allocate resources
   auto stack = stacks_.Allocate();
-  FiberId id = ids_.Generate();
+  auto id = ids_.Generate();
 
   // Create fiber
   return new Fiber(this, std::move(routine), std::move(stack), id);
