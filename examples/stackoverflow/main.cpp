@@ -2,7 +2,7 @@
 
 #include <fmt/core.h>
 
-using namespace tf;
+using tf::RunScheduler;
 
 void Recurse(size_t depth) {
   fmt::println("Recurse @ depth {}", depth);

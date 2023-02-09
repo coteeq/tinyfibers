@@ -4,6 +4,9 @@
 
 #include <fmt/core.h>
 
+using tf::RunScheduler;
+using tf::GetId;
+
 int main() {
   tf::RunScheduler([]() {
     fmt::println("Hi, I am Fiber #{}", tf::GetId());

@@ -3,7 +3,9 @@
 
 #include <fmt/core.h>
 
-using namespace tf;
+using tf::RunScheduler;
+using tf::Spawn;
+using tf::JoinHandle;
 
 int main() {
   RunScheduler([]() {

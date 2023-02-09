@@ -5,7 +5,9 @@
 
 #include <fmt/core.h>
 
-using namespace tf;
+using tf::RunScheduler;
+using tf::SleepFor;
+using tf::WaitGroup;
 
 std::vector<int> SleepSort(std::vector<int> ints) {
   std::vector<int> sorted_ints;

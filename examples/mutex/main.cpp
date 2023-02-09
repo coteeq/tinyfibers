@@ -6,8 +6,14 @@
 
 #include <fmt/core.h>
 
-using namespace tf;
 using namespace std::chrono_literals;
+
+using tf::RunScheduler;
+using tf::Spawn;
+using tf::SleepFor;
+using tf::GetId;
+using tf::JoinHandle;
+using tf::Mutex;
 
 int main() {
   RunScheduler([]() {

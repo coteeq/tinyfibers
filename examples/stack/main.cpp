@@ -4,7 +4,10 @@
 
 #include <fmt/core.h>
 
-using namespace tf;
+using tf::RunScheduler;
+using tf::Yield;
+using tf::Spawn;
+using tf::JoinHandle;
 
 void Breakpoint() {
 }
