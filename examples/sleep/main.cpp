@@ -5,9 +5,13 @@
 
 #include <fmt/core.h>
 
+#include <chrono>
+
 using tf::RunScheduler;
 using tf::SleepFor;
 using tf::WaitGroup;
+
+using namespace std::chrono_literals;
 
 std::vector<int> SleepSort(std::vector<int> ints) {
   std::vector<int> sorted_ints;
@@ -15,7 +19,7 @@ std::vector<int> SleepSort(std::vector<int> ints) {
   WaitGroup wg;
   for (int value : ints) {
     wg.Spawn([&, value]() {
-      SleepFor(std::chrono::seconds(value));
+      SleepFor(1s * value);
       sorted_ints.push_back(value);
     });
   }
