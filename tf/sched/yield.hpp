@@ -3,7 +3,7 @@
 namespace tf {
 
 // Transfers control to the current scheduler
-// and puts the current fiber to the end of the run queue
+// and puts this fiber to the end of the run queue
 
 void Yield();
 

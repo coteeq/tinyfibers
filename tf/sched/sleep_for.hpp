@@ -4,8 +4,7 @@
 
 namespace tf {
 
-// Blocks the execution of the current fiber for _at_least_
-// the specified 'delay'
+// Suspends this fiber for _at_least_ 'delay' milliseconds
 
 void SleepFor(std::chrono::milliseconds delay);
 
