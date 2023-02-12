@@ -31,8 +31,8 @@ void Baz() {
 }
 
 int main() {
-  RunScheduler([]() {
-    JoinHandle h = Spawn([]() {
+  RunScheduler([] {
+    JoinHandle h = Spawn([] {
       Baz();
     });
 

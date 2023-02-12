@@ -11,7 +11,7 @@ using tf::Yield;
 using tf::JoinHandle;
 
 int main() {
-  RunScheduler([]() {
+  RunScheduler([] {
     JoinHandle h1 = Spawn([] {
       fmt::print("->2");
       Yield();

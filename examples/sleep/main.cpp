@@ -19,7 +19,7 @@ std::vector<int> SleepSort(std::vector<int> input) {
   WaitGroup wg;
 
   for (int value : input) {
-    wg.Spawn([&, value]() {
+    wg.Spawn([&, value] {
       SleepFor(1s * value);
       output.push_back(value);
     });

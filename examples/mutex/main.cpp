@@ -16,12 +16,12 @@ using tf::JoinHandle;
 using tf::Mutex;
 
 int main() {
-  RunScheduler([]() {
+  RunScheduler([] {
     Mutex mutex;
 
     fmt::println("Starting");
 
-    JoinHandle h2 = Spawn([&mutex]() {
+    JoinHandle h2 = Spawn([&mutex] {
       mutex.Lock();
       {
         // Critical section
@@ -30,7 +30,7 @@ int main() {
       mutex.Unlock();
     });
 
-    JoinHandle h3 = Spawn([&mutex]() {
+    JoinHandle h3 = Spawn([&mutex] {
       fmt::println("Try to lock mutex from Fiber #{}", GetId());
       mutex.Lock();  // <-- Blocks for 3s
       {
