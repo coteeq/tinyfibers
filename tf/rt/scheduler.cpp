@@ -144,7 +144,9 @@ Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
 }
 
 void Scheduler::Destroy(Fiber* fiber) {
+  // Release resources
   stacks_.Release(std::move(fiber->Stack()));
+
   delete fiber;
 }
 

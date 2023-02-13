@@ -26,12 +26,12 @@ class Scheduler {
 
   // System calls
 
-  Fiber* Spawn(FiberRoutine routine);
+  Fiber* Spawn(FiberRoutine);
   void Yield();
   // Sleep for _at_least_ `delay`
   void SleepFor(std::chrono::milliseconds delay);
   void Suspend();
-  void Resume(Fiber* fiber);
+  void Resume(Fiber*);
   void Terminate();
 
   Fiber* RunningFiber();
@@ -42,20 +42,20 @@ class Scheduler {
   // Context switches
 
   // Scheduler context -> fiber context
-  void SwitchTo(Fiber* fiber);
+  void SwitchTo(Fiber*);
   // Fiber context -> scheduler (thread) context
   void SwitchToScheduler();
   void ExitToScheduler();
 
   // Switch to `fiber` and run it until this fiber calls Yield or terminates
-  void Step(Fiber* fiber);
+  void Step(Fiber*);
   // ~ Handle system call (Yield / SleepFor / Terminate)
-  void Dispatch(Fiber* fiber);
+  void Dispatch(Fiber*);
   // Add fiber to run queue
-  void Schedule(Fiber* fiber);
+  void Schedule(Fiber*);
 
-  Fiber* CreateFiber(FiberRoutine routine);
-  void Destroy(Fiber* fiber);
+  Fiber* CreateFiber(FiberRoutine);
+  void Destroy(Fiber*);
 
  private:
   sure::ExecutionContext loop_context_;  // Thread context!
