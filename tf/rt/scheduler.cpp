@@ -95,7 +95,7 @@ void Scheduler::Run(FiberRoutine init) {
 }
 
 void Scheduler::RunLoop() {
-  while (!run_queue_.IsEmpty()) {
+  while (run_queue_.NonEmpty()) {
     Fiber* next = run_queue_.PopFront();
     Step(next);
     Dispatch(next);  // ~ Handle syscall
