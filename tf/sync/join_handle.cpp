@@ -2,6 +2,8 @@
 
 #include <tf/rt/scheduler.hpp>
 
+#include <utility>
+
 namespace tf {
 
 JoinHandle::JoinHandle(rt::Fiber* fiber)
