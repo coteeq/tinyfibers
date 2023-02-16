@@ -2,6 +2,8 @@
 
 #include <tf/rt/scheduler.hpp>
 
+#include <wheels/core/assert.hpp>
+
 #include <utility>
 
 namespace tf {
