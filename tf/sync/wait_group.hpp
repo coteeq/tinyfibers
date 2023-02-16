@@ -1,8 +1,8 @@
 #pragma once
 
 #include <tf/rt/run.hpp>
+#include <tf/rt/wait_queue.hpp>
 #include <tf/rt/watcher.hpp>
-#include <tf/rt/parking_lot.hpp>
 
 #include <vector>
 
@@ -19,8 +19,8 @@ class WaitGroup : public rt::IFiberWatcher {
   void OnCompleted() override;
 
  private:
-  size_t active_{0};
-  rt::ParkingLot parking_lot_;
+  size_t alive_{0};
+  rt::WaitQueue wait_queue_;
 };
 
 }  // namespace tf
