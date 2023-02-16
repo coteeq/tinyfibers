@@ -35,7 +35,8 @@ class JoinHandle : public rt::IFiberWatcher {
   bool IsCompleted() const;
   bool IsAlive() const;
 
-  void OnCompleted() override;
+  // IFiberWatcher
+  void OnCompleted() noexcept override;
 
  private:
   // States: Detached | Alive | Completed

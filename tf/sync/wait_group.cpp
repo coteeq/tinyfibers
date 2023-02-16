@@ -19,7 +19,7 @@ void WaitGroup::Wait() {
   }
 }
 
-void WaitGroup::OnCompleted() {
+void WaitGroup::OnCompleted() noexcept {
   if (--alive_ == 0) {
     wait_queue_.WakeAll();
   }

@@ -60,7 +60,7 @@ bool JoinHandle::Joinable() const {
   return !IsDetached();
 }
 
-void JoinHandle::OnCompleted() {
+void JoinHandle::OnCompleted() noexcept {
   fiber_ = kCompletedFiber;
   waitee_.Wake();
 }

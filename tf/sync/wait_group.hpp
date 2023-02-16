@@ -16,7 +16,8 @@ class WaitGroup : public rt::IFiberWatcher {
   ~WaitGroup();
 
  private:
-  void OnCompleted() override;
+  // IFiberWatcher
+  void OnCompleted() noexcept override;
 
  private:
   size_t alive_{0};
