@@ -7,7 +7,7 @@
 
 namespace tf {
 
-JoinHandle Spawn(std::function<void()> routine) {
+JoinHandle Spawn(rt::FiberRoutine routine) {
   rt::Fiber* fiber = rt::Scheduler::Current()->Spawn(std::move(routine));
   return JoinHandle{fiber};
 }
