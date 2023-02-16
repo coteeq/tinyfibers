@@ -6,7 +6,7 @@
 
 namespace tf {
 
-WaitGroup& WaitGroup::Spawn(std::function<void()> routine) {
+WaitGroup& WaitGroup::Spawn(rt::FiberRoutine routine) {
   rt::Fiber* newbie = rt::Scheduler::Current()->Spawn(std::move(routine));
   newbie->SetWatcher(this);
   ++active_;

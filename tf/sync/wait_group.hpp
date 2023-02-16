@@ -10,7 +10,7 @@ namespace tf {
 
 class WaitGroup : public rt::IFiberWatcher {
  public:
-  WaitGroup& Spawn(std::function<void()> routine);
+  WaitGroup& Spawn(rt::FiberRoutine routine);
   void Wait();
 
   ~WaitGroup();
