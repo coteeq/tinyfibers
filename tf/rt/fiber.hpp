@@ -52,7 +52,7 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
         sure::Stack stack,     //
         FiberId id);
 
-  void SetupContext();
+  void SetupExecutionContext();
 
   // sure::ITrampoline
   [[noreturn]] void Run() noexcept override;

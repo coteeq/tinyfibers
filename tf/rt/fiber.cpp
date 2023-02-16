@@ -17,7 +17,7 @@ Fiber::Fiber(Scheduler* scheduler,  //
       stack_(std::move(stack)),
       state_(FiberState::Starting),
       id_(id) {
-  SetupContext();
+  SetupExecutionContext();
 }
 
 Fiber::~Fiber() {
@@ -43,7 +43,7 @@ void Fiber::Run() noexcept {
   WHEELS_UNREACHABLE();
 }
 
-void Fiber::SetupContext() {
+void Fiber::SetupExecutionContext() {
   context_.Setup(
       /*stack=*/stack_.MutView(),
       /*trampoline=*/this);
