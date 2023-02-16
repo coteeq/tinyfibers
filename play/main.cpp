@@ -8,7 +8,7 @@ using tf::RunScheduler;
 using tf::GetId;
 
 int main() {
-  tf::RunScheduler([]() {
+  tf::RunScheduler([] {
     fmt::println("Hi, I am Fiber #{}", tf::GetId());
   });
   return 0;
