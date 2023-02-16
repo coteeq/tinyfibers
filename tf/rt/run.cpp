@@ -4,7 +4,7 @@
 
 namespace tf::rt {
 
-void RunScheduler(std::function<void()> init) {
+void RunScheduler(FiberRoutine init) {
   Scheduler scheduler;
   scheduler.Run(std::move(init));
 }

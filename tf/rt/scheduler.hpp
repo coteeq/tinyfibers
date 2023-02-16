@@ -34,16 +34,16 @@ class Scheduler {
   void Resume(Fiber*);
   void Terminate();
 
-  Fiber* RunningFiber();
+  Fiber* RunningFiber() const;
 
  private:
   void RunLoop();
 
   // Context switches
 
-  // Scheduler context -> fiber context
+  // Scheduler (loop) context -> fiber context
   void SwitchTo(Fiber*);
-  // Fiber context -> scheduler (thread) context
+  // Fiber context -> scheduler (loop) context
   void SwitchToScheduler();
   void ExitToScheduler();
 

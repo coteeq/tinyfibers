@@ -12,7 +12,7 @@ class StackAllocator {
 
  public:
   Stack Allocate();
-  void Release(Stack stack);
+  void Release(Stack);
 
  private:
   static Stack AllocateNew();

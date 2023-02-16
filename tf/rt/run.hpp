@@ -1,10 +1,10 @@
 #pragma once
 
-#include <functional>
+#include <tf/rt/routine.hpp>
 
 namespace tf::rt {
 
 // Runs 'init' routine in fiber scheduler in the current thread
-void RunScheduler(std::function<void()> init);
+void RunScheduler(FiberRoutine init);
 
 }  // namespace tf::rt

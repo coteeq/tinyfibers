@@ -11,7 +11,7 @@ namespace tf::rt {
 static Scheduler* current_scheduler = nullptr;
 
 Scheduler* Scheduler::Current() {
-  WHEELS_VERIFY(current_scheduler, "Not in fiber context");
+  WHEELS_VERIFY(current_scheduler, "Not in fiber scheduler");
   return current_scheduler;
 }
 
@@ -32,7 +32,7 @@ struct SchedulerScope {
 Scheduler::Scheduler() {
 }
 
-Fiber* Scheduler::RunningFiber() {
+Fiber* Scheduler::RunningFiber() const {
   WHEELS_VERIFY(running_ != nullptr, "Not in fiber context");
   return running_;
 }
@@ -82,8 +82,7 @@ void Scheduler::Resume(Fiber* fiber) {
 
 void Scheduler::Terminate() {
   running_->SetState(FiberState::Terminated);
-  // Leave this context forever
-  ExitToScheduler();
+  ExitToScheduler();  // Leave this execution context forever
 }
 
 // Scheduling
@@ -103,8 +102,8 @@ void Scheduler::RunLoop() {
 }
 
 void Scheduler::Step(Fiber* fiber) {
-  running_ = fiber;
   fiber->SetState(FiberState::Running);
+  running_ = fiber;
   SwitchTo(fiber);
   running_ = nullptr;
 }
