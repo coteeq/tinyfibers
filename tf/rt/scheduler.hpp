@@ -47,7 +47,7 @@ class Scheduler {
   void SwitchToScheduler();
   void ExitToScheduler();
 
-  // Switch to `fiber` and run it until this fiber calls Yield or terminates
+  // Switch to fiber and run it until this fiber calls Yield or terminates
   void Step(Fiber*);
   // ~ Handle system call (Yield / SleepFor / Terminate)
   void Dispatch(Fiber*);
@@ -58,7 +58,7 @@ class Scheduler {
   void Destroy(Fiber*);
 
  private:
-  sure::ExecutionContext loop_context_;  // Thread context!
+  sure::ExecutionContext loop_context_;  // Thread context
   wheels::IntrusiveList<Fiber> run_queue_;
   Fiber* running_{nullptr};
 
