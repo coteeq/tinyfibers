@@ -1,5 +1,4 @@
-#include <wheels/test/test_framework.hpp>
-#include <tf/test/test.hpp>
+#include "test.hpp"
 
 #include <tf/rt/run.hpp>
 
