@@ -34,7 +34,7 @@ int main() {
     h2.Join();
   });
 
-  // Output: 1->2->3->4->5
+  // Output: 1->2->3->4->5->6
 
   return 0;
 }
