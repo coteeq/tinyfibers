@@ -24,14 +24,14 @@ add_subdirectory(tf)
 
 add_subdirectory(play)
 
-if(TINY_FIBERS_EXAMPLES)
+if(TINY_FIBERS_EXAMPLES OR TINY_FIBERS_DEVELOPER)
     add_subdirectory(examples)
 endif()
 
-if(TINY_FIBERS_TESTS)
+if(TINY_FIBERS_TESTS OR TINY_FIBERS_DEVELOPER)
     add_subdirectory(tests)
 endif()
 
-if(TINY_FIBERS_BENCHMARKS)
-    add_subdirectory(benchmarks)
+if(TINY_FIBERS_DEVELOPER)
+    add_subdirectory(dev)
 endif()
