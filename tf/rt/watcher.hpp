@@ -6,7 +6,7 @@ namespace tf::rt {
 
 struct IFiberWatcher {
   virtual ~IFiberWatcher() = default;
-  virtual void OnCompleted() = 0;
+  virtual void OnCompleted() noexcept = 0;
 };
 
 }  // namespace tf::rt

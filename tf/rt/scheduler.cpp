@@ -13,7 +13,7 @@ namespace tf::rt {
 static Scheduler* current_scheduler = nullptr;
 
 Scheduler* Scheduler::Current() {
-  WHEELS_VERIFY(current_scheduler, "Not in fiber context");
+  WHEELS_VERIFY(current_scheduler, "Not in fiber scheduler");
   return current_scheduler;
 }
 
@@ -37,7 +37,7 @@ Scheduler::Scheduler() {
   });
 }
 
-Fiber* Scheduler::RunningFiber() {
+Fiber* Scheduler::RunningFiber() const {
   WHEELS_VERIFY(running_ != nullptr, "Not in fiber context");
   return running_;
 }
@@ -87,8 +87,7 @@ void Scheduler::Resume(Fiber* fiber) {
 
 void Scheduler::Terminate() {
   running_->SetState(FiberState::Terminated);
-  // Leave this context forever
-  ExitToScheduler();
+  ExitToScheduler();  // Leave this execution context forever
 }
 
 // Scheduling
@@ -107,7 +106,7 @@ void Scheduler::Run(FiberRoutine init, size_t fuel) {
 }
 
 void Scheduler::RunLoop(size_t& fuel) {
-  while (!run_queue_.IsEmpty() && fuel-- > 0) {
+  while (run_queue_.NonEmpty() && fuel-- > 0) {
     Fiber* next = run_queue_.PopFront();
     Step(next);
     Dispatch(next);  // ~ Handle syscall
@@ -115,8 +114,8 @@ void Scheduler::RunLoop(size_t& fuel) {
 }
 
 void Scheduler::Step(Fiber* fiber) {
-  running_ = fiber;
   fiber->SetState(FiberState::Running);
+  running_ = fiber;
   SwitchTo(fiber);
   running_ = nullptr;
 }
@@ -153,13 +152,15 @@ Fiber* Scheduler::CreateFiber(FiberRoutine routine) {
   auto stack = stacks_.Allocate();
   auto id = ids_.Generate();
 
-  // Create fiber
   return new Fiber(this, std::move(routine), std::move(stack), id);
 }
 
 void Scheduler::Destroy(Fiber* fiber) {
   --alive_count_;
+
+  // Release resources
   stacks_.Release(std::move(fiber->Stack()));
+
   delete fiber;
 }
 

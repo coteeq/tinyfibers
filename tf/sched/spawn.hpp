@@ -1,5 +1,6 @@
 #pragma once
 
+#include <tf/rt/routine.hpp>
 #include <tf/sync/join_handle.hpp>
 
 #include <functional>
@@ -10,6 +11,6 @@ namespace tf {
 // puts this fiber to the end of the run queue.
 // Does not transfer control to the scheduler.
 
-JoinHandle Spawn(std::function<void()> fun);
+JoinHandle Spawn(rt::FiberRoutine fun);
 
 }  // namespace tf

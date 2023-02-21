@@ -21,7 +21,7 @@ void WaitQueue::WakeOne() {
 }
 
 void WaitQueue::WakeAll() {
-  while (!waiters_.IsEmpty()) {
+  while (waiters_.NonEmpty()) {
     waiters_.PopFront()->Resume();
   }
 }

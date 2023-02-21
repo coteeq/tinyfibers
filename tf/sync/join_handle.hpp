@@ -26,15 +26,21 @@ class JoinHandle : public rt::IFiberWatcher {
   void Join();
   void Detach();
 
+  bool Joinable() const;
+
   ~JoinHandle();
 
  private:
-  void CheckAttached();
-  void OnCompleted() override;
+  bool IsDetached() const;
+  bool IsCompleted() const;
+  bool IsAlive() const;
+
+  // IFiberWatcher
+  void OnCompleted() noexcept override;
 
  private:
+  // States: Detached | Alive | Completed
   rt::Fiber* fiber_;
-  bool completed_{false};
   rt::ParkingLot waitee_;
 };
 

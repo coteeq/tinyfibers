@@ -2,6 +2,8 @@
 
 #include <tf/rt/scheduler.hpp>
 
+#include <utility>
+
 namespace tf::rt {
 
 void ParkingLot::Park() {
@@ -12,8 +14,10 @@ void ParkingLot::Park() {
 }
 
 void ParkingLot::Wake() {
-  if (waitee_ != nullptr) {
-    waitee_->Resume();
+  Fiber* waitee = std::exchange(waitee_, nullptr);
+
+  if (waitee != nullptr) {
+    waitee->Resume();
   }
 }
 

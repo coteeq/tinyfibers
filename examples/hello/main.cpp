@@ -8,9 +8,9 @@ using tf::Spawn;
 using tf::JoinHandle;
 
 int main() {
-  RunScheduler([]() {
+  RunScheduler([] {
     fmt::println("Parent");
-    JoinHandle child = Spawn([]() {
+    JoinHandle child = Spawn([] {
       fmt::println("Child");
     });
     child.Join();

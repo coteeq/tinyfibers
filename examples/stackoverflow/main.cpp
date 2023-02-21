@@ -10,7 +10,7 @@ void Recurse(size_t depth) {
 }
 
 int main() {
-  RunScheduler([]() {
+  RunScheduler([] {
     Recurse(0);
   });
 
