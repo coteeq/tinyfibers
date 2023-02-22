@@ -25,14 +25,14 @@ int main() {
       mutex.Lock();
       {
         // Critical section
-        SleepFor(3s);
+        SleepFor(3s);  // <- Suspended for 3s
       }
       mutex.Unlock();
     });
 
     JoinHandle h3 = Spawn([&mutex] {
       fmt::println("Try to lock mutex from Fiber #{}", GetId());
-      mutex.Lock();  // <-- Blocks for 3s
+      mutex.Lock();  // <- Suspended for 3s
       {
         fmt::println("Mutex locked by Fiber #{}", GetId());
       }
