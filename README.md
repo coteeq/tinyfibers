@@ -77,6 +77,7 @@ Child completed
 - [folly::fibers](https://github.com/facebook/folly/blob/master/folly/fibers/README.md)
 - [Marl](https://github.com/google/marl/)  
 - [Project Loom: Fibers and Continuations for the Java Virtual Machine](https://cr.openjdk.java.net/~rpressler/loom/Loom-Proposal.html)
+- [Fibers, Oh My!](https://graphitemaster.github.io/fibers/)
 
 ### Scheduler
 
