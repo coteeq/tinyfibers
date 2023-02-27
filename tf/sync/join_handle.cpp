@@ -8,7 +8,8 @@
 
 namespace tf {
 
-static rt::Fiber* kCompletedFiber = (rt::Fiber*)1;
+static rt::Fiber* const kDetached = nullptr;
+static rt::Fiber* const kCompleted = (rt::Fiber*)1;
 
 JoinHandle::JoinHandle(rt::Fiber* fiber)
     : fiber_(fiber) {
@@ -16,8 +17,8 @@ JoinHandle::JoinHandle(rt::Fiber* fiber)
 }
 
 JoinHandle::JoinHandle(JoinHandle&& that) {
-  fiber_ = std::exchange(that.fiber_, nullptr);
-  if (IsAlive()) {
+  fiber_ = std::exchange(that.fiber_, kDetached);
+  if (IsRunning()) {
     fiber_->SetWatcher(this);
   }
 }
@@ -25,19 +26,19 @@ JoinHandle::JoinHandle(JoinHandle&& that) {
 void JoinHandle::Join() {
   WHEELS_ASSERT(Joinable(), "Cannot Join detached fiber");
 
-  if (IsAlive()) {
+  if (IsRunning()) {
     waitee_.Park();
   }
-  fiber_ = nullptr;  // Detached
+  fiber_ = kDetached;
 }
 
 void JoinHandle::Detach() {
   WHEELS_ASSERT(Joinable(), "Cannot Detach already detached fiber");
 
-  if (IsAlive()) {
+  if (IsRunning()) {
     fiber_->SetWatcher(nullptr);
   }
-  fiber_ = nullptr;  // Detached
+  fiber_ = kDetached;
 }
 
 JoinHandle::~JoinHandle() {
@@ -45,14 +46,14 @@ JoinHandle::~JoinHandle() {
 }
 
 bool JoinHandle::IsDetached() const {
-  return fiber_ == nullptr;
+  return fiber_ == kDetached;
 }
 
 bool JoinHandle::IsCompleted() const {
-  return fiber_ == kCompletedFiber;
+  return fiber_ == kCompleted;
 }
 
-bool JoinHandle::IsAlive() const {
+bool JoinHandle::IsRunning() const {
   return !IsDetached() && !IsCompleted();
 }
 
@@ -61,7 +62,7 @@ bool JoinHandle::Joinable() const {
 }
 
 void JoinHandle::OnCompleted() noexcept {
-  fiber_ = kCompletedFiber;
+  fiber_ = kCompleted;
   waitee_.Wake();
 }
 
