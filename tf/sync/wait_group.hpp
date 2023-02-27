@@ -20,7 +20,7 @@ class WaitGroup : public rt::IFiberWatcher {
   void OnCompleted() noexcept override;
 
  private:
-  size_t alive_{0};
+  size_t count_{0};
   rt::WaitQueue wait_queue_;
 };
 
