@@ -31,6 +31,7 @@ class JoinHandle : public rt::IFiberWatcher {
   ~JoinHandle();
 
  private:
+  // States
   bool IsDetached() const;
   bool IsCompleted() const;
   bool IsRunning() const;
@@ -39,7 +40,6 @@ class JoinHandle : public rt::IFiberWatcher {
   void OnCompleted() noexcept override;
 
  private:
-  // States: Detached | Running | Completed
   rt::Fiber* fiber_;
   rt::ParkingLot waitee_;
 };
