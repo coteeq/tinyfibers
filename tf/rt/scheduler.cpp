@@ -56,8 +56,8 @@ Fiber* Scheduler::Spawn(FiberRoutine routine) {
 }
 
 void Scheduler::Yield() {
-  auto schedule = [this](Fiber* fiber) {
-    Schedule(fiber);
+  auto schedule = [this](Fiber* me) {
+    Schedule(me);
   };
   SwitchToScheduler(/*handler=*/schedule);
 }
@@ -82,8 +82,8 @@ void Scheduler::Resume(Fiber* fiber) {
 }
 
 void Scheduler::Terminate() {
-  auto destroy = [this](Fiber* fiber) {
-    Destroy(fiber);
+  auto destroy = [this](Fiber* me) {
+    Destroy(me);
   };
   ExitToScheduler(/*handler=*/destroy);  // Leave this execution context forever
 }
