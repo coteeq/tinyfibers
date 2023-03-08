@@ -15,7 +15,6 @@ Fiber::Fiber(Scheduler* scheduler,  //
     : scheduler_(scheduler),
       routine_(std::move(routine)),
       stack_(std::move(stack)),
-      state_(FiberState::Starting),
       id_(id) {
   SetupExecutionContext();
 }
@@ -28,8 +27,6 @@ Fiber::~Fiber() {
 
 void Fiber::Run() noexcept {
   // Fiber execution starts here
-
-  SetState(FiberState::Running);
 
   try {
     routine_();

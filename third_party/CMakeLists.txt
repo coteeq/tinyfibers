@@ -31,3 +31,12 @@ FetchContent_Declare(
         GIT_TAG master
 )
 FetchContent_MakeAvailable(sure)
+
+# --------------------------------------------------------------------
+
+FetchContent_Declare(
+        function2
+        GIT_REPOSITORY https://github.com/Naios/function2.git
+        GIT_TAG master
+)
+FetchContent_MakeAvailable(function2)

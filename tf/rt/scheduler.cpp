@@ -37,11 +37,13 @@ Fiber* Scheduler::RunningFiber() const {
   return running_;
 }
 
-void Scheduler::SwitchToScheduler() {
+void Scheduler::SwitchToScheduler(Handler handler) {
+  handler_ = handler;
   running_->Context().SwitchTo(loop_context_);
 }
 
-void Scheduler::ExitToScheduler() {
+void Scheduler::ExitToScheduler(Handler handler) {
+  handler_ = handler;
   running_->Context().ExitTo(loop_context_);
 }
 
@@ -54,8 +56,10 @@ Fiber* Scheduler::Spawn(FiberRoutine routine) {
 }
 
 void Scheduler::Yield() {
-  running_->SetState(FiberState::Runnable);
-  SwitchToScheduler();
+  auto schedule = [this](Fiber* fiber) {
+    Schedule(fiber);
+  };
+  SwitchToScheduler(/*handler=*/schedule);
 }
 
 void Scheduler::SleepFor(std::chrono::milliseconds delay) {
@@ -69,20 +73,19 @@ void Scheduler::SleepFor(std::chrono::milliseconds delay) {
 }
 
 void Scheduler::Suspend() {
-  running_->SetState(FiberState::Suspended);
-  SwitchToScheduler();
+  auto nop = [](Fiber*) {};
+  SwitchToScheduler(/*handler=*/nop);
 }
 
 void Scheduler::Resume(Fiber* fiber) {
-  WHEELS_ASSERT(fiber->State() == FiberState::Suspended,
-                "Expected fiber in Suspended state");
-  fiber->SetState(FiberState::Runnable);
   Schedule(fiber);
 }
 
 void Scheduler::Terminate() {
-  running_->SetState(FiberState::Terminated);
-  ExitToScheduler();  // Leave this execution context forever
+  auto destroy = [this](Fiber* fiber) {
+    Destroy(fiber);
+  };
+  ExitToScheduler(/*handler=*/destroy);  // Leave this execution context forever
 }
 
 // Scheduling
@@ -96,37 +99,20 @@ void Scheduler::Run(FiberRoutine init) {
 void Scheduler::RunLoop() {
   while (run_queue_.NonEmpty()) {
     Fiber* next = run_queue_.PopFront();
-    Step(next);
-    Dispatch(next);  // ~ Handle syscall
+    auto handler = Step(next);
+    handler(next);  // Dispatch
   }
 }
 
-void Scheduler::Step(Fiber* fiber) {
-  fiber->SetState(FiberState::Running);
+Handler Scheduler::Step(Fiber* fiber) {
   running_ = fiber;
   SwitchTo(fiber);
   running_ = nullptr;
+  return handler_;
 }
 
 void Scheduler::SwitchTo(Fiber* fiber) {
   loop_context_.SwitchTo(fiber->Context());
-}
-
-void Scheduler::Dispatch(Fiber* fiber) {
-  switch (fiber->State()) {
-    case FiberState::Runnable:  // From Yield
-      Schedule(fiber);
-      break;
-    case FiberState::Suspended:  // From Suspend
-      // Do nothing
-      break;
-    case FiberState::Terminated:  // From Terminate
-      Destroy(fiber);
-      break;
-    default:
-      WHEELS_PANIC("Unexpected fiber state");
-      break;
-  }
 }
 
 void Scheduler::Schedule(Fiber* fiber) {

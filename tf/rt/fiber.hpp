@@ -2,7 +2,6 @@
 
 #include <tf/rt/fwd.hpp>
 #include <tf/rt/routine.hpp>
-#include <tf/rt/state.hpp>
 #include <tf/rt/id.hpp>
 #include <tf/rt/watcher.hpp>
 
@@ -30,14 +29,6 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
     return stack_;
   }
 
-  FiberState State() const {
-    return state_;
-  }
-
-  void SetState(FiberState target) {
-    state_ = target;
-  }
-
   void SetWatcher(IFiberWatcher* watcher) {
     watcher_ = watcher;
   }
@@ -62,7 +53,6 @@ class Fiber : public wheels::IntrusiveListNode<Fiber>,
   FiberRoutine routine_;
   sure::Stack stack_;
   sure::ExecutionContext context_;
-  FiberState state_;
   FiberId id_;
   IFiberWatcher* watcher_{nullptr};
 };

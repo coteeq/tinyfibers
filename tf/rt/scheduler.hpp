@@ -3,6 +3,7 @@
 #include <tf/rt/fiber.hpp>
 #include <tf/rt/id_generator.hpp>
 #include <tf/rt/stack_allocator.hpp>
+#include <tf/rt/syscall.hpp>
 
 #include <sure/context.hpp>
 
@@ -44,13 +45,11 @@ class Scheduler {
   // Scheduler (loop) context -> fiber context
   void SwitchTo(Fiber*);
   // Fiber context -> scheduler (loop) context
-  void SwitchToScheduler();
-  [[noreturn]] void ExitToScheduler();
+  void SwitchToScheduler(Handler);
+  [[noreturn]] void ExitToScheduler(Handler);
 
-  // Switch to fiber and run it until this fiber calls Yield or terminates
-  void Step(Fiber*);
-  // ~ Handle system call (Yield / SleepFor / Terminate)
-  void Dispatch(Fiber*);
+  // Switch to fiber and run it until this fiber returns control via system call
+  Handler Step(Fiber*);
   // Add fiber to run queue
   void Schedule(Fiber*);
 
@@ -61,6 +60,7 @@ class Scheduler {
   sure::ExecutionContext loop_context_;  // Thread context
   wheels::IntrusiveList<Fiber> run_queue_;
   Fiber* running_{nullptr};
+  Handler handler_;
 
   // Resources
   IdGenerator ids_;

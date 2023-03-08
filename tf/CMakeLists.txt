@@ -18,7 +18,7 @@ add_library(${LIB_TARGET} STATIC
         rt/scheduler.cpp
         rt/stack_allocator.hpp
         rt/stack_allocator.cpp
-        rt/state.hpp
+        rt/syscall.hpp
         rt/wait_queue.hpp
         rt/wait_queue.cpp
         rt/watcher.hpp
@@ -36,6 +36,6 @@ add_library(${LIB_TARGET} STATIC
         run.hpp)
 
 target_include_directories(${LIB_TARGET} PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(${LIB_TARGET} PUBLIC fmt sure wheels)
+target_link_libraries(${LIB_TARGET} PUBLIC fmt function2 sure wheels)
 
 # --------------------------------------------------------------------
