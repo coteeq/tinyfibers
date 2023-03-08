@@ -32,7 +32,7 @@ class Scheduler {
   void SleepFor(std::chrono::milliseconds delay);
   void Suspend();
   void Resume(Fiber*);
-  void Terminate();
+  [[noreturn]] void Terminate();
 
   Fiber* RunningFiber() const;
 
@@ -45,7 +45,7 @@ class Scheduler {
   void SwitchTo(Fiber*);
   // Fiber context -> scheduler (loop) context
   void SwitchToScheduler();
-  void ExitToScheduler();
+  [[noreturn]] void ExitToScheduler();
 
   // Switch to fiber and run it until this fiber calls Yield or terminates
   void Step(Fiber*);
