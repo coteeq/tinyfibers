@@ -8,8 +8,6 @@ include(cmake/Sanitize.cmake)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
-add_subdirectory(third_party)
-
 include(cmake/ClangFormat.cmake)
 include(cmake/ClangTidy.cmake)
 

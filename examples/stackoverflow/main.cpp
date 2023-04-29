@@ -4,10 +4,13 @@
 
 using tf::RunScheduler;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winfinite-recursion"
 void Recurse(size_t depth) {
   fmt::println("Recurse @ depth {}", depth);
   Recurse(depth + 1);
 }
+#pragma clang diagnostic pop
 
 int main() {
   RunScheduler([] {
