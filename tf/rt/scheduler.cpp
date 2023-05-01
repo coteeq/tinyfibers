@@ -32,6 +32,10 @@ struct SchedulerScope {
 Scheduler::Scheduler() {
 }
 
+Scheduler::Scheduler(IPoller* poller) {
+  poller_ = poller;
+}
+
 Fiber* Scheduler::RunningFiber() const {
   WHEELS_VERIFY(running_ != nullptr, "Not in fiber context");
   return running_;
@@ -97,10 +101,17 @@ void Scheduler::Run(FiberRoutine init) {
 }
 
 void Scheduler::RunLoop() {
-  while (run_queue_.NonEmpty()) {
-    Fiber* next = run_queue_.PopFront();
-    auto handler = Step(next);
-    handler(next);  // Dispatch
+  while (run_queue_.NonEmpty() || (poller_ && poller_->HasPending())) {
+    if (run_queue_.NonEmpty()) {
+      Fiber* next = run_queue_.PopFront();
+      auto handler = Step(next);
+      handler(next);  // Dispatch
+    }
+    if (poller_) {
+      if (auto* fiber = poller_->TryPoll(); fiber) {
+        Schedule(fiber);
+      }
+    }
   }
 }
 

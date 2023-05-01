@@ -2,6 +2,7 @@
 
 #include <tf/rt/fiber.hpp>
 #include <tf/rt/id_generator.hpp>
+#include <tf/rt/poller.hpp>
 #include <tf/rt/stack_allocator.hpp>
 #include <tf/rt/syscall.hpp>
 
@@ -19,6 +20,7 @@ namespace tf::rt {
 class Scheduler {
  public:
   Scheduler();
+  explicit Scheduler(IPoller* poller);
 
   // One-shot
   void Run(FiberRoutine init);
@@ -61,6 +63,8 @@ class Scheduler {
   wheels::IntrusiveList<Fiber> run_queue_;
   Fiber* running_{nullptr};
   Handler handler_;
+
+  IPoller* poller_{nullptr};
 
   // Resources
   IdGenerator ids_;

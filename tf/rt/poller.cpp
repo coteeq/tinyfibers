@@ -6,4 +6,8 @@ Fiber* NopPoller::TryPoll() {
     return nullptr;
 }
 
+bool NopPoller::HasPending() const {
+    return false;
+}
+
 }
